@@ -1,0 +1,5 @@
+out/*
+.vs/*
+GED_Core/GED/Core/bin/*
+GED_Core/GED/Core/obj/*
+GED_Core/GED/Core/.vs/*
