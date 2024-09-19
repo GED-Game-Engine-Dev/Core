@@ -1,29 +1,14 @@
-include(CPack)
-project("GED_Core")
+project(GED_Core)
+# build with csproj
+include(ExternalProject)
+set(PROJECT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/GED_CORE.csproj)
 
-add_library(
-	${PROJECT_NAME}
-	"GED/Core/Test.cs"
+ExternalProject_Add(
+    ${PROJECT_NAME}
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND dotnet build ${PROJECT_PATH} --configuration Release
+    INSTALL_COMMAND ""
 )
 
-set(CPACK_GENERATOR "NuGet")
-set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
-set(CPACK_PACKAGE_VERSION "1.0.0")
-set(CPACK_PACKAGE_DESCRIPTION "GED Core")
-set(CPACK_PACKAGE_AUTHOR "GED")
-set(CPACK_PACKAGE_LICENSE "MIT")
-set(CPACK_PACKAGE_MAINTAINER "yuisanae2f")
-set(CPACK_GENERATOR "ZIP;TGZ")
-
-target_link_libraries(${PROJECT_NAME} PUBLIC "RCore")
-
-# 설치할 파일 및 디렉토리 설정
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-
-
-add_custom_target(Sharp${PROJECT_NAME}
-    COMMAND ${CMAKE_COMMAND} -E echo "Running CPack..."
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} ${CMAKE_COMMAND} -E env cpack
-    DEPENDS ${PROJECT_NAME}
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
+add_dependencies(${PROJECT_NAME} "RCore")
