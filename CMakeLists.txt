@@ -3,4 +3,4 @@ enable_language(CSharp)
 project(GED_CORE_INSTALLER LANGUAGES C CXX CSharp)
 
 add_subdirectory("RCore")
-add_subdirectory("GED_Core")
+add_subdirectory("GED_CORE")
