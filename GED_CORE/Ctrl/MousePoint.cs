@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace GED.Core.Ctrl
 {
-    unsafe partial struct MousePoint
+    public unsafe partial struct MousePoint
     {
         [LibraryImport("RCore.dll", EntryPoint = "GED_Core_Ctrl_MousePoint_ptrX")]
         private static partial double* pX();
