@@ -11,4 +11,4 @@ ExternalProject_Add(
     INSTALL_COMMAND ""
 )
 
-add_dependencies(${PROJECT_NAME} "RCore")
+add_dependencies(${PROJECT_NAME} RCore)

@@ -2,7 +2,10 @@ project("RCore")
 
 add_library(
     ${PROJECT_NAME} SHARED
-    "src/a.c"
+    "include/GED/Core/Clock.h"
+    "src/xClock.cpp"
+    "include/GED/Core/Ctrl/MousePoint.h" 
+    "src/Ctrl/MousePoint.c"
 )
 
 include(FetchContent)
@@ -13,25 +16,16 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.0.0"
+        GIT_TAG "Rel-v2.0.2"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 
     FetchContent_MakeAvailable(Bmp)
 
-    install(DIRECTORY include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/
-    )
-
-    install(EXPORT BmpTargets
-        FILE BmpTargets.cmake
-        NAMESPACE ae2f::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ae2f
-    )
-
-    include_directories(${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp/include)
+    target_link_libraries(${PROJECT_NAME} Bmp)
+    
 else()
-    target_link_libraries(Bmp ae2f::Bmp)
+    target_link_libraries(${PROJECT_NAME} ae2f::Bmp)
 endif()
 
 include_directories(include)
