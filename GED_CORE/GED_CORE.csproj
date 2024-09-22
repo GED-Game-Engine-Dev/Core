@@ -1,11 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup>
-		<None Update="lib/RCore.dll">
-			<Pack>true</Pack>
-			<PackagePath>lib/net8.0/</PackagePath>
-		</None>
-	</ItemGroup>
-
 	<PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -18,8 +11,15 @@
     <Product>Core</Product>
     <RepositoryUrl>https://github.com/yuisanae2f/GED_Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>0.0.2</Version>
+    <Version>0.0.20</Version>
   </PropertyGroup>
+
+    <ItemGroup>
+		<Content Include="lib/RCore.dll">
+		    <Pack>true</Pack>
+		    <PackagePath>lib/net8.0/</PackagePath>
+	    </Content>
+    </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <IsTrimmable>False</IsTrimmable>

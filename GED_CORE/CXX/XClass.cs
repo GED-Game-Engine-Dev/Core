@@ -4,8 +4,9 @@
     {
         private byte[] _Object;
 
-        public iXClass(int Length)
+        public iXClass(UIntPtr Length)
         { 
+            
             this._Object = new byte[Length]; 
         }
 

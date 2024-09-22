@@ -2,12 +2,13 @@ using System.Runtime.InteropServices;
 
 namespace GED.Core.Ctrl
 {
-    public unsafe partial struct MousePoint
+    public unsafe struct MousePoint
     {
-        [LibraryImport("RCore.dll", EntryPoint = "GED_Core_Ctrl_MousePoint_ptrX")]
-        private static partial double* pX();
-        [LibraryImport("RCore.dll", EntryPoint = "GED_Core_Ctrl_MousePoint_ptrY")]
-        private static partial double* pY();
+        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrX")]
+        extern private static double* pX();
+
+        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint="GED_Core_Ctrl_MousePoint_ptrY")]
+        extern private static double* pY();
 
         private static double* x = pX();
         private static double* y = pY();

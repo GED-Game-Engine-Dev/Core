@@ -6,7 +6,7 @@ add_library(
     "src/xClock.cpp"
     "include/GED/Core/Ctrl/MousePoint.h" 
     "src/Ctrl/MousePoint.c"
-)
+ "include/GED/Core/Ctrl/Event.h" "src/Ctrl/xEvent.cpp")
 
 include(FetchContent)
 find_package(Bmp)
