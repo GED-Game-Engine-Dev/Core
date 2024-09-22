@@ -1,4 +1,6 @@
 # GED_Core
+Source of the nuget package: GED_CORE
+> see nupkg here: https://www.nuget.org/packages/GED_CORE
 
 # depends on
 Critical
@@ -12,4 +14,4 @@ Optional
 	- ae2f_Bmp_Use_OpenCL
 
 ## RCore
-## GED_Core
+## GED_CORE
