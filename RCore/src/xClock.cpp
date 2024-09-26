@@ -1,5 +1,6 @@
 #include <GED/Core/Clock.h>
 #include <chrono>
+#include <stdio.h>
 
 using Clock_t = std::chrono::steady_clock;
 static time_t castDuration;
