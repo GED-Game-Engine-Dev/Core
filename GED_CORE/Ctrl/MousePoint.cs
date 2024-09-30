@@ -13,7 +13,7 @@ namespace GED.Core.Ctrl
         private static double* x = pX();
         private static double* y = pY();
 
-        public static double X { get => x[0]; set => x[0] = value; }
         public static double Y { get => y[0]; set => y[0] = value; }
+        public static double X { get => x[0]; set => x[0] = value; }
     }
 }

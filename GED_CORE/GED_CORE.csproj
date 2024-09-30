@@ -11,7 +11,7 @@
     <Product>Core</Product>
     <RepositoryUrl>https://github.com/yuisanae2f/GED_Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>0.0.20</Version>
+    <Version>0.0.21</Version>
   </PropertyGroup>
 
     <ItemGroup>

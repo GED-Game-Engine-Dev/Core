@@ -7,7 +7,7 @@
         public iXClass(UIntPtr Length)
         { 
             
-            this._Object = new byte[Length]; 
+            _Object = new byte[Length]; 
         }
 
         public byte[] Raw {  get => _Object; }

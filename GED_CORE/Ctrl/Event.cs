@@ -6,6 +6,9 @@ namespace GED.Core.Ctrl
 
     internal unsafe struct Event
     {
+        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Make")]
+        public static extern int Make(byte[] mgr, byte elwidth);
+
         [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Resize")]
         public static extern int Resize(byte[] mgr, UIntPtr size);
 
@@ -22,7 +25,10 @@ namespace GED.Core.Ctrl
         public static extern int GetRange(byte[] mgr, iEvent.fpCond_t Condition, out UIntPtr Min, out UIntPtr Max);
 
         [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Element")]
-        public static extern int Element(byte[] mgr, UIntPtr i, out UIntPtr elsize, out byte* lpEl);
+        public static extern int GetElement(byte[] mgr, UIntPtr i, byte[] lpEl);
+
+        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Element_Set")]
+        public static extern int SetElement(byte[] mgr, UIntPtr i, byte[] lpSrc);
     }
 
     public unsafe class iEvent : iXClass
@@ -35,7 +41,8 @@ namespace GED.Core.Ctrl
 
         private iEvent() : base(Event.TypeSize()) { }
 
-        public iEvent(UIntPtr size, out int perr) : this() {
+        public iEvent(UIntPtr size, byte wel, out int perr) : this() {
+            if((perr = Event.Make(Raw, wel)) != 0) return;
             perr = Event.Resize(Raw, size);
         }
 
@@ -43,17 +50,14 @@ namespace GED.Core.Ctrl
         public int Resize(UIntPtr size) => Event.Resize(Raw, size);
         public int Sort(fpElCmp_t FunctionCompare) => Event.Sort(Raw, FunctionCompare);
         public int GetRange(fpCond_t Condition, out UIntPtr Min, out UIntPtr Max) => Event.GetRange(Raw, Condition, out Min, out Max);
-        public unsafe struct rElement
-        {
-            public byte* Ptr;
-            public UIntPtr Size;
-        }
         
-        public rElement Element(UIntPtr i, out int perr)
+        public byte[] GetElement(UIntPtr i, out int perr)
         {
-            var el = new rElement();
-            perr = Event.Element(Raw, i, out el.Size, out el.Ptr);
-            return el;
+            byte[] a = new byte[Raw[0]];
+            perr = Event.GetElement(Raw, i, a);
+            return a;
         }
+
+        public int SetElement(UIntPtr i, byte[] element) => Event.SetElement(Raw, i, element);
     }
 }
