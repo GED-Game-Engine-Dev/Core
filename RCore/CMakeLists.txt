@@ -16,7 +16,7 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.0.3"
+        GIT_TAG "Rel-v2.1.0"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 
@@ -37,7 +37,7 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-# ¼³Ä¡ ¼³Á¤
+# ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -48,14 +48,14 @@ install(DIRECTORY include/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/
 )
 
-# ÆÐÅ°Áö ¼³Á¤
+# ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 install(EXPORT ${PROJECT_NAME}Targets
     FILE ${PROJECT_NAME}Targets.cmake
     NAMESPACE GED::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GED
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
 )
 
-# ÆÐÅ°Áö ±¸¼º ÆÄÀÏ »ý¼º
+# ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 include(CMakePackageConfigHelpers)
 configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in"
@@ -65,7 +65,7 @@ configure_package_config_file(
 
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GED
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
 )
 
 
