@@ -10,6 +10,23 @@ add_library(
     "src/Ctrl/Event.c"
 )
 
+
+if(CMAKE_CXX_COMPILER MATCHES "mingw")
+    message(STATUS "Building with MinGW")
+    set(DLL_OUTPUT_PREFIX "")
+    set(DLL_OUTPUT_SUFFIX ".dll")
+    set(ae2f_IS_WIN ON)
+    set(ae2f_IS_LINUX OFF)
+else()
+    message(STATUS "Not using MinGW")
+    set(DLL_OUTPUT_PREFIX "")
+    set(DLL_OUTPUT_SUFFIX ".so.dll")
+    set(ae2f_IS_LINUX ON)
+    set(ae2f_IS_WIN OFF)
+endif()
+
+
+
 include(FetchContent)
 find_package(Bmp)
 if(NOT Bmp_FOUND)
@@ -18,7 +35,7 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.1.1.3"
+        GIT_TAG "Rel-v2.1.2"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 
@@ -72,19 +89,6 @@ install(FILES
 
 
 set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE/lib")
-
-	
-
-if(CMAKE_CXX_COMPILER MATCHES "mingw")
-    message(STATUS "Building with MinGW")
-    set(DLL_OUTPUT_PREFIX "")
-    set(DLL_OUTPUT_SUFFIX ".dll")
-else()
-    message(STATUS "Not using MinGW")
-    set(DLL_OUTPUT_PREFIX "")
-    set(DLL_OUTPUT_SUFFIX ".so.dll")
-endif()
-
 
 add_custom_command(
     TARGET ${PROJECT_NAME}
