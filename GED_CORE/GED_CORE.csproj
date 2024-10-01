@@ -9,12 +9,6 @@
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
 
-  <Target Name="RunShellCommand" BeforeTargets="BeforeBuild">
-    <Exec Command="echo 'Building the low part first...'" />
-    <Exec Command="cmake .. -B../build -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE" />
-    <Exec Command="cmake --build ../build --config Release --target all -j 18 --"/>
-  </Target>
-
 
   <PropertyGroup Condition="'$(IsWindows)'=='true'">
       <DefineConstants>GED_WIN</DefineConstants>

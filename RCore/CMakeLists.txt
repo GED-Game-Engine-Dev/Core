@@ -10,9 +10,6 @@ add_library(
     "src/Ctrl/Event.c"
 )
 
-set(BUILD_SHARED_LIBS ON)
-set(ae2f_IS_SHARED ON)
-
 include(FetchContent)
 find_package(Bmp)
 if(NOT Bmp_FOUND)
@@ -78,17 +75,14 @@ set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE/lib")
 
 	
 
-if(WIN32)
-	MESSAGE(STATUS "Thou art using Windows")
+if(CMAKE_CXX_COMPILER MATCHES "mingw")
+    message(STATUS "Building with MinGW")
     set(DLL_OUTPUT_PREFIX "")
     set(DLL_OUTPUT_SUFFIX ".dll")
-elseif(UNIX)
-	MESSAGE(STATUS "Thou art using LINUX")
-	set(OS linux)
+else()
+    message(STATUS "Not using MinGW")
     set(DLL_OUTPUT_PREFIX "")
     set(DLL_OUTPUT_SUFFIX ".so.dll")
-else()
-	MESSAGE(FATAL_ERROR "Thy system is no supported")
 endif()
 
 
