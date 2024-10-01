@@ -5,7 +5,7 @@ namespace GED.Core.Ctrl
     public unsafe static partial class fMousePoint {
         [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrX")]
         private static partial double* pX();
-
+        
         [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrY")]
         private static partial double* pY();
 

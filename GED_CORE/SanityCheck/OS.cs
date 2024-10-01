@@ -4,13 +4,13 @@ using System.Diagnostics;
 
 namespace GED.SanityCheck {
     internal static class OS {
-        public const string Dll_Name_Prefix = "lib/";
+        public const string Dll_Name_Prefix = "";
 
 
 #if GED_WIN
-        public const string Dll_Name_Suffix = ".dll";
+        public const string Dll_Name_Suffix = "";
 #elif GED_LINUX
-        public const string Dll_Name_Suffix = ".so.dll";
+        public const string Dll_Name_Suffix = "";
 #else
         public const string Dll_Name_Suffix = "";
 #endif

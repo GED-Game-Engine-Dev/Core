@@ -13,14 +13,14 @@ add_library(
 # 플랫폼 확인
 if(WIN32)
     message(STATUS "Building with MinGW")
-    set(DLL_OUTPUT_PREFIX "")
+    set(DLL_OUTPUT_PREFIX "lib")
     set(DLL_OUTPUT_SUFFIX ".dll")
     set(ae2f_IS_WIN ON)
     set(ae2f_IS_LINUX OFF)
 elseif(UNIX)
     message(STATUS "Not using MinGW")
-    set(DLL_OUTPUT_PREFIX "")
-    set(DLL_OUTPUT_SUFFIX ".so.dll")
+    set(DLL_OUTPUT_PREFIX "lib")
+    set(DLL_OUTPUT_SUFFIX ".so")
     set(ae2f_IS_LINUX ON)
     set(ae2f_IS_WIN OFF)
 else()
@@ -97,7 +97,7 @@ install(FILES
 )
 
 
-set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE/lib")
+set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE")
 
 add_custom_command(
     TARGET ${PROJECT_NAME}
