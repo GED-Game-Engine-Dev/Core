@@ -1,6 +1,9 @@
 # GED_Core
 Source of the nuget package: GED_CORE
-> see nupkg here: https://www.nuget.org/packages/GED_CORE
+
+# Nupkg is @deprecated
+> https://www.nuget.org/packages/GED_CORE  
+> We won't update it any more.
 
 # depends on
 Critical

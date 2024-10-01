@@ -10,7 +10,7 @@ add_library(
     "src/Ctrl/Event.c"
 )
 
-set(ae2f_IS_SHARED ON)
+set(BUILD_SHARED_LIBS ON)
 
 include(FetchContent)
 find_package(Bmp)
@@ -20,7 +20,7 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.1.1.1"
+        GIT_TAG "Rel-v2.1.1.3"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 
