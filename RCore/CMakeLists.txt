@@ -10,6 +10,8 @@ add_library(
     "src/Ctrl/Event.c"
 )
 
+set(ae2f_IS_SHARED ON)
+
 include(FetchContent)
 find_package(Bmp)
 if(NOT Bmp_FOUND)
@@ -18,7 +20,7 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.1.0"
+        GIT_TAG "Rel-v2.1.1.1"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 
@@ -62,7 +64,7 @@ include(CMakePackageConfigHelpers)
 configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GED
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/
 )
 
 install(FILES
@@ -71,10 +73,36 @@ install(FILES
 )
 
 
-set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE/lib/RCore.dll")
+set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE/lib")
+
+if(CMAKE_CXX_COMPILER MATCHES "mingw")
+    message(STATUS "Building with MinGW")
+    set(DLL_OUTPUT_PREFIX "")
+    set(DLL_OUTPUT_SUFFIX ".dll")
+else()
+    message(STATUS "Not using MinGW")
+    set(DLL_OUTPUT_PREFIX "")
+    set(DLL_OUTPUT_SUFFIX ".so.dll")
+endif()
+
+
 add_custom_command(
     TARGET ${PROJECT_NAME}
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> ${DLL_OUTPUT_DIR}
-    COMMENT "Copying ${PROJECT_NAME} to ${DLL_OUTPUT_DIR}"
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}RCore${DLL_OUTPUT_SUFFIX}
+    COMMENT "Copying ${PROJECT_NAME} to ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}RCore${DLL_OUTPUT_SUFFIX}"
+)
+
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Bmp> ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Bmp${DLL_OUTPUT_SUFFIX}
+    COMMENT "Copying Bmp to ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Bmp${DLL_OUTPUT_SUFFIX}"
+)
+
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Core> ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}
+    COMMENT "Copying Core to ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}"
 )

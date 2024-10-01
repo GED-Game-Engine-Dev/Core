@@ -1,24 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
+
+  <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <SignAssembly>False</SignAssembly>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>yuisanae2f</Authors>
-    <Company>GED</Company>
-    <Product>Core</Product>
-    <RepositoryUrl>https://github.com/yuisanae2f/GED_Core.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <Version>0.0.21</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
 
-    <ItemGroup>
-		<Content Include="lib/RCore.dll">
-		    <Pack>true</Pack>
-		    <PackagePath>lib/net8.0/</PackagePath>
-	    </Content>
+  <PropertyGroup Condition="'$(IsWindows)'=='true'">
+      <DefineConstants>GED_WIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsLinux)'=='true'">
+      <DefineConstants>GED_LINUX</DefineConstants>
+  </PropertyGroup>
+
+      <ItemGroup Condition="'$(IsLinux)'=='true'">
+          <Content Include="lib/RCore.so.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+
+        <Content Include="lib/Bmp.so.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+
+        <Content Include="lib/Core.so.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+
+      <ItemGroup Condition="'$(IsWindows)'=='true'">
+        <Content Include="lib/RCore.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+
+        <Content Include="lib/Bmp.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+
+        <Content Include="lib/Core.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GED_CORE", "GED_CORE\GED_CORE.csproj", "{C536BE18-EED1-48CF-A170-AB47AB403E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GED_CORE", "GED_CORE\GED_CORE.csproj", "{16578596-CF7B-4865-8A50-D4325C12E54A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C536BE18-EED1-48CF-A170-AB47AB403E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C536BE18-EED1-48CF-A170-AB47AB403E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C536BE18-EED1-48CF-A170-AB47AB403E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C536BE18-EED1-48CF-A170-AB47AB403E34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16578596-CF7B-4865-8A50-D4325C12E54A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16578596-CF7B-4865-8A50-D4325C12E54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16578596-CF7B-4865-8A50-D4325C12E54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16578596-CF7B-4865-8A50-D4325C12E54A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FB31DDE3-9CBE-4FE4-AB25-A00E507DB969}
+		SolutionGuid = {9BB6F050-31D5-4529-B641-3E7855CE9EC5}
 	EndGlobalSection
 EndGlobal

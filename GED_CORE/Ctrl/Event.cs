@@ -4,31 +4,31 @@ using System.Runtime.InteropServices;
 namespace GED.Core.Ctrl
 {
 
-    internal unsafe struct Event
+    internal static unsafe partial class fEvent
     {
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Make")]
-        public static extern int Make(byte[] mgr, byte elwidth);
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Make")]
+        public static partial int Make(byte[] mgr, byte elwidth);
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Resize")]
-        public static extern int Resize(byte[] mgr, UIntPtr size);
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Resize")]
+        public static partial int Resize(byte[] mgr, UIntPtr size);
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Kill")]
-        public static extern void Kill(byte[] mgr);
+        [LibraryImport(SanityCheck.DllNames.RCore,  EntryPoint = "GED_Core_Ctrl_Ev_Kill")]
+        public static partial void Kill(byte[] mgr);
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_TypeSize")]
-        public static extern UIntPtr TypeSize();
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_TypeSize")]
+        public static partial UIntPtr TypeSize();
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Sort")]
-        public static extern int Sort(byte[] mgr, iEvent.fpElCmp_t FunctionCompare);
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Sort")]
+        public static partial int Sort(byte[] mgr, iEvent.fpElCmp_t FunctionCompare);
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Sort")]
-        public static extern int GetRange(byte[] mgr, iEvent.fpCond_t Condition, out UIntPtr Min, out UIntPtr Max);
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Sort")]
+        public static partial int GetRange(byte[] mgr, iEvent.fpCond_t Condition, out UIntPtr Min, out UIntPtr Max);
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Element")]
-        public static extern int GetElement(byte[] mgr, UIntPtr i, byte[] lpEl);
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Element")]
+        public static partial int GetElement(byte[] mgr, UIntPtr i, byte[] lpEl);
 
-        [DllImport("RCore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GED_Core_Ctrl_Ev_Element_Set")]
-        public static extern int SetElement(byte[] mgr, UIntPtr i, byte[] lpSrc);
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Element_Set")]
+        public static partial int SetElement(byte[] mgr, UIntPtr i, byte[] lpSrc);
     }
 
     public unsafe class iEvent : iXClass
@@ -39,25 +39,25 @@ namespace GED.Core.Ctrl
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public unsafe delegate bool fpCond_t(void* a);
 
-        private iEvent() : base(Event.TypeSize()) { }
+        private iEvent() : base(fEvent.TypeSize()) { }
 
         public iEvent(UIntPtr size, byte wel, out int perr) : this() {
-            if((perr = Event.Make(Raw, wel)) != 0) return;
-            perr = Event.Resize(Raw, size);
+            if((perr = fEvent.Make(Raw, wel)) != 0) return;
+            perr = fEvent.Resize(Raw, size);
         }
 
-        ~iEvent() => Event.Kill(Raw);
-        public int Resize(UIntPtr size) => Event.Resize(Raw, size);
-        public int Sort(fpElCmp_t FunctionCompare) => Event.Sort(Raw, FunctionCompare);
-        public int GetRange(fpCond_t Condition, out UIntPtr Min, out UIntPtr Max) => Event.GetRange(Raw, Condition, out Min, out Max);
+        ~iEvent() => fEvent.Kill(Raw);
+        public int Resize(UIntPtr size) => fEvent.Resize(Raw, size);
+        public int Sort(fpElCmp_t FunctionCompare) => fEvent.Sort(Raw, FunctionCompare);
+        public int GetRange(fpCond_t Condition, out UIntPtr Min, out UIntPtr Max) => fEvent.GetRange(Raw, Condition, out Min, out Max);
         
         public byte[] GetElement(UIntPtr i, out int perr)
         {
             byte[] a = new byte[Raw[0]];
-            perr = Event.GetElement(Raw, i, a);
+            perr = fEvent.GetElement(Raw, i, a);
             return a;
         }
 
-        public int SetElement(UIntPtr i, byte[] element) => Event.SetElement(Raw, i, element);
+        public int SetElement(UIntPtr i, byte[] element) => fEvent.SetElement(Raw, i, element);
     }
 }
