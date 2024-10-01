@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace GED.SanityCheck {
     internal static class OS {
-        public const string Dll_Name_Prefix = "";
+        public const string Dll_Name_Prefix = "lib/";
 
 
 #if GED_WIN
