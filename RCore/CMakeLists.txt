@@ -75,14 +75,19 @@ install(FILES
 
 set(DLL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GED_CORE/lib")
 
-if(CMAKE_CXX_COMPILER MATCHES "mingw")
-    message(STATUS "Building with MinGW")
+	
+
+if(WIN32)
+	MESSAGE(STATUS "Thou art using Windows")
     set(DLL_OUTPUT_PREFIX "")
     set(DLL_OUTPUT_SUFFIX ".dll")
-else()
-    message(STATUS "Not using MinGW")
+elseif(UNIX)
+	MESSAGE(STATUS "Thou art using LINUX")
+	set(OS linux)
     set(DLL_OUTPUT_PREFIX "")
     set(DLL_OUTPUT_SUFFIX ".so.dll")
+else()
+	MESSAGE(FATAL_ERROR "Thy system is no supported")
 endif()
 
 
