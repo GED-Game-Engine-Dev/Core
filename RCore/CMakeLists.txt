@@ -10,19 +10,28 @@ add_library(
     "src/Ctrl/Event.c"
 )
 
-
-if(CMAKE_CXX_COMPILER MATCHES "mingw")
+# 플랫폼 확인
+if(WIN32)
     message(STATUS "Building with MinGW")
     set(DLL_OUTPUT_PREFIX "")
     set(DLL_OUTPUT_SUFFIX ".dll")
     set(ae2f_IS_WIN ON)
     set(ae2f_IS_LINUX OFF)
-else()
+elseif(UNIX)
     message(STATUS "Not using MinGW")
     set(DLL_OUTPUT_PREFIX "")
     set(DLL_OUTPUT_SUFFIX ".so.dll")
     set(ae2f_IS_LINUX ON)
     set(ae2f_IS_WIN OFF)
+else()
+    message(FATAL_ERROR "No imp")
+endif()
+
+
+if(CMAKE_CXX_COMPILER MATCHES "mingw")
+
+else()
+
 endif()
 
 
