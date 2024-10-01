@@ -11,6 +11,7 @@ add_library(
 )
 
 set(BUILD_SHARED_LIBS ON)
+set(ae2f_IS_SHARED ON)
 
 include(FetchContent)
 find_package(Bmp)
