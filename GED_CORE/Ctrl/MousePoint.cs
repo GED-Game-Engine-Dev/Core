@@ -10,7 +10,7 @@ namespace GED.Core.Ctrl
         private static partial double* pY();
 
         public static double* x;
-        public static double* y = pY();
+        public static double* y;
 
         static fMousePoint() { x = pX(); y = pY(); }
     }

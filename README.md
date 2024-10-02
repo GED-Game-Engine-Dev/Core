@@ -1,5 +1,6 @@
 # GED_Core
-Source of the nuget package: GED_CORE
+> It is a CSharp Project withon a lower project, RCore.  
+> To build, you need your programme "cmake" in your environment path on your computer.
 
 # Nupkg is @deprecated
 > https://www.nuget.org/packages/GED_CORE  

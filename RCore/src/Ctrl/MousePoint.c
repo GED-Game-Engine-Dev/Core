@@ -1,6 +1,6 @@
 #include <GED/Core/Ctrl/MousePoint.h>
 
-double
+ae2f_SHAREDEXPORT double
 GED_Core_Ctrl_MousePoint_X,
 GED_Core_Ctrl_MousePoint_Y;
 
