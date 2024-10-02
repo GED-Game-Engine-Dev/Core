@@ -7,7 +7,7 @@ Source of the nuget package: GED_CORE
 
 # depends on
 Critical
-- [ae2f::Bmp Rel-v2.1.0](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.0)
+- [ae2f::Bmp Rel-v2.1.3](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.3)
 	> Image Displayers
 
 Optional

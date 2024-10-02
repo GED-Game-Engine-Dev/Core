@@ -24,14 +24,7 @@ elseif(UNIX)
     set(ae2f_IS_LINUX ON)
     set(ae2f_IS_WIN OFF)
 else()
-    message(FATAL_ERROR "No imp")
-endif()
-
-
-if(CMAKE_CXX_COMPILER MATCHES "mingw")
-
-else()
-
+    message(FATAL_ERROR "No imp") # 구현 없음 ㅺ
 endif()
 
 
@@ -44,7 +37,7 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.1.2"
+        GIT_TAG "Rel-v2.1.3"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 

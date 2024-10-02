@@ -1,5 +1,6 @@
 namespace GED.SanityCheck {
     public enum FuckedNumbers {
+        
         OK,
         // Failed to find the function on preprocessor which is callable for some reason
         // No operation has beed done.

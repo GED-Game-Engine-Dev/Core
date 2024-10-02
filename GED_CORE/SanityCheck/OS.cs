@@ -16,12 +16,9 @@ namespace GED.SanityCheck {
 #endif
 
         static OS() {
-            #if GED_LINUX || GED_WINDOWS
-            #else
+#if !(GED_LINUX || GED_WINDOWS)
             Trace.Assert(false, "No implementation. Go away. (It must be windows or linux)");
-            #endif
-
-            
+#endif
         }
     }
 }
