@@ -10,7 +10,11 @@ add_library(
     "src/Ctrl/Event.c"
 )
 
-# 플랫폼 확인
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+else()
+    message(FATAL_ERROR "Not using GCC compiler")
+endif()
+
 if(WIN32)
     message(STATUS "Building with MinGW")
     set(DLL_OUTPUT_PREFIX "lib")
