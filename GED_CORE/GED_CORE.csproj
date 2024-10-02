@@ -12,7 +12,8 @@
   <Target Name="PreBuild" BeforeTargets="BeforeBuild">
     <Exec Command="rmdir /S /Q ../build" Condition="'$(IsWindows)'=='true'"/>
     <Exec Command="rm -rf ../build"  Condition="'$(IsLinux)'=='true'"/>
-    <Exec Command='cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER:STRING=gcc -DCMAKE_CXX_COMPILER:STRING=g++ -S../ -B../build -G "MinGW Makefiles" '/>
+    <Exec Condition="'$(IsWindows)'=='true'" Command='cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER:STRING=gcc -DCMAKE_CXX_COMPILER:STRING=g++ -S../ -B../build -G "MinGW Makefiles" '/>
+    <Exec Condition="'$(IsLinux)'=='true'" Command='cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER:STRING=gcc -DCMAKE_CXX_COMPILER:STRING=g++ -S../ -B../build" '/>
     <Exec Command='cmake --build ../build --config Release'/>
   </Target>
 
