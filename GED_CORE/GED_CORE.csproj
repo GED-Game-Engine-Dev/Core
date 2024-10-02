@@ -12,7 +12,7 @@
   <Target Name="PreBuild" BeforeTargets="BeforeBuild">
     <Exec Command="rmdir /S /Q ../build" Condition="'$(IsWindows)'=='true'"/>
     <Exec Command="rm -rf ../build"  Condition="'$(IsLinux)'=='true'"/>
-    <Exec Command='cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE --no-warn-unused-cli -S../ -B../build '/>
+    <Exec Command='cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ --no-warn-unused-cli -S../ -B../build '/>
     <Exec Command='cmake --build ../build --config Release'/>
   </Target>
 
