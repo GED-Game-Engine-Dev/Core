@@ -7,7 +7,7 @@ namespace GED.Core.CXX {
     /// It owns the unmanaged memory.
     /// </summary>
     /// <typeparam name="T">The sequentially / explicitly layered structure</typeparam>
-    internal unsafe class XClassMem<T> where T : struct {
+    public unsafe class XClassMem<T> where T : struct {
         public readonly nint bytes;
 
         public XClassMem(out SanityCheck.FuckedNumbers state, int sizeWantedExact = 0) {
@@ -23,6 +23,7 @@ namespace GED.Core.CXX {
                 state = SanityCheck.FuckedNumbers.WRONG_OPERATION;
                 return;
             }
+
             try {
                 int __sz = Marshal.SizeOf(typeof(T));
                 bytes = Marshal.AllocHGlobal(sizeWantedExact > __sz ? sizeWantedExact : __sz); 
@@ -42,8 +43,8 @@ namespace GED.Core.CXX {
             }
         }
 
-        public T* Instance() {
-            return (T*)bytes;
+        public ref T Instance() {
+            return ref ((T*)bytes)[0];
         }
     }
 }

@@ -9,15 +9,20 @@ namespace GED.Core.Ctrl
         [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrY")]
         private static partial double* pY();
 
-        public static double* x;
-        public static double* y;
-
-        static fMousePoint() { x = pX(); y = pY(); }
+        public static double* X = pX();
+        public static double* Y = pY();
     }
 
-    public unsafe struct MousePoint
+    public unsafe class MousePoint
     {
-        public static double Y { get => fMousePoint.y[0]; set => fMousePoint.y[0] = value; }
-        public static double X { get => fMousePoint.x[0]; set => fMousePoint.x[0] = value; }
+        public static double X {
+            get { return fMousePoint.X[0]; }
+            set { fMousePoint.X[0] = value; }
+        }
+
+        public static double Y {
+            get { return fMousePoint.Y[0]; }
+            set { fMousePoint.Y[0] = value; }
+        }
     }
 }
