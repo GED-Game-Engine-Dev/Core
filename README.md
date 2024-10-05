@@ -8,7 +8,7 @@
 
 # depends on
 Critical
-- [ae2f::Bmp Rel-v2.1.3](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.3)
+- [ae2f::Bmp Rel-v2.1.4](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.4)
 	> Image Displayers
 
 Optional
