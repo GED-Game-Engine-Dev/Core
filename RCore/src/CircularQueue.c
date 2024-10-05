@@ -9,7 +9,7 @@ struct _Header {
 
 
 #define Header ae2f_dynamic_cast(struct _Header*, (_this)->data)
-#define NullAssert(cond)  if(!(cond)) return ae2f_errGlobal_PTR_IS_NULL
+#define NullAssert(cond)  if(!(cond)) return ae2f_errGlobal_PTR_IS_NULL 
 
 #define Buff ((_this)->data + sizeof(struct _Header))
 #define Good ae2f_errGlobal_OK;
@@ -20,8 +20,8 @@ static ae2f_errint_t getsize(
 	const ae2f_struct ae2f_ds_Alloc_Refer* _this,
 	size_t* pSize
 ) {
-	NullAssert(_this && pSize);
-	pSize[0] = Header->size;
+	NullAssert(_this && pSize); // BUG?
+	*pSize = Header->size;
 	return Good;
 }
 
@@ -36,13 +36,11 @@ static ae2f_errint_t Read(
 	size_t Buff_size
 ) {
 	NullAssert(_this && lpBuff);
-	
-	#pragma omp for
-	for(size_t i = 0; i < Buff_size; i++) {
-		lpBuff[i] = Buff[i];
-	}
-
-	return ae2f_errGlobal_IMP_NOT_FOUND;
+	if (Header->size <= Buff_size + Index)
+		return ae2f_errGlobal_WRONG_OPERATION;
+	for (size_t i=0;i<Buff_size;i++)
+		lpBuff[i] = Buff[Index+i];
+	return Good;
 }
 
 /// @param _this The instance of the class.
@@ -56,7 +54,11 @@ static ae2f_errint_t Write(
 	size_t Buff_size
 ) {
 	NullAssert(_this && lpBuff);
-	return ae2f_errGlobal_IMP_NOT_FOUND;
+	if (Header->size <= Buff_size + Index)
+		return ae2f_errGlobal_WRONG_OPERATION;
+	for (size_t i=0;i<Buff_size;i++)
+		Buff[Index+i] = ((const char*) lpBuff)[i];
+	return Good;
 }
 
 /// @brief 
