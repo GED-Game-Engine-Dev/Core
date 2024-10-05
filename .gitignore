@@ -1,6 +1,11 @@
 build/*
 out/*
 .vs/*
+.vscode/*
 GED_CORE/bin/*
 GED_CORE/obj/*
-GED_CORE/.vs/*
+
+test/bin/*
+
+*.so
+*.dll

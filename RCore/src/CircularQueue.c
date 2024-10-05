@@ -77,8 +77,43 @@ static ae2f_errint_t Resize(
 	size_t size
 ) {
 	NullAssert(_this);
-	return ae2f_errGlobal_IMP_NOT_FOUND;
+
+	// if data null,
+	// means that we have no allocated memory
+	if(_this->data) {
+		// We have pointer
+		void* try = realloc(_this->data, size);
+
+		if(try) {
+			_this->data = try;
+			for(size_t i = Header->size; i < size; i++) {
+				Buff[i] = 0;
+			}
+
+			Header->size = size;
+			return Good;
+		} else {
+			return ae2f_errGlobal_ALLOC_FAILED;
+		}
+	} {
+		_this->data = calloc(size, 1);
+		if(_this->data) {
+			Header->size = size;
+			return Good;
+		}
+		else return ae2f_errGlobal_ALLOC_FAILED;
+	}
+
+	return ae2f_errGlobal_LMT;
 }
 
-ae2f_SHAREDEXPORT ae2f_extern const ae2f_struct ae2f_ds_Alloc_vOwner GED_Core_Owner_cCircularQueue;
-ae2f_SHAREDEXPORT ae2f_extern const ae2f_struct ae2f_ds_Alloc_vRefer GED_Core_Refer_cCircularQueue;
+ae2f_SHAREDEXPORT ae2f_extern const ae2f_struct ae2f_ds_Alloc_vOwner GED_Core_Owner_cCircularQueue = {
+	.Del = Del,
+	.reSize = Resize
+};
+
+ae2f_SHAREDEXPORT ae2f_extern const ae2f_struct ae2f_ds_Alloc_vRefer GED_Core_Refer_cCircularQueue = {
+	.getSize = getsize,
+	.Read = Read,
+	.Write = Write
+};
