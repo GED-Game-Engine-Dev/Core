@@ -37,7 +37,7 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.1.3"
+        GIT_TAG "Rel-v2.1.4"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
 
@@ -112,3 +112,5 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Core> ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}
     COMMENT "Copying Core to ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}"
 )
+
+add_subdirectory(test)
