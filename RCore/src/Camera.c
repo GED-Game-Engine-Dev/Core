@@ -43,3 +43,15 @@ ae2f_SHAREDEXPORT ae2f_extern
 ae2f_errint_t GED_Core_Camera_Free(GED_Core_Camera_t* _this) {
     return ae2f_ds_Alloc_vOwner_Del(_this);
 }
+
+ae2f_SHAREDEXPORT ae2f_extern
+ae2f_errint_t GED_Core_Camera_Make(GED_Core_Camera_t* _this) {
+    return ae2f_ds_Alloc_vOwner_InitAuto(_this);
+}
+
+ae2f_SHAREDEXPORT ae2f_extern ae2f_errint_t GED_Core_Camera_Append(
+    GED_Core_Camera_t* _this,
+    const ae2f_struct GED_Core_Camera_El* element
+) {
+    return ae2f_errGlobal_IMP_NOT_FOUND;
+}

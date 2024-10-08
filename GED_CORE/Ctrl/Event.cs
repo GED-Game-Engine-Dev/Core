@@ -1,15 +1,12 @@
 ﻿using GED.Core.CXX;
 using GED.SanityCheck;
-using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GED.Core.Ctrl
 {
-
-    internal static unsafe partial class fEvent
+        
+    internal static partial class fEvent
     {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Make")]
         public static partial int Make(nint mgr, byte elwidth);
@@ -44,7 +41,7 @@ namespace GED.Core.Ctrl
     }
 
 
-    public class iEvent
+    internal class iEvent
     {
         [StructLayout(LayoutKind.Sequential)]
         protected struct member {
@@ -92,7 +89,7 @@ namespace GED.Core.Ctrl
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class xEvent<T> : iEvent where T : struct {
+    internal class xEvent<T> : iEvent where T : struct {
         protected xEvent(out int state) : base(out state) {
             if(state == (int)FuckedNumbers.OK)
             {

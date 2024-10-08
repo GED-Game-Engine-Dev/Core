@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace GED.Core.Ctrl
 {
-    public unsafe static partial class fMousePoint {
+    internal static unsafe partial class fMousePoint {
         [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrX")]
         private static partial double* pX();
         
@@ -15,6 +15,7 @@ namespace GED.Core.Ctrl
 
     public unsafe class MousePoint
     {
+
         public static double X {
             get { return fMousePoint.X[0]; }
             set { fMousePoint.X[0] = value; }

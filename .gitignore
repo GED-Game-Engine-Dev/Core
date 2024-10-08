@@ -6,6 +6,7 @@ GED_CORE/bin/*
 GED_CORE/obj/*
 
 test/bin/*
+test/obj/*
 
 *.so
 *.dll

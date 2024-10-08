@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -7,7 +6,7 @@ namespace GED.Core.CXX {
     /// It owns the unmanaged memory.
     /// </summary>
     /// <typeparam name="T">The sequentially / explicitly layered structure</typeparam>
-    public unsafe class XClassMem<T> where T : struct {
+    internal unsafe class XClassMem<T> where T : struct {
         public readonly nint bytes;
 
         public XClassMem(out SanityCheck.FuckedNumbers state, int sizeWantedExact = 0) {

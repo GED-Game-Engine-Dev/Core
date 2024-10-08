@@ -25,4 +25,7 @@ ae2f_SHAREDCALL ae2f_extern ae2f_errint_t GED_Core_Camera_Append(
     const ae2f_struct GED_Core_Camera_El* element
 );
 
+ae2f_SHAREDCALL ae2f_extern
+ae2f_errint_t GED_Core_Camera_Make(GED_Core_Camera_t* _this);
+
 #endif
