@@ -28,8 +28,6 @@ ae2f_errint_t GED_Core_Camera_Buff_All(GED_Core_Camera_t* _this, ae2f_struct ae2
 
         if((code = ae2f_ds_Alloc_vOwner_Write(_this, i * sizeof(struct GED_Core_Camera_El), &_element, sizeof(struct GED_Core_Camera_El))) != ae2f_errGlobal_OK)
         goto DONE;
-
-        
     }
 
     DONE:
