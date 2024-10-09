@@ -12,4 +12,3 @@ else
 fi
 
 cmake --build ./build --config Release
-rm -rf ./build
