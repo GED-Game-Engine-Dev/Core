@@ -17,15 +17,15 @@
   </PropertyGroup>
 
       <ItemGroup Condition="'$(IsLinux)'=='true'">
-        <Content Include="libRCore.so">
+        <Content Include="RCore.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libBmp.so">
+        <Content Include="Bmp.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libCore.so">
+        <Content Include="Core.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
