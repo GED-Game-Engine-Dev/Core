@@ -15,8 +15,8 @@ Critical
 - [ae2f::Bmp Rel-v2.1.8](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.8)
 	> Image Displayers
 
-- [SDL 2](https://github.com/libsdl-org/SDL/releases/tag/release-2.30.8)
-	> Renderer
+- [Avalonia](https://avaloniaui.net/)
+	> C# Image Render
 
 Optional
 - [OpenCL::OpenCL v2024.05.08](https://github.com/KhronosGroup/OpenCL-SDK/releases/tag/v2024.05.08)
