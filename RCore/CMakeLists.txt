@@ -44,9 +44,27 @@ if(NOT Bmp_FOUND)
     FetchContent_MakeAvailable(Bmp)
 
     target_link_libraries(${PROJECT_NAME} Bmp)
-    
 else()
     target_link_libraries(${PROJECT_NAME} ae2f::Bmp)
+endif()
+
+
+find_package(SDL2)
+if(NOT SDL2_FOUND)
+    message("SDL2::SDL2 not found")
+
+    FetchContent_Declare(
+        SDL2
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG "release-2.30.8"
+        SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/sdl/sdl/
+    )
+
+    FetchContent_MakeAvailable(SDL2)
+
+    target_link_libraries(${PROJECT_NAME} SDL2)
+else()
+    target_link_libraries(${PROJECT_NAME} SDL2::SDL2)
 endif()
 
 include_directories(include)
@@ -110,6 +128,13 @@ add_custom_command(
     TARGET ${PROJECT_NAME}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Core> ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}
+    COMMENT "Copying Core to ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}"
+)
+
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:SDL2> ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}SDL2${DLL_OUTPUT_SUFFIX}
     COMMENT "Copying Core to ${DLL_OUTPUT_DIR}/${DLL_OUTPUT_PREFIX}Core${DLL_OUTPUT_SUFFIX}"
 )
 

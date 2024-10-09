@@ -2,14 +2,21 @@
 > It is a CSharp Project withon a lower project, RCore.  
 > To build, you need your programme "cmake" in your environment path on your computer.
 
-# Nupkg is @deprecated
-> https://www.nuget.org/packages/GED_CORE  
-> We won't update it any more.
+# Begenning
+To start, you need to run the shell
+```sh
+sh init.sh
+```
+
+...Then it would give you the answer.
 
 # depends on
 Critical
 - [ae2f::Bmp Rel-v2.1.8](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.8)
 	> Image Displayers
+
+- [SDL 2](https://github.com/libsdl-org/SDL/releases/tag/release-2.30.8)
+	> Renderer
 
 Optional
 - [OpenCL::OpenCL v2024.05.08](https://github.com/KhronosGroup/OpenCL-SDK/releases/tag/v2024.05.08)
