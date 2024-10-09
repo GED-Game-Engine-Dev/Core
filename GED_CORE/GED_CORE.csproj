@@ -48,6 +48,10 @@
         <Folder Include="Diaplay\" />
       </ItemGroup>
 
+      <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.1.4" />
+      </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <IsTrimmable>False</IsTrimmable>
     <WarningLevel>9999</WarningLevel>
