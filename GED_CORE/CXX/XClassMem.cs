@@ -30,7 +30,7 @@ namespace GED.Core.CXX {
                 bytes = Marshal.AllocHGlobal(__sz);
                 for(int i = 0; i < __sz; i++)
                 ((byte*)bytes)[i] = 0;
-                
+
             } catch {
                 bytes = 0;
                 state = (int)SanityCheck.FuckedNumbers.ALLOC_FAILED;

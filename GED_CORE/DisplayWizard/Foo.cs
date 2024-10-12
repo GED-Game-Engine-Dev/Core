@@ -4,7 +4,7 @@ using GED.Core;
 using GED.SanityCheck;
 
 namespace GED.DisplayWizerd {
-    internal class Foo {
+    public class Foo {
         private WriteableBitmap? memory;
 
         public Foo(out int Error, BitmapElementSize pxbc, int w, int h, Avalonia.Vector dpi) {
@@ -22,14 +22,6 @@ namespace GED.DisplayWizerd {
                 Error = 1;
                 break;
             }
-        }
-
-        unsafe public int Render() {
-            if(memory == null) {
-                return (int)FuckedNumbers.PTR_IS_NULL;
-            }
-
-            return (int)FuckedNumbers.IMP_NOT_FOUND;
         }
     }
 }

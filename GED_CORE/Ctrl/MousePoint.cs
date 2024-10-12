@@ -18,12 +18,10 @@ namespace GED.Core.Ctrl
 
         public static double X {
             get { return fMousePoint.X[0]; }
-            set { fMousePoint.X[0] = value; }
         }
 
         public static double Y {
             get { return fMousePoint.Y[0]; }
-            set { fMousePoint.Y[0] = value; }
         }
     }
 }
