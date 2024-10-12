@@ -16,7 +16,7 @@ namespace GED.Core.Ctrl
 
             try
             {
-                //PointerMoved += OnPointerMoved;
+                PointerMoved += OnPointerMoved;
                 AvaloniaXamlLoader.Load(this);
             }
             catch
