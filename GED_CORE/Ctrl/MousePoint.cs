@@ -15,7 +15,6 @@ namespace GED.Core.Ctrl
 
     public unsafe class MousePoint
     {
-
         public static double X {
             get { return fMousePoint.X[0]; }
         }

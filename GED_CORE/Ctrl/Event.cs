@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace GED.Core.Ctrl
 {
-        
     internal static partial class fEvent
     {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Ctrl_Ev_Make")]
