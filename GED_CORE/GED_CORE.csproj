@@ -45,6 +45,13 @@
     </ItemGroup>
 
       <ItemGroup>
+        <AvaloniaXaml Remove="Ctrl\CustomControls\**" />
+        <Compile Remove="Ctrl\CustomControls\**" />
+        <EmbeddedResource Remove="Ctrl\CustomControls\**" />
+        <None Remove="Ctrl\CustomControls\**" />
+      </ItemGroup>
+
+      <ItemGroup>
         <Folder Include="Diaplay\" />
       </ItemGroup>
 
