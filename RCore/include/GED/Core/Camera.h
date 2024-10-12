@@ -7,7 +7,6 @@
 struct GED_Core_Camera_El {
     ae2f_struct ae2f_Bmp_cSrc Source;
     ae2f_struct ae2f_Bmp_cSrc_Copy_Global SourceLinked;
-    // ae2f_struct ae2f_Bmp_cSrc_Copy_Global ChangeQuery;
 };
 
 typedef ae2f_struct ae2f_ds_Alloc_Owner GED_Core_Camera_t;
@@ -17,15 +16,11 @@ typedef ae2f_struct ae2f_ds_Alloc_Owner GED_Core_Camera_t;
 #define GED_Core_Camera_Init(This) ae2f_ds_Alloc_vOwner_InitAuto(This)
 
 ae2f_SHAREDCALL ae2f_extern ae2f_errint_t GED_Core_Camera_Buff_All(GED_Core_Camera_t* _this, ae2f_struct ae2f_Bmp_cSrc* dest, uint32_t background);
-ae2f_SHAREDCALL ae2f_extern ae2f_errint_t GED_Core_Camera_Resize(GED_Core_Camera_t* _this, size_t count);
-ae2f_SHAREDCALL ae2f_extern ae2f_errint_t GED_Core_Camera_Free(GED_Core_Camera_t* _this);
 
-ae2f_SHAREDCALL ae2f_extern ae2f_errint_t GED_Core_Camera_Append(
-    GED_Core_Camera_t* _this, 
-    const ae2f_struct GED_Core_Camera_El* element
-);
-
-ae2f_SHAREDCALL ae2f_extern
-ae2f_errint_t GED_Core_Camera_Make(GED_Core_Camera_t* _this);
+#define GED_Core_Camera_Read(_this, buff, i) ae2f_ds_Alloc_vOwner_Read((_this), (i) * sizeof(struct GED_Core_Camera_El), (buff), sizeof(struct GED_Core_Camera_El))
+#define GED_Core_Camera_Write(_this, buff, i) ae2f_ds_Alloc_vOwner_Write((_this), (i) * sizeof(struct GED_Core_Camera_El), (buff), sizeof(struct GED_Core_Camera_El))
+#define GED_Core_Camera_Make ae2f_ds_Alloc_vOwner_InitAuto
+#define GED_Core_Camera_Free ae2f_ds_Alloc_vOwner_Del
+#define GED_Core_Camera_Resize(_this, count) ae2f_ds_Alloc_vOwner_reSize((_this), (count) * sizeof(struct GED_Core_Camera_El))
 
 #endif

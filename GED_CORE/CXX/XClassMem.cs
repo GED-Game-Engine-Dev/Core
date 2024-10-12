@@ -6,10 +6,10 @@ namespace GED.Core.CXX {
     /// It owns the unmanaged memory.
     /// </summary>
     /// <typeparam name="T">The sequentially / explicitly layered structure</typeparam>
-    internal unsafe class XClassMem<T> where T : struct {
-        public readonly nint bytes;
+    public unsafe class XClassMem<T> where T : struct {
+        internal readonly nint bytes;
 
-        public XClassMem(out SanityCheck.FuckedNumbers state, int sizeWantedExact = 0) {
+        internal XClassMem(out int state, int sizeWantedExact = 0) {
 
             var layoutAttributes = typeof(T).GetCustomAttributes(typeof(StructLayoutAttribute), false);
             if (
@@ -19,20 +19,25 @@ namespace GED.Core.CXX {
             {
                 Trace.Assert(false, "Following structure must be explicit or sequential.");
                 bytes = 0;
-                state = SanityCheck.FuckedNumbers.WRONG_OPERATION;
+                state = (int)SanityCheck.FuckedNumbers.WRONG_OPERATION;
                 return;
             }
 
             try {
                 int __sz = Marshal.SizeOf(typeof(T));
-                bytes = Marshal.AllocHGlobal(sizeWantedExact > __sz ? sizeWantedExact : __sz);
+                __sz = sizeWantedExact > __sz ? sizeWantedExact : __sz;
+
+                bytes = Marshal.AllocHGlobal(__sz);
+                for(int i = 0; i < __sz; i++)
+                ((byte*)bytes)[i] = 0;
+                
             } catch {
                 bytes = 0;
-                state = SanityCheck.FuckedNumbers.ALLOC_FAILED;
+                state = (int)SanityCheck.FuckedNumbers.ALLOC_FAILED;
                 return;
             }
 
-            state = SanityCheck.FuckedNumbers.OK;
+            state = (int)SanityCheck.FuckedNumbers.OK;
             return;
         }
 

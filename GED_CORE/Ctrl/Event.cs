@@ -51,9 +51,7 @@ namespace GED.Core.Ctrl
         protected XClassMem<member> memory;
 
         protected iEvent(out int state) {
-            FuckedNumbers a;
-            memory = new(out a, (int)fEvent.TypeSize());
-            state = (int)a;
+            memory = new(out state, (int)fEvent.TypeSize());
         }
 
         public iEvent(UIntPtr size, byte wel, out int perr) : this(out perr) {

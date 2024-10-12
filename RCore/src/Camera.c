@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#undef GED_Core_Camera_Read
+#undef GED_Core_Camera_Write
+#undef GED_Core_Camera_Make
+#undef GED_Core_Camera_Free
+#undef GED_Core_Camera_Resize
+
 ae2f_SHAREDEXPORT ae2f_extern 
 ae2f_errint_t GED_Core_Camera_Buff_All(GED_Core_Camera_t* _this, ae2f_struct ae2f_Bmp_cSrc* dest, uint32_t background_asRGB) {
     size_t a; ae2f_errint_t code = ae2f_errGlobal_OK;
@@ -49,9 +55,12 @@ ae2f_errint_t GED_Core_Camera_Make(GED_Core_Camera_t* _this) {
     return ae2f_ds_Alloc_vOwner_InitAuto(_this);
 }
 
-ae2f_SHAREDEXPORT ae2f_extern ae2f_errint_t GED_Core_Camera_Append(
-    GED_Core_Camera_t* _this,
-    const ae2f_struct GED_Core_Camera_El* element
-) {
-    return ae2f_errGlobal_IMP_NOT_FOUND;
+ae2f_SHAREDEXPORT ae2f_extern
+ae2f_errint_t GED_Core_Camera_Read(const GED_Core_Camera_t* _this, struct GED_Core_Camera_El* buff, size_t i) {
+    return ae2f_ds_Alloc_vOwner_Read(_this, i * sizeof(struct GED_Core_Camera_El), buff, sizeof(struct GED_Core_Camera_El));
+}
+
+ae2f_SHAREDEXPORT ae2f_extern
+ae2f_errint_t GED_Core_Camera_Write(GED_Core_Camera_t* _this, struct GED_Core_Camera_El* buff, size_t i) {
+    return ae2f_ds_Alloc_vOwner_Write(_this, i * sizeof(struct GED_Core_Camera_El), buff, sizeof(struct GED_Core_Camera_El));
 }
