@@ -1,21 +1,33 @@
+using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Markup.Xaml;
 using GED.SanityCheck;
+using GED_CORE.ViewModels;
 
-namespace GED.Core.Ctrl {
-    public abstract class Content : Avalonia.Controls.ContentControl {
-        public Content(out int err)  {
+namespace GED.Core.Ctrl
+{
+    public partial class Content : ContentControl
+    {
+        public Content(out int err)
+        {
+            //DataContext = new ContentViewModel(out err);
+
             err = (int)FuckedNumbers.OK;
 
-            try {
-                Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this);
-                PointerMoved += OnPointerMoved;
-            } catch {
+            try
+            {
+                //PointerMoved += OnPointerMoved;
+                AvaloniaXamlLoader.Load(this);
+            }
+            catch
+            {
                 err = (int)FuckedNumbers.ALLOC_FAILED;
                 return;
             }
         }
 
-        unsafe private void OnPointerMoved(object sender, PointerEventArgs e) {
+        private unsafe void OnPointerMoved(object? sender, PointerEventArgs e)
+        {
             var pos = e.GetPosition(this);
             fMousePoint.X[0] = pos.X;
             fMousePoint.Y[0] = pos.Y;
