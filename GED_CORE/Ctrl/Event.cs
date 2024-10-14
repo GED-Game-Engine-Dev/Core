@@ -40,6 +40,7 @@ namespace GED.Core.Ctrl
     }
 
 
+
     internal class iEvent
     {
         [StructLayout(LayoutKind.Sequential)]

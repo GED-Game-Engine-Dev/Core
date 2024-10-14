@@ -1,12 +1,7 @@
 ﻿using Avalonia.Controls;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GED.Core.Ctrl;
-using System.Diagnostics;
 
 namespace test.ViewModels
 {
@@ -28,15 +23,7 @@ namespace test.ViewModels
         public MainViewModel()
         {
             int err;
-            contentControl = new Content(out err);
-
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    Debug.WriteLine($"X: {MousePoint.X}, Y: {MousePoint.Y}");
-                }
-            });
+            contentControl = new Content(out err, 1920, 1080);
         }
 
         protected void OnPropertyChanged(string propertyName)

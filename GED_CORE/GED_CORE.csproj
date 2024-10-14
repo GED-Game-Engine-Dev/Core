@@ -52,10 +52,6 @@
       </ItemGroup>
 
       <ItemGroup>
-        <Folder Include="Diaplay\" />
-      </ItemGroup>
-
-      <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.1.4" />
       </ItemGroup>
 

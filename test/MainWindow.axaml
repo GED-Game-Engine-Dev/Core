@@ -7,7 +7,6 @@
 		x:DataType="vm:MainViewModel"
         x:Class="test.MainWindow"
         Title="Test">
-
-	<ContentControl Content="{Binding ContentControl}"/>
 	
+	<ContentControl Content="{Binding ContentControl}"/>
 </Window>

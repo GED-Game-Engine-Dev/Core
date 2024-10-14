@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.Diagnostics;
 
 namespace test
 {
@@ -9,8 +10,15 @@ namespace test
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
         [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
+        public static void Main(string[] args)
+        {
+            Debug.WriteLine($"Code: {
+                GED.Core.Manager.Bitmap.EmplaceBack(Resource1.Bitmap1)
+            }");
+
+            BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
+        }
 
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()

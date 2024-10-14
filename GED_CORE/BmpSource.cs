@@ -1,6 +1,4 @@
 using System.Runtime.InteropServices;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using GED.Core.CXX;
 using GED.SanityCheck;
 
@@ -27,7 +25,7 @@ namespace GED.Core {
             memory = new XClassMem<BmpSourceField>(out err);
         }
 
-        unsafe public BmpSource(out int err, byte[] raw) : this(out err) 
+        unsafe internal BmpSource(out int err, byte[] raw) : this(out err)
         {
             fixed (byte* raw_ptr = raw)
             {
@@ -35,7 +33,7 @@ namespace GED.Core {
             }
         }
 
-        unsafe public BmpSource(
+        unsafe internal BmpSource(
             out int err, 
             uint Width,
             uint Height,

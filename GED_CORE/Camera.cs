@@ -100,8 +100,7 @@ namespace GED.Core
         ) {
             int code;
             buffer = new Element(out code);
-            if(code != (int)FuckedNumbers.OK)
-            return code;
+            if(code != (int)FuckedNumbers.OK) return code;
             return fCamera.Read(memory.bytes, buffer.memory.bytes, index);
         }
 
