@@ -11,6 +11,20 @@ namespace GED.Core.Ctrl
 {
     public partial class Content : ContentControl
     {
+        #region Member Fields
+        internal uint ZeroPosX, ZeroPosY;
+        internal double screenWidth, screenHeight;
+        internal WriteableBitmap __DisplayBuffer;
+
+        public uint VisualWidth, VisualHeight;
+        #endregion
+
+        #region Properties
+        public double ScreenWidth { get => screenWidth; }
+        public double ScreenHeight { get => screenHeight; }
+        public WriteableBitmap DisplayBuffer { get => __DisplayBuffer; }
+        #endregion
+
         public Content(out int err, uint VisualWidth, uint VisualHeight)
         {
 
@@ -40,26 +54,6 @@ namespace GED.Core.Ctrl
             }
         }
 
-        private unsafe void OnPointerMoved(object? sender, PointerEventArgs e)
-        {
-            var pos = e.GetPosition(this);
-            fMousePoint.X[0] = pos.X;
-            fMousePoint.Y[0] = pos.Y;
-        }
-
-        internal double screenWidth, screenHeight;
-        public double ScreenWidth { get => screenWidth; }
-        public double ScreenHeight { get => screenHeight; }
-
-        private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
-        {
-            var nSize = e.NewSize;
-            screenWidth = nSize.Width;
-            screenHeight = nSize.Height;
-            SetVisualWin(VisualWidth, VisualHeight);
-        }
-
-        public uint VisualWidth, VisualHeight;
         public int SetVisualWin(uint width, uint height)
         {
             if (width == 0 || height == 0)
@@ -72,14 +66,15 @@ namespace GED.Core.Ctrl
 
             uint newwidth, newheight;
 
-            if(VisualWidth * screenHeight > VisualHeight * screenWidth)
+            if (VisualWidth * screenHeight > VisualHeight * screenWidth)
             {
                 newheight = (uint)screenHeight;
                 newwidth = (uint)(screenHeight * width / height);
 
                 ZeroPosX = (uint)((screenWidth - newwidth) / 2);
                 ZeroPosY = 0;
-            } else
+            }
+            else
             {
                 newwidth = (uint)screenWidth;
                 newheight = (uint)(screenWidth * height / width);
@@ -93,10 +88,10 @@ namespace GED.Core.Ctrl
             __DisplayBuffer = new WriteableBitmap
             (
                 new PixelSize(
-                    (int)newwidth, 
+                    (int)newwidth,
                     (int)newheight
-                    ), 
-                new Vector(96, 96), 
+                    ),
+                new Vector(96, 96),
                 format: PixelFormats.Bgr24
                 );
 
@@ -105,10 +100,21 @@ namespace GED.Core.Ctrl
             return (int)FuckedNumbers.OK;
         }
 
-        internal WriteableBitmap __DisplayBuffer;
+        #region Private Functions
+        private unsafe void OnPointerMoved(object? sender, PointerEventArgs e)
+        {
+            var pos = e.GetPosition(this);
+            fMousePoint.X[0] = pos.X;
+            fMousePoint.Y[0] = pos.Y;
+        }
 
-        public WriteableBitmap DisplayBuffer { get => __DisplayBuffer; }
-
-        internal uint ZeroPosX, ZeroPosY;
+        private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+        {
+            var nSize = e.NewSize;
+            screenWidth = nSize.Width;
+            screenHeight = nSize.Height;
+            SetVisualWin(VisualWidth, VisualHeight);
+        }
+        #endregion
     }
 }

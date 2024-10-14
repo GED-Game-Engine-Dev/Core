@@ -2,14 +2,21 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using GED.Core.Ctrl;
+using Avalonia.Media.Imaging;
+using System.IO;
+using SkiaSharp;
 
 namespace test.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        #region Memver Fields
         private ContentControl contentControl;
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        #endregion
+
+        #region Properties
         public ContentControl ContentControl
         {
             get => contentControl;
@@ -19,20 +26,18 @@ namespace test.ViewModels
                 OnPropertyChanged(nameof(value));
             }
         }
+        #endregion
 
         public MainViewModel()
         {
             int err;
-            contentControl = new Content(out err, 1920, 1080);
+            var content = new Content(out err, 1920, 1080);
+            ContentControl = content;
         }
 
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
