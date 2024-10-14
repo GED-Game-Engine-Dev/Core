@@ -54,7 +54,7 @@ namespace GED.Core.Ctrl
             }
         }
 
-        public int SetVisualWin(uint width, uint height)
+        public unsafe int SetVisualWin(uint width, uint height)
         {
             if (width == 0 || height == 0)
             {
@@ -95,6 +95,15 @@ namespace GED.Core.Ctrl
                 format: PixelFormats.Bgr24
                 );
 
+            using (var locked = __DisplayBuffer.Lock()) {
+                for (uint i = 0; i < newwidth; i++)
+                    for (uint j = 0; j < newheight; j++)
+                    {
+                        ((byte*)locked.Address)[(j * newwidth + i) * 3 + 0] = 255;
+                        ((byte*)locked.Address)[(j * newwidth + i) * 3 + 1] = 0;
+                        ((byte*)locked.Address)[(j * newwidth + i) * 3 + 2] = 0;
+                    }
+            }
 #endif
 
             return (int)FuckedNumbers.OK;
