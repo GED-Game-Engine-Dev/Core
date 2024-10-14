@@ -7,6 +7,12 @@
 		x:DataType="vm:MainViewModel"
         x:Class="test.MainWindow"
         Title="Test">
-	
-	<ContentControl Content="{Binding ContentControl}"/>
+
+	<ContentControl Content="{Binding ContentControl}">
+		<ContentControl.ContentTemplate>
+			<DataTemplate>
+				<!-- <Image Source="{Binding BitmapImage}"/> -->
+			</DataTemplate>
+		</ContentControl.ContentTemplate>
+	</ContentControl>
 </Window>
