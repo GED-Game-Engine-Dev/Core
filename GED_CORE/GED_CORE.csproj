@@ -30,19 +30,19 @@
         </Content>
       </ItemGroup>
 
-      <ItemGroup Condition="'$(IsWindows)'=='true'">
-        <Content Include="libRCore.dll">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+	<ItemGroup Condition="'$(IsWindows)'=='true'">
+		<Content Include="libRCore.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 
-        <Content Include="libBmp.dll">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+		<Content Include="libBmp.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 
-        <Content Include="libCore.dll">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
+		<Content Include="libCore.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
       <ItemGroup>
         <AvaloniaXaml Remove="Ctrl\CustomControls\**" />
