@@ -12,9 +12,6 @@ namespace test
         [STAThread]
         public static void Main(string[] args)
         {
-            Debug.WriteLine($"Code: {
-                GED.Core.Manager.Bitmap.EmplaceBack(Resource1.Bitmap1)
-            }");
 
             BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);

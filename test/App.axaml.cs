@@ -15,7 +15,8 @@ namespace test
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                int a;
+                desktop.MainWindow = new MainWindow(out a);
             }
 
             base.OnFrameworkInitializationCompleted();

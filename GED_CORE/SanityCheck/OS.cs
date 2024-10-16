@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace GED.SanityCheck {
+namespace GED.Core.SanityCheck {
     internal static class OS {
 #if GED_WIN
         public const string Dll_Name_Prefix = "lib";

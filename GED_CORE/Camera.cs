@@ -1,7 +1,7 @@
+using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using GED.Core.CXX;
-using GED.SanityCheck;
-using System.Diagnostics;
+using GED.Core.SanityCheck;
 using System.Runtime.InteropServices;
 
 namespace GED.Core
@@ -24,6 +24,38 @@ namespace GED.Core
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Write")]
         public static partial int Write(nint _this, nint Element, nuint index);
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Size")]
+        private static partial nuint Size();
+
+        public readonly static nuint size;
+
+        static fCamera() {
+            size = Size();
+        }
+    }
+
+    internal static partial class fCameraEl {
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_El_Size")]
+        private static partial nuint Size();
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_El_Init")]
+        public static partial int Init(
+            nint _this,
+            byte Alpha,
+            uint WidthAsResized,
+            uint HeightAsResized,
+            uint AddrXForDest,
+            uint AddrYForDest,
+            uint DataToIgnore,
+            nint __PTr_BmpSource
+        );
+
+        public readonly static nuint size;
+
+        static fCameraEl() {
+            size = Size();
+        }
     }
 
     internal struct CameraField {
@@ -34,10 +66,10 @@ namespace GED.Core
 
     public class Camera
     {
-        internal XClassMem<CameraField> memory;
+        internal XClassMem memory;
         public Camera(out int _err) {
-            memory = new XClassMem<CameraField>(out _err);
-            if(_err != (int)FuckedNumbers.OK)
+            memory = new XClassMem(out _err, fCamera.size);
+            if(_err != FuckedNumbers.OK)
             return;
             _err = fCamera.Make(memory.bytes);
         }
@@ -45,29 +77,36 @@ namespace GED.Core
         public int Resize(nuint count) => fCamera.Resize(memory.bytes, count);
         ~Camera() => fCamera.Free(memory.bytes);
 
-        public int BuffAll(ref BmpSource src, uint Colour_Background) {
-            int code = 0;
-            if(code != 0) {
-                code = fCamera.BuffAll(memory.bytes, src.memory.bytes, Colour_Background);
-            }
-            return code;
-        }
-        internal struct CopyParameterField {
-            public byte a;
-            public uint b, c, d, e, f;
-        }
+        public int BuffAll(BmpSource dest, uint Colour_Background)
+            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
 
-        internal struct ElementField {
-            public BmpSourceField a;
-            public CopyParameterField b;
+        public int BuffAll(WriteableBitmap dest, uint Colour_Background) {
+            BitmapElementSize elsize;
+            if(dest.Format == PixelFormats.Bgr24) {
+                elsize = BitmapElementSize.RGB24;
+            } else if (dest.Format == PixelFormats.Bgra8888) {
+                elsize = BitmapElementSize.RGBA32;
+            } else return FuckedNumbers.IMP_NOT_FOUND;
+
+            using(var locked = dest.Lock()) {
+                int err;
+
+                BmpSource bitmap = new BmpSource(out err, 
+                (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height,
+                elsize, locked.Address
+                );
+
+                return err == FuckedNumbers.OK ? BuffAll(bitmap, Colour_Background) : err;
+            }
         }
 
         public class Element
         {
-            internal XClassMem<ElementField> memory;
+            internal XClassMem memory;
             internal Element(out int state) {
-                memory = new(out state);
+                memory = new(out state, fCameraEl.size);
             }
+
             public Element(
                 out int state, 
                 byte Alpha,
@@ -77,21 +116,18 @@ namespace GED.Core
                 uint AddrYForDest,
                 uint DataToIgnore,
                 in BmpSource source
-            ) : this(out state) {
-                ref ElementField a = ref memory.Instance();
-                a.b.a = Alpha;
-                a.b.b = WidthAsResized;
-                a.b.c = HeightAsResized;
-                a.b.d = AddrXForDest;
-                a.b.e = AddrYForDest;
-                a.b.f = DataToIgnore;
-
-                ref BmpSourceField b = ref source.memory.Instance();
-
-                a.a.a = b.a;
-                a.a.b = b.b;
-                a.a.c = b.c;
-            }
+            ) : this(out state)
+            => state = fCameraEl.Init(
+                memory.bytes, 
+                Alpha, 
+                
+                WidthAsResized, HeightAsResized,
+                AddrXForDest, AddrYForDest,
+                
+                DataToIgnore,
+                
+                source.memory.bytes
+            );
         }
 
         public int Read(
@@ -100,7 +136,7 @@ namespace GED.Core
         ) {
             int code;
             buffer = new Element(out code);
-            if(code != (int)FuckedNumbers.OK) return code;
+            if(code != FuckedNumbers.OK) return code;
             return fCamera.Read(memory.bytes, buffer.memory.bytes, index);
         }
 

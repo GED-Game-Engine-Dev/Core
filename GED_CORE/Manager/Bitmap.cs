@@ -1,5 +1,5 @@
 ﻿
-using GED.SanityCheck;
+using GED.Core.SanityCheck;
 
 namespace GED.Core.Manager
 {
@@ -19,12 +19,12 @@ namespace GED.Core.Manager
         static public int Emplace(int index, ref byte[] raw)
         {
             if (index >= list.Count)
-                return (int)FuckedNumbers.WRONG_OPERATION;
+                return FuckedNumbers.WRONG_OPERATION;
 
             byte[] hey = new byte[raw.Length];
 
             if (hey == null)
-                return (int)FuckedNumbers.PTR_IS_NULL;
+                return FuckedNumbers.PTR_IS_NULL;
 
             try
             {
@@ -32,10 +32,10 @@ namespace GED.Core.Manager
                 list[index] = hey;
             } catch
             {
-                return (int)FuckedNumbers.WRONG_OPERATION;
+                return FuckedNumbers.WRONG_OPERATION;
             }
 
-            return (int)FuckedNumbers.OK;
+            return FuckedNumbers.OK;
         }
 
         static public int EmplaceBack(byte[] raw)
@@ -43,7 +43,7 @@ namespace GED.Core.Manager
             byte[] hey = new byte[raw.Length];
 
             if (hey == null)
-                return (int)FuckedNumbers.PTR_IS_NULL;
+                return FuckedNumbers.PTR_IS_NULL;
 
             try
             {
@@ -52,10 +52,10 @@ namespace GED.Core.Manager
             }
             catch
             {
-                return (int)FuckedNumbers.WRONG_OPERATION;
+                return FuckedNumbers.WRONG_OPERATION;
             }
 
-            return (int)FuckedNumbers.OK;
+            return FuckedNumbers.OK;
         }
 
         static public int GetSource(int index, out BmpSource retval)
@@ -64,11 +64,11 @@ namespace GED.Core.Manager
             if (index >= list.Count)
             {
                 retval = new BmpSource(out err);
-                return (int)FuckedNumbers.WRONG_OPERATION;
+                return FuckedNumbers.WRONG_OPERATION;
             }
-
+            
             retval = new BmpSource(out err, list[index]);
-            return (int)FuckedNumbers.OK;
+            return err;
         }
     }
 }

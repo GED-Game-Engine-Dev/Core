@@ -2,17 +2,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:vm="using:test.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		x:DataType="vm:MainViewModel"
         x:Class="test.MainWindow"
         Title="Test">
 
-	<ContentControl Content="{Binding ContentControl}">
-		<ContentControl.ContentTemplate>
-			<DataTemplate>
-				<!-- <Image Source="{Binding BitmapImage}"/> -->
-			</DataTemplate>
-		</ContentControl.ContentTemplate>
-	</ContentControl>
+    <Grid>
+        <Image x:Name="MyImage" 
+               Stretch="Uniform" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"/>
+
+        <TextBlock Text="Hello World!" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   Foreground="White" 
+                   FontSize="24" 
+                   FontWeight="Bold"
+                   TextAlignment="Center"/>
+    </Grid>
 </Window>

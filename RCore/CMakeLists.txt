@@ -3,11 +3,15 @@ project("RCore")
 add_library(
     ${PROJECT_NAME} SHARED
     "include/GED/Core/Clock.h"
-    "src/xClock.cpp"
     "include/GED/Core/Ctrl/MousePoint.h" 
-    "src/Ctrl/MousePoint.c"
     "include/GED/Core/Ctrl/Event.h" 
+
+    "src/Ctrl/MousePoint.c"
     "src/Ctrl/Event.c"
+    
+    "src/xClock.cpp"
+    "src/Camera.c"
+    "src/BmpSrc.c"
 )
 
 
