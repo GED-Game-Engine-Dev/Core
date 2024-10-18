@@ -78,7 +78,10 @@ namespace GED.Core
         ~Camera() => fCamera.Free(memory.bytes);
 
         public int BuffAll(BmpSource dest, uint Colour_Background)
-            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
+            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background & 0xFFFFFF);
+
+        public int BuffAll(BmpSource dest)
+            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, 0xFFFFFFFF);
 
         public int BuffAll(WriteableBitmap dest, uint Colour_Background) {
             BitmapElementSize elsize;
@@ -96,7 +99,27 @@ namespace GED.Core
                 elsize, locked.Address
                 );
 
-                return err == FuckedNumbers.OK ? BuffAll(bitmap, Colour_Background) : err;
+                return err == FuckedNumbers.OK ? BuffAll(bitmap, Colour_Background & 0xFFFFFF) : err;
+            }
+        }
+
+        public int BuffAll(WriteableBitmap dest) {
+            BitmapElementSize elsize;
+            if(dest.Format == PixelFormats.Bgr24) {
+                elsize = BitmapElementSize.RGB24;
+            } else if (dest.Format == PixelFormats.Bgra8888) {
+                elsize = BitmapElementSize.RGBA32;
+            } else return FuckedNumbers.IMP_NOT_FOUND;
+
+            using(var locked = dest.Lock()) {
+                int err;
+
+                BmpSource bitmap = new BmpSource(out err, 
+                (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height,
+                elsize, locked.Address
+                );
+
+                return err == FuckedNumbers.OK ? BuffAll(bitmap, 0xFFFFFFFF) : err;
             }
         }
 

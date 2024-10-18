@@ -16,8 +16,17 @@ ae2f_errint_t GED_Core_Camera_Buff_All(GED_Core_Camera_t* _this, ae2f_struct ae2
     if((code = ae2f_ds_Alloc_vOwner_getSize(_this, &a)) != ae2f_errGlobal_OK)
     goto DONE;
 
-    if((code = ae2f_Bmp_cSrc_Fill(dest, background_asRGB)) != ae2f_errGlobal_OK)
-    goto DONE;
+    switch (background_asRGB)
+    {
+    default: {
+        if((code = ae2f_Bmp_cSrc_Fill(dest, background_asRGB)) != ae2f_errGlobal_OK)
+        goto DONE;
+    } break;
+    case (uint32_t)-1:
+        
+        break;
+    }
+
 
     for(size_t i = 0; i < a; i+=sizeof(struct GED_Core_Camera_El)) {
         ae2f_struct GED_Core_Camera_El _element;

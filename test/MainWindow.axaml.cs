@@ -29,19 +29,19 @@ namespace test
 
             // Implemented as not Stretch, but trim
             Camera.Element[] element = {
-                new(out err, 255, 1920, 1080, 0, 0, 1, in source),
+                new(out err, 255, 3000, 3000, 0, 0, 1, in source),
                 new(out err, 40, 40, 200, 49, 500, 1, in source),
                 new(out err, 100, 90, 80, 500, 100, 1, in source),
             };
 
-            for(int i = 1; i < 3; i++) {
+            for(int i = 0; i < 3; i++) {
                 camera.Write((uint)i, in element[i]);
             }
 
             stopwatch.Start();
 
             try {
-                camera.BuffAll(DisplayBuffer, 0xFF006F);
+                camera.BuffAll(DisplayBuffer);
             } catch(Exception e) {
                 Console.WriteLine(e);
             }
