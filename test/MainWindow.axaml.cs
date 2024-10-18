@@ -34,14 +34,14 @@ namespace test
                 new(out err, 100, 90, 80, 500, 100, 1, in source),
             };
 
-            for(int i = 0; i < 3; i++) {
+            for(int i = 1; i < 3; i++) {
                 camera.Write((uint)i, in element[i]);
             }
 
             stopwatch.Start();
 
             try {
-                camera.BuffAll(DisplayBuffer, 0);
+                camera.BuffAll(DisplayBuffer, 0xFF006F);
             } catch(Exception e) {
                 Console.WriteLine(e);
             }
