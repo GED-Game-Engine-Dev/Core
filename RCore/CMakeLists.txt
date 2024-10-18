@@ -41,10 +41,10 @@ if(NOT Bmp_FOUND)
     FetchContent_Declare(
         Bmp
         GIT_REPOSITORY https://github.com/yuisanae2f/ae2f_Bmp.git
-        GIT_TAG "Rel-v2.1.8"
+        GIT_TAG "Rel-v2.1.11"
         SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/ae2f/Bmp
     )
-
+    
     FetchContent_MakeAvailable(Bmp)
 
     target_link_libraries(${PROJECT_NAME} Bmp)
