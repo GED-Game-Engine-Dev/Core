@@ -39,18 +39,9 @@ namespace test
             }
 
             stopwatch.Start();
-
-            try {
-                camera.BuffAll(DisplayBuffer);
-            } catch(Exception e) {
-                Console.WriteLine(e);
-            }
-
-            // 시간 측정 종료
+            camera.BuffAll(DisplayBuffer);
             stopwatch.Stop();
-
-            // 경과 시간 출력
-            Console.WriteLine("경과 시간: " + stopwatch.ElapsedMilliseconds + " ms");
+            Console.WriteLine("Time elasped: " + stopwatch.ElapsedMilliseconds + " ms");
 
         }
 

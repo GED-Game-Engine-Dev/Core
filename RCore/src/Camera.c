@@ -23,10 +23,8 @@ ae2f_errint_t GED_Core_Camera_Buff_All(GED_Core_Camera_t* _this, ae2f_struct ae2
         goto DONE;
     } break;
     case (uint32_t)-1:
-        
         break;
     }
-
 
     for(size_t i = 0; i < a; i+=sizeof(struct GED_Core_Camera_El)) {
         ae2f_struct GED_Core_Camera_El _element;

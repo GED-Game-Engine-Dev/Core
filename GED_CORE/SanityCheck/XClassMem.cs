@@ -13,7 +13,6 @@ namespace GED.Core.SanityCheck {
                 bytes = Marshal.AllocHGlobal((nint)__sz);
                 for(nuint i = 0; i < __sz; i++)
                 ((byte*)bytes)[i] = 0;
-
             } catch {
                 bytes = 0;
                 state = FuckedNumbers.ALLOC_FAILED;
