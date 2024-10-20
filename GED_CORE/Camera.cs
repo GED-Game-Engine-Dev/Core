@@ -43,6 +43,7 @@ namespace GED.Core
         public static partial int Init(
             nint _this,
             byte Alpha,
+            byte ReverseIdx,
             uint WidthAsResized,
             uint HeightAsResized,
             uint AddrXForDest,
@@ -52,6 +53,9 @@ namespace GED.Core
         );
 
         public readonly static nuint size;
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_El_getParam")]
+        unsafe public static partial int GetParam(nint _this, Camera.Element.Param** param);
 
         static fCameraEl() {
             size = Size();
@@ -125,9 +129,27 @@ namespace GED.Core
 
         public class Element
         {
+            public struct Param {
+                public byte 
+                    Alpha, // Global Fucking Alpha
+                    ReverseIdx; // Reverse Idx?
+                public uint
+                    WidthAsResized, 	// want to resize?
+                    HeightAsResized, 	// want to resize?
+                    AddrXForDest, 		// where to copy
+                    AddrYForDest, 		// where to copy
+                    DataToIgnore;
+            };
+
             internal XClassMem memory;
             internal Element(out int state) {
                 memory = new(out state, fCameraEl.size);
+            }
+
+            public static class ReverseIdx {
+                public const byte XReverse = 0b1;
+                public const byte YReverse = 0b10;
+                public const byte NoneReverse = 0;
             }
 
             public Element(
@@ -138,11 +160,12 @@ namespace GED.Core
                 uint AddrXForDest,
                 uint AddrYForDest,
                 uint DataToIgnore,
-                in BmpSource source
+                in BmpSource source,
+                byte ReverseIdx = ReverseIdx.YReverse
             ) : this(out state)
             => state = fCameraEl.Init(
                 memory.bytes, 
-                Alpha, 
+                Alpha, ReverseIdx,
                 
                 WidthAsResized, HeightAsResized,
                 AddrXForDest, AddrYForDest,
@@ -151,6 +174,36 @@ namespace GED.Core
                 
                 source.memory.bytes
             );
+
+            public Element(
+                out int state, 
+                byte Alpha,
+                uint WidthAsResized,
+                uint HeightAsResized,
+                uint AddrXForDest,
+                uint AddrYForDest,
+                uint DataToIgnore,
+                in BmpSource source,
+                bool Reverse_X,
+                bool Reverse_Y
+            ) : this(out state)
+            => state = fCameraEl.Init(
+                memory.bytes, 
+                Alpha, (byte)((Reverse_X ? 1 : 0) | (Reverse_Y ? 2 : 0)),
+                
+                WidthAsResized, HeightAsResized,
+                AddrXForDest, AddrYForDest,
+                
+                DataToIgnore,
+                
+                source.memory.bytes
+            );
+
+            public unsafe ref Param CheckParameter(out int err) {
+                Param* param;
+                err = fCameraEl.GetParam(memory.bytes, &param);
+                return ref param[0];
+            }
         }
 
         public int Read(

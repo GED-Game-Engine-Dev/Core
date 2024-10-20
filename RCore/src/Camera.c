@@ -83,11 +83,13 @@ GED_Core_Camera_El_Size() {
     return sizeof(struct GED_Core_Camera_El);
 }
 
+
 ae2f_SHAREDEXPORT ae2f_errint_t
 GED_Core_Camera_El_Init(
     struct GED_Core_Camera_El* _this,
 
     uint8_t Alpha,
+    uint8_t ReverseIdx,
     uint32_t WidthAsResized,
     uint32_t HeightAsResized,
     uint32_t AddrXForDest,
@@ -105,9 +107,18 @@ GED_Core_Camera_El_Init(
         .DataToIgnore = DataToIgnore,
         .Alpha = Alpha,
         .WidthAsResized = WidthAsResized,
-        .HeightAsResized = HeightAsResized
+        .HeightAsResized = HeightAsResized,
+
+        .ReverseIdx = ReverseIdx
     };
 
     _this->Source = bitmapsource[0];
+    return ae2f_errGlobal_OK;
+}
+
+ae2f_SHAREDEXPORT ae2f_errint_t
+GED_Core_Camera_El_getParam(struct GED_Core_Camera_El* _this, struct ae2f_Bmp_cSrc_Copy_Global** param) {
+    if(!(_this && param)) return ae2f_errGlobal_PTR_IS_NULL;
+    param[0] = &_this->SourceLinked;
     return ae2f_errGlobal_OK;
 }
