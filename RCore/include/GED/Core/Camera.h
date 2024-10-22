@@ -1,7 +1,7 @@
 #if !defined(GED_Core_Camera_h)
 #define GED_Core_Camera_h
 
-#include <ae2f/Bmp/Src.hpp>
+#include <ae2f/Bmp/Src.h>
 #include <ae2f/DataStructure/Array.h>
 
 struct GED_Core_Camera_El {

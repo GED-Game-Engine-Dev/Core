@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using GED.Core.SanityCheck;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 
 namespace GED.Core
@@ -9,6 +10,9 @@ namespace GED.Core
     internal static partial class fCamera {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Buff_All")]
         public static partial int BuffAll(nint _this, nint dest, uint background_asRGB);
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Buff_Threaded")]
+        public static partial int BuffThreaded(nint _this, nint dest, uint background_asRGB, byte tdcount);
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Resize")]
         public static partial int Resize(nint _this, nuint count);
@@ -81,11 +85,20 @@ namespace GED.Core
         public int Resize(nuint count) => fCamera.Resize(memory.bytes, count);
         ~Camera() => fCamera.Free(memory.bytes);
 
+        internal const uint WHITE = 0xFFFFFF;
+        internal const uint TRANSPARENT = 0xFFFFFFFF;
+
         public int BuffAll(BmpSource dest, uint Colour_Background)
-            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background & 0xFFFFFF);
+            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background & WHITE);
 
         public int BuffAll(BmpSource dest)
-            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, 0xFFFFFFFF);
+            => fCamera.BuffAll(memory.bytes, dest.memory.bytes, TRANSPARENT);
+
+        public int BuffThreaded(BmpSource dest, uint Colour_Background, byte tdcount)
+            => fCamera.BuffThreaded(memory.bytes, dest.memory.bytes, Colour_Background & WHITE, tdcount);
+
+        public int BuffThreaded(BmpSource dest, byte tdcount)
+            => fCamera.BuffThreaded(memory.bytes, dest.memory.bytes, TRANSPARENT, tdcount);
 
         public int BuffAll(WriteableBitmap dest, uint Colour_Background) {
             BitmapElementSize elsize;
@@ -103,7 +116,7 @@ namespace GED.Core
                 elsize, locked.Address
                 );
 
-                return err == FuckedNumbers.OK ? BuffAll(bitmap, Colour_Background & 0xFFFFFF) : err;
+                return err == FuckedNumbers.OK ? BuffAll(bitmap, Colour_Background) : err;
             }
         }
 
@@ -123,7 +136,47 @@ namespace GED.Core
                 elsize, locked.Address
                 );
 
-                return err == FuckedNumbers.OK ? BuffAll(bitmap, 0xFFFFFFFF) : err;
+                return err == FuckedNumbers.OK ? BuffAll(bitmap) : err;
+            }
+        }
+
+        public int BuffThreaded(WriteableBitmap dest, uint Colour_Background, byte tdcount) {
+            BitmapElementSize elsize;
+            if(dest.Format == PixelFormats.Bgr24) {
+                elsize = BitmapElementSize.RGB24;
+            } else if (dest.Format == PixelFormats.Bgra8888) {
+                elsize = BitmapElementSize.RGBA32;
+            } else return FuckedNumbers.IMP_NOT_FOUND;
+
+            using(var locked = dest.Lock()) {
+                int err;
+
+                BmpSource bitmap = new BmpSource(out err, 
+                (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height,
+                elsize, locked.Address
+                );
+
+                return err == FuckedNumbers.OK ? BuffThreaded(bitmap, Colour_Background, tdcount) : err;
+            }
+        }
+
+        public int BuffThreaded(WriteableBitmap dest, byte tdcount) {
+            BitmapElementSize elsize;
+            if(dest.Format == PixelFormats.Bgr24) {
+                elsize = BitmapElementSize.RGB24;
+            } else if (dest.Format == PixelFormats.Bgra8888) {
+                elsize = BitmapElementSize.RGBA32;
+            } else return FuckedNumbers.IMP_NOT_FOUND;
+
+            using(var locked = dest.Lock()) {
+                int err;
+
+                BmpSource bitmap = new BmpSource(out err, 
+                (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height,
+                elsize, locked.Address
+                );
+
+                return err == FuckedNumbers.OK ? BuffThreaded(bitmap, tdcount) : err;
             }
         }
 

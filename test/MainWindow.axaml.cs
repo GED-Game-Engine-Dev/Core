@@ -17,7 +17,7 @@ namespace test
 
             Buffer = this.FindControl<Image>("MyImage");
             camera = new Camera(out err);
-            camera.Resize(10);
+            camera.Resize(100);
             GED.Core.Manager.Bitmap.EmplaceBack(Resource1.Bitmap1);
 
             BmpSource source;
@@ -43,10 +43,9 @@ namespace test
             }
 
             stopwatch.Start();
-            camera.BuffAll(DisplayBuffer);
+            for(int i = 0; i < 100; i++) camera.BuffThreaded(DisplayBuffer, 15);
             stopwatch.Stop();
-            Console.WriteLine("Time elasped: " + stopwatch.ElapsedMilliseconds + " ms");
-
+            Console.WriteLine("Time elasped: " + stopwatch.ElapsedMilliseconds / 1000 + " ms");
         }
 
         void InitializeComponent() {

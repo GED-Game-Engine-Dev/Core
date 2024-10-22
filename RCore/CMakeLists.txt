@@ -11,6 +11,7 @@ add_library(
     
     "src/xClock.cpp"
     "src/Camera.c"
+    "src/xCamera.cpp"
     "src/BmpSrc.c"
 )
 
