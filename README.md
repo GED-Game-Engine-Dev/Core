@@ -12,7 +12,7 @@ sh init.sh
 
 # depends on
 Critical
-- [ae2f::Bmp Rel-v2.1.8](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.1.8)
+- [ae2f::Bmp Rel-v2.2.2](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.2.2)
 	> Image Displayers
 
 - [Avalonia 11.1.4](https://avaloniaui.net/)

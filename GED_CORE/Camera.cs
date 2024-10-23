@@ -1,8 +1,6 @@
-using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using GED.Core.SanityCheck;
-using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 
 namespace GED.Core
