@@ -190,6 +190,12 @@ namespace GED.Core
                     AddrXForDest, 		// where to copy
                     AddrYForDest, 		// where to copy
                     DataToIgnore;
+
+                public double 
+                    RotateXYClockWise;
+
+                public int 
+                    AxisX, AxisY;
             };
 
             internal XClassMem memory;
@@ -250,7 +256,7 @@ namespace GED.Core
                 source.memory.bytes
             );
 
-            public unsafe ref Param CheckParameter(out int err) {
+            public unsafe ref Param CheckPrm(out int err) {
                 Param* param;
                 err = fCameraEl.GetParam(memory.bytes, &param);
                 return ref param[0];

@@ -28,19 +28,17 @@ namespace test
 
 
             // Implemented as not Stretch, but trim
-            Camera.Element[] element = {
-                new(out err, 255,   640, 1080, 0, 0, 1, in source, 2),
-                new(out err, 255,   640, 1080, 640, 0, 1, in source, 3),
-                new(out err, 255,   640, 1080, 1280, 0, 1, in source, 1),
-            };
+            Camera.Element element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
+            element.CheckPrm(out err).AxisX = 200;
+            element.CheckPrm(out err).AxisY = 200;
 
             for(int i = 0; i < 3; i++) {
-                camera.Write((uint)i, in element[i]);
-                Console.WriteLine($"{element[i].CheckParameter(out err).HeightAsResized}");
+                element.CheckPrm(out err).RotateXYClockWise = (float)i * 2;
+                camera.Write((uint)i, in element);
             }
 
             stopwatch.Start();
-            camera.BuffAll(DisplayBuffer, 0x00);
+            camera.BuffAll(DisplayBuffer);
             stopwatch.Stop();
             Console.WriteLine("Time elasped: " + stopwatch.ElapsedMilliseconds + " ms");
         }

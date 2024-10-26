@@ -109,7 +109,9 @@ GED_Core_Camera_El_Init(
         .WidthAsResized = WidthAsResized,
         .HeightAsResized = HeightAsResized,
 
-        .ReverseIdx = ReverseIdx
+        .ReverseIdx = ReverseIdx,
+
+        .ReverseIdx = 0
     };
 
     _this->Source = bitmapsource[0];
