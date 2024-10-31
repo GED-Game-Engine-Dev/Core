@@ -24,11 +24,11 @@ static void Process(
 
     for(size_t i = 0; i < _this_len; i+=sizeof(struct GED_Core_Camera_El)) {
         ae2f_struct GED_Core_Camera_El _element;
-        if((code = ae2f_ds_Alloc_vOwner_Read(
+        if((code = ae2f_ds_Alloc_cOwn_Read(
             _this,
             i,
             &_element,
-            sizeof(GED_Core_Camera_El))) != ae2f_errGlobal_OK
+            sizeof(GED_Core_Camera_El))) != ae2f_errGlob_OK
         ) goto DONE;
 
         if(!_element.Source.Addr) continue;
@@ -38,10 +38,10 @@ static void Process(
                     left, 0, right, 
                     ae2f_Bmp_Idx_YLeft(dest->rIdxer)
                 )
-            ) != ae2f_errGlobal_OK) // Real
+            ) != ae2f_errGlob_OK) // Real
         goto DONE;
 
-        if((code = ae2f_ds_Alloc_vOwner_Write(_this, i, &_element, sizeof(struct GED_Core_Camera_El))) != ae2f_errGlobal_OK)
+        if((code = ae2f_ds_Alloc_cOwn_Write(_this, i, &_element, sizeof(struct GED_Core_Camera_El))) != ae2f_errGlob_OK)
         goto DONE;
     }
 
@@ -64,16 +64,16 @@ ae2f_errint_t GED_Core_Camera_Buff_Threaded(
 ) {
     buff tds(tdcount);
     if(!tds.a) {
-        return ae2f_errGlobal_ALLOC_FAILED;
+        return ae2f_errGlob_ALLOC_FAILED;
     }
 
-    size_t a; ae2f_errint_t code = ae2f_errGlobal_OK;
-    if((code = ae2f_ds_Alloc_vOwner_getSize(_this, &a)) != ae2f_errGlobal_OK)
+    size_t a; ae2f_errint_t code = ae2f_errGlob_OK;
+    if((code = ae2f_ds_Alloc_cOwn_getSize(_this, &a, 0)) != ae2f_ds_Alloc_cRef_getSize_NCOPIED)
     goto DONE;
     switch (background_asRGB)
     {
     default: {
-        if((code = ae2f_Bmp_cSrc_Fill(dest, background_asRGB)) != ae2f_errGlobal_OK)
+        if((code = ae2f_Bmp_cSrc_Fill(dest, background_asRGB)) != ae2f_errGlob_OK)
         goto DONE;
     } break;
     case (uint32_t)-1:
@@ -81,11 +81,12 @@ ae2f_errint_t GED_Core_Camera_Buff_Threaded(
     }
     
     for(uint8_t i = 0; i < tdcount; i++) {
-        tds.a[i] = std::thread(Process, _this, dest, background_asRGB, i, tdcount, a);
+        new(tds.a + i) std::thread(Process, _this, dest, background_asRGB, i, tdcount, a);
     }
 
     for(uint8_t i = 0; i < tdcount; i++) {
         tds.a[i].join();
+        tds.a[i].~thread();
     }
 
     DONE:

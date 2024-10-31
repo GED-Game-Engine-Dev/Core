@@ -2,14 +2,14 @@
 #define GED_Core_Camera_h
 
 #include <ae2f/Bmp/Src.h>
-#include <ae2f/DataStructure/Array.h>
+#include <ae2f/Ds/Arr.h>
 
 struct GED_Core_Camera_El {
     ae2f_struct ae2f_Bmp_cSrc Source;
     ae2f_struct ae2f_Bmp_cSrc_Copy_Global SourceLinked;
 };
 
-typedef ae2f_struct ae2f_ds_Alloc_Owner GED_Core_Camera_t;
+typedef ae2f_struct ae2f_ds_Alloc_cOwn GED_Core_Camera_t;
 
 
 /// @param This:ae2f_ds_Alloc_Owner 

@@ -32,13 +32,17 @@ namespace test
             element.CheckPrm(out err).AxisX = 200;
             element.CheckPrm(out err).AxisY = 200;
 
+            Console.WriteLine($"{err}");
+
             for(int i = 0; i < 3; i++) {
                 element.CheckPrm(out err).RotateXYClockWise = (float)i * 2;
                 camera.Write((uint)i, in element);
             }
 
+            Console.WriteLine($"{err}");
+
             stopwatch.Start();
-            camera.BuffAll(DisplayBuffer);
+            Console.WriteLine($"{camera.BuffAll(DisplayBuffer)}");
             stopwatch.Stop();
             Console.WriteLine("Time elasped: " + stopwatch.ElapsedMilliseconds + " ms");
         }

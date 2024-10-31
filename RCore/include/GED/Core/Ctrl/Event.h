@@ -1,6 +1,6 @@
 #if !defined(GED_Core_Ctrl_Event_h)
 #define GED_Core_Ctrl_Event_h
-#include <ae2f/DataStructure/Array.h>
+#include <ae2f/Ds/Arr.h>
 #include <ae2f/Macro/Cast.h>
 #include <ae2f/Macro/Call.h>
 #include <stdint.h>
@@ -8,7 +8,7 @@
 // inside is Allocator::cOwner. (aka ae2f_ds_Alloc_Owner)
 typedef struct GED_Core_Ctrl_Ev {
     uint8_t wel;
-    ae2f_struct ae2f_ds_Alloc_Owner list;
+    ae2f_struct ae2f_ds_Alloc_cOwn list;
 } GED_Core_Ctrl_Ev_t;
 
 typedef bool(*GED_Core_Ctrl_Ev_fpCond_t)(const void*);
@@ -22,9 +22,9 @@ ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Element_Set(const GED
 ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Make(GED_Core_Ctrl_Ev_t* mgr, uint8_t elsize);
 
 // No Element has met the condition.
-#define GED_Core_Ctrl_Ev_GetRange_COND_MET_NONE ae2f_errGlobal_LMT
+#define GED_Core_Ctrl_Ev_GetRange_COND_MET_NONE ae2f_ds_Arr_BSearch_NOT_FOUND
 
 // Only an element has met the condition
-#define GED_Core_Ctrl_Ev_GetRange_COND_MET_ONLY_ONE (ae2f_errGlobal_LMT + 1)
+#define GED_Core_Ctrl_Ev_GetRange_COND_MET_ONLY_ONE ae2f_errGlob_DONE_HOWEV
 
 #endif // GED_Core_Ctrl_Custom_h

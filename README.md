@@ -12,17 +12,11 @@ sh init.sh
 
 # depends on
 Critical
-- [ae2f::Bmp Rel-v2.3.2](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.3.2)
+- [ae2f::Bmp Rel-v2.4](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.3.2)
 	> Image Displayers
 
 - [Avalonia 11.1.4](https://avaloniaui.net/)
 	> C# Image Render
-
-Optional
-- [OpenCL::OpenCL v2024.05.08](https://github.com/KhronosGroup/OpenCL-SDK/releases/tag/v2024.05.08)
-	> Used for copying function parallelly.  
-	> Not implemented yet.
-	- ae2f_Bmp_Use_OpenCL
 
 ## RCore
 ## GED_CORE

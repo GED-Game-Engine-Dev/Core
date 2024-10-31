@@ -17,10 +17,10 @@ GED_Core_BmpSrc_init(
         case 24:
         case 32: break;
 
-        default: return ae2f_errGlobal_IMP_NOT_FOUND;
+        default: return ae2f_errGlob_IMP_NOT_FOUND;
     }
 
-    if(!(Addr && _this)) return ae2f_errGlobal_PTR_IS_NULL;
+    if(!(Addr && _this)) return ae2f_errGlob_PTR_IS_NULL;
 
     _this->Addr = Addr;
     _this->ElSize = elsize;
@@ -29,5 +29,5 @@ GED_Core_BmpSrc_init(
     _this->rIdxer.CurrX = 0;
     _this->rIdxer.Count *= Height;
 
-    return ae2f_errGlobal_OK;
+    return ae2f_errGlob_OK;
 }
