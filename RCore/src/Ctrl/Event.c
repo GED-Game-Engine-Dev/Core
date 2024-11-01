@@ -49,7 +49,7 @@ ae2f_SHAREDEXPORT ae2f_errint_t GED_Core_Ctrl_Ev_GetRange(const GED_Core_Ctrl_Ev
 ae2f_SHAREDEXPORT ae2f_errint_t GED_Core_Ctrl_Ev_Element(const GED_Core_Ctrl_Ev_t* mgr, size_t i, void* lpEl) {
     return ae2f_ds_Alloc_cOwn_Read(&mgr->list, mgr->wel * i, lpEl, mgr->wel);
 }
-ae2f_SHAREDEXPORT ae2f_errint_t GED_Core_Ctrl_Ev_Element_Set(const GED_Core_Ctrl_Ev_t* mgr, size_t i, const void* lpEl) {
+ae2f_SHAREDEXPORT ae2f_errint_t GED_Core_Ctrl_Ev_Element_Set(GED_Core_Ctrl_Ev_t* mgr, size_t i, const void* lpEl) {
     return ae2f_ds_Alloc_cOwn_Write(&mgr->list, mgr->wel * i, lpEl, mgr->wel);
 }
 ae2f_SHAREDEXPORT size_t GED_Core_Ctrl_Ev_TypeSize() {

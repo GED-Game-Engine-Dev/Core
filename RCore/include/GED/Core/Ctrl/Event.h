@@ -18,7 +18,7 @@ ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Resize(GED_Core_Ctrl_
 ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Sort(GED_Core_Ctrl_Ev_t* mgr, const ae2f_ds_Arr_fpElCmp_t fpcmp);
 ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_GetRange(const GED_Core_Ctrl_Ev_t* mgr, const GED_Core_Ctrl_Ev_fpCond_t fpcond, size_t* Min, size_t* Max);
 ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Element(const GED_Core_Ctrl_Ev_t* mgr, size_t i, void* lpEl);
-ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Element_Set(const GED_Core_Ctrl_Ev_t* mgr, size_t i, const void* lpEl);
+ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Element_Set(GED_Core_Ctrl_Ev_t* mgr, size_t i, const void* lpEl);
 ae2f_extern ae2f_SHAREDCALL ae2f_errint_t GED_Core_Ctrl_Ev_Make(GED_Core_Ctrl_Ev_t* mgr, uint8_t elsize);
 
 // No Element has met the condition.
