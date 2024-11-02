@@ -40,14 +40,37 @@ static void Process(
                 )
             ) != ae2f_errGlob_OK) // Real
         goto DONE;
-
-        if((code = ae2f_ds_Alloc_cOwn_Write(_this, i, &_element, sizeof(struct GED_Core_Camera_El))) != ae2f_errGlob_OK)
-        goto DONE;
     }
 
     DONE:
     return;
 }
+
+static void ProcessFill(
+    ae2f_struct ae2f_Bmp_cSrc* dest, 
+    uint32_t background_asRGB,
+    uint8_t tdidx,
+    uint8_t tdlen
+) {
+    uint32_t 
+        left, right,
+        gwidth = ae2f_Bmp_Idx_XLeft(dest->rIdxer),
+        pwidth = (gwidth / tdlen);
+
+    right = left = pwidth * tdidx;
+    right += pwidth;
+    if(right > gwidth) right = gwidth;
+
+    ae2f_Bmp_cSrc_Fill_Partial(
+        dest,
+        background_asRGB,
+        left,
+        0,
+        right,
+        ae2f_Bmp_Idx_YLeft(dest->rIdxer)
+    );
+}
+
 #include <stdlib.h>
 struct buff {
     std::thread* a;
@@ -73,8 +96,17 @@ ae2f_errint_t GED_Core_Camera_Buff_Threaded(
     switch (background_asRGB)
     {
     default: {
-        if((code = ae2f_Bmp_cSrc_Fill(dest, background_asRGB)) != ae2f_errGlob_OK)
-        goto DONE;
+        for(uint8_t i = 0; i < tdcount; i++) {
+            new(tds.a + i) std::thread(ProcessFill, dest, background_asRGB, i, tdcount);
+        }
+
+        ProcessFill(dest, background_asRGB, tdcount, tdcount);
+
+        for(uint8_t i = 0; i < tdcount; i++) {
+            tds.a[i].join();
+            tds.a[i].~thread();
+        }
+
     } break;
     case (uint32_t)-1:
         break;
@@ -83,6 +115,8 @@ ae2f_errint_t GED_Core_Camera_Buff_Threaded(
     for(uint8_t i = 0; i < tdcount; i++) {
         new(tds.a + i) std::thread(Process, _this, dest, background_asRGB, i, tdcount, a);
     }
+
+    Process(_this, dest, background_asRGB, tdcount, tdcount, a);
 
     for(uint8_t i = 0; i < tdcount; i++) {
         tds.a[i].join();

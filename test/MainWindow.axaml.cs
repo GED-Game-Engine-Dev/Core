@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using GED.Core;
 using GED.Core.DisplayWizard;
 
@@ -23,28 +25,37 @@ namespace test
             BmpSource source;
             err = GED.Core.Manager.Bitmap.GetSource(0, out source);
 
-            // Stopwatch 객체 생성
-            Stopwatch stopwatch = new Stopwatch();
-
-
-            // Implemented as not Stretch, but trim
             Camera.Element element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
-            element.CheckPrm(out err).AxisX = 200;
-            element.CheckPrm(out err).AxisY = 200;
+            element.CheckPrm(out err).AxisX = -200;
+            element.CheckPrm(out err).AxisY = -200;
 
-            Console.WriteLine($"{err}");
+            camera.BuffAll(DisplayBuffer, 0x00FF00);
 
-            for(int i = 0; i < 3; i++) {
-                element.CheckPrm(out err).RotateXYClockWise = (float)i * 2;
-                camera.Write((uint)i, in element);
-            }
+            Task.Run(() => {
+                byte i = 0;
+                int err;
 
-            Console.WriteLine($"{err}");
+                Stopwatch stopwatch = new Stopwatch();
 
-            stopwatch.Start();
-            Console.WriteLine($"{camera.BuffAll(DisplayBuffer)}");
-            stopwatch.Stop();
-            Console.WriteLine("Time elasped: " + stopwatch.ElapsedMilliseconds + " ms");
+                while(true) {
+                    stopwatch.Restart();
+                    element.CheckPrm(out err).RotateXYClockWise = i / 10.0;
+                    element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
+                    element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
+                    camera.Write((uint)0, in element);
+                    i++;
+                    int fucked = camera.BuffThreaded(DisplayBuffer, i, 50); // buffering
+                    stopwatch.Stop();
+
+                    if(stopwatch.ElapsedMilliseconds > 50)
+                    Console.WriteLine($"{stopwatch.ElapsedMilliseconds} mil");
+
+                    Dispatcher.UIThread.Invoke(() => {
+                        Buffer.Source = null;
+                        Buffer.Source = DisplayBuffer;
+                    });
+                }
+            });
         }
 
         void InitializeComponent() {

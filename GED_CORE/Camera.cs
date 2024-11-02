@@ -64,12 +64,6 @@ namespace GED.Core
         }
     }
 
-    internal struct CameraField {
-        public nint A;
-        public nint B;
-        public nint C;
-    }
-
     public class Camera
     {
         internal XClassMem memory;
