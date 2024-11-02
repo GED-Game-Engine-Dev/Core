@@ -10,3 +10,5 @@ test/obj/*
 
 *.so
 *.dll
+
+Doxyfile
