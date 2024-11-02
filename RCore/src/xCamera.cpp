@@ -116,7 +116,7 @@ ae2f_errint_t GED_Core_Camera_Buff_Threaded(
         new(tds.a + i) std::thread(Process, _this, dest, background_asRGB, i, tdcount, a);
     }
 
-    Process(_this, dest, background_asRGB, tdcount, tdcount, a);
+    // Process(_this, dest, background_asRGB, tdcount, tdcount, a);
 
     for(uint8_t i = 0; i < tdcount; i++) {
         tds.a[i].join();

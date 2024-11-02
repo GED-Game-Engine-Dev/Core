@@ -37,6 +37,8 @@ namespace test
                 byte i = 0;
                 int err;
 
+                int max = 0;
+
                 Stopwatch stopwatch = new Stopwatch();
                 int mil = 0;
                 while(true) {
@@ -46,10 +48,11 @@ namespace test
                     element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
                     camera.Write((uint)0, in element);
                     i++;
-                    int fucked = camera.BuffThreaded(DisplayBuffer, (uint)((0xFF) |(mil << 16)), 50); // buffering
+                    int fucked = camera.BuffThreaded(DisplayBuffer, (uint)((0) |(mil << 16)), 50); // buffering
                     stopwatch.Stop();
 
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
+                    if(max < mil) max = mil;
 
                     if(stopwatch.ElapsedMilliseconds > 50)
                     Console.WriteLine($"{1000 / stopwatch.ElapsedMilliseconds} fps");
@@ -58,7 +61,7 @@ namespace test
                         Buffer.Source = null;
                         Buffer.Source = DisplayBuffer;
 
-                        TextBuff.Text = $"FPS: {1000 / stopwatch.ElapsedMilliseconds}";
+                        TextBuff.Text = $"FPS: {1000 / stopwatch.ElapsedMilliseconds}, [Block: {1000 / max}]";
                     });
                 }
             });
