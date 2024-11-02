@@ -12,12 +12,14 @@
                HorizontalAlignment="Center" 
                VerticalAlignment="Center"/>
 
-        <TextBlock Text="Hello World!" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" 
-                   Foreground="White" 
-                   FontSize="24" 
-                   FontWeight="Bold"
-                   TextAlignment="Center"/>
+        <TextBlock 
+                    x:Name="MyText"
+                    Text="Hello World!" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Foreground="White" 
+                    FontSize="24" 
+                    FontWeight="Bold"
+                    TextAlignment="Center"/>
     </Grid>
 </Window>
