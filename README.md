@@ -14,8 +14,8 @@ sh init.sh
 - 11.1.4
 > C# Image Render
 
-# [ae2f::Bmp](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.4.7.1)
-- Rel-v2.4.7.1
+# [ae2f::Bmp](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.4.7.2)
+- Rel-v2.4.7.2
 
 > The Library is not stable. Keep your expectations low.
 
