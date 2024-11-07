@@ -1,0 +1,3 @@
+[submodule "submodules/RCore"]
+	path = submodules/RCore
+	url = https://github.com/yuisanae2f/GED_RCore
