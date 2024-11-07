@@ -1,4 +1,5 @@
 # GED_Core
+- Rel-v0.3
 > It is a CSharp Project withon a lower project, RCore.  
 > To build, you need your programme "cmake" in your environment path on your computer.
 
@@ -14,9 +15,8 @@ sh init.sh
 - 11.1.4
 > C# Image Render
 
-# [ae2f::Bmp](https://github.com/yuisanae2f/ae2f_Bmp/releases/tag/Rel-v2.4.7.2)
-- Rel-v2.4.7.2
-
+# [ae2f::Bmp](https://github.com/yuisanae2f/ae2f_Bmp)
+- Rel-v2.4.9
 > The Library is not stable. Keep your expectations low.
 
 > Is the functions for handling Bmp FIle, within a library.
@@ -28,8 +28,8 @@ sh init.sh
 # m
 > Built-in math library
 
-# [ae2f::Core](https://github.com/yuisanae2f/ae2f_Core/releases/tag/Rel-v1.2.9.1)
-- Rel-v1.2.9.1
+# [ae2f::Core](https://github.com/yuisanae2f/ae2f_Core)
+- Rel-v1.2.10.4
 
 > This is a very first & core of my own package.  
 > When installed, will be installed as usual, but in directory of "ae2f" under the default install direction.  
