@@ -1,3 +1,8 @@
+git submodule init && git submodule update
+cd submodules/RCore
+sh init.sh
+cd ../../
+
 rm -rf ./build
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
