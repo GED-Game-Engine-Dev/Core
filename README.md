@@ -1,5 +1,5 @@
 # GED_Core
-- Rel-v0.3
+- Rel-v0.4
 > It is a CSharp Project withon a lower project, RCore.  
 > To build, you need your programme "cmake" in your environment path on your computer.
 

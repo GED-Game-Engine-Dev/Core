@@ -1,7 +1,7 @@
 git submodule init && git submodule update
-cd submodules/RCore
+cd mod/GED/RCore
 sh init.sh
-cd ../../
+cd ../../../
 
 rm -rf ./build
 

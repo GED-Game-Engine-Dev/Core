@@ -10,3 +10,6 @@ test/obj/*
 
 *.so
 *.dll
+
+GED_CORE/*Test
+GED_CORE/*Test.exe
