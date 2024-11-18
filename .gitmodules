@@ -1,3 +1,6 @@
 [submodule "submodules/RCore"]
 	path = submodules/RCore
 	url = https://github.com/yuisanae2f/GED_RCore
+[submodule "mod/GED/RCore"]
+	path = mod/GED/RCore
+	url = https://github.com/GED-Game-Engine-Dev/rcore
