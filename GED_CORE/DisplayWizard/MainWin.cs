@@ -50,8 +50,8 @@ namespace GED.Core.DisplayWizard
         private unsafe void OnPointerMoved(object? sender, PointerEventArgs e)
         {
             var pos = e.GetPosition(this);
-            fMousePoint.X[0] = pos.X;
-            fMousePoint.Y[0] = pos.Y;
+            fMousePoint.X[0] = (Float)pos.X;
+            fMousePoint.Y[0] = (Float)pos.Y;
         }
         
         private void OnSizeChanged(object? sender, SizeChangedEventArgs e)

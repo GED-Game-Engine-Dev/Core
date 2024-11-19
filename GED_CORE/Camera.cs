@@ -185,7 +185,7 @@ namespace GED.Core
                     AddrYForDest, 		// where to copy
                     DataToIgnore;
 
-                public double 
+                public Float
                     RotateXYClockWise;
 
                 public int 
