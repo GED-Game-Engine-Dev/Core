@@ -3,13 +3,13 @@ using GED.Core.SanityCheck;
 
 namespace GED.Core {
     internal static partial class fBmpSource {
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_BmpSrc_size")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_BmpSrc_size")]
         private static partial nuint Size();
 
         [LibraryImport(DllNames.Bmp, EntryPoint = "ae2f_Bmp_cSrc_Read")]
         public static partial int Read(nint _this, nint bytes, nuint bytes_len);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_BmpSrc_init")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_BmpSrc_init")]
         public static partial int Init(
             nint _this,
             uint Width,

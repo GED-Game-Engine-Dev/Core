@@ -6,28 +6,28 @@ using System.Runtime.InteropServices;
 namespace GED.Core
 {
     internal static partial class fCamera {
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Buff_All")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_BuffAll")]
         public static partial int BuffAll(nint _this, nint dest, uint background_asRGB);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Buff_Threaded")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Buff_Threaded")]
         public static partial int BuffThreaded(nint _this, nint dest, uint background_asRGB, byte tdcount);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Resize")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Resize")]
         public static partial int Resize(nint _this, nuint count);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Free")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Del")]
         public static partial int Free(nint _this);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Make")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Mk")]
         public static partial int Make(nint _this);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Read")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Read")]
         public static partial int Read(nint _this, nint Element, nuint index);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Write")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Write")]
         public static partial int Write(nint _this, nint Element, nuint index);
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_Size")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_Size")]
         private static partial nuint Size();
 
         public readonly static nuint size;
@@ -38,10 +38,10 @@ namespace GED.Core
     }
 
     internal static partial class fCameraEl {
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_El_Size")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_El_Size")]
         private static partial nuint Size();
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_El_Init")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_El_Init")]
         public static partial int Init(
             nint _this,
             byte Alpha,
@@ -56,7 +56,7 @@ namespace GED.Core
 
         public readonly static nuint size;
 
-        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Core_Camera_El_getParam")]
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Camera_El_getParam")]
         unsafe public static partial int GetParam(nint _this, Camera.Element.Param** param);
 
         static fCameraEl() {

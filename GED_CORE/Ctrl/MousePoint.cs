@@ -3,10 +3,10 @@ using System.Runtime.InteropServices;
 namespace GED.Core.Ctrl
 {
     internal static unsafe partial class fMousePoint {
-        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrX")]
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Ctrl_MousePoint_ptrX")]
         private static partial double* pX();
         
-        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Core_Ctrl_MousePoint_ptrY")]
+        [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_Ctrl_MousePoint_ptrY")]
         private static partial double* pY();
 
         public static double* X = pX();
