@@ -14,4 +14,4 @@ test/obj/*
 GED_CORE/*Test
 GED_CORE/*Test.exe
 
-hin/*
+GED_CORE/SanityCheck/Float.cs
