@@ -44,11 +44,11 @@ namespace test
                 while(true) {
                     stopwatch.Restart();
                     element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
-                    // element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
+                    element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
                     element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
                     camera.Write((uint)0, in element);
                     i++;
-                    int fucked = camera.BuffThreaded(DisplayBuffer, (uint)((0) |(mil << 16)), 50); // buffering
+                    int fucked = camera.BuffThreaded(DisplayBuffer, (uint)((0) |(mil << 16)), 4); // buffering
                     stopwatch.Stop();
 
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
