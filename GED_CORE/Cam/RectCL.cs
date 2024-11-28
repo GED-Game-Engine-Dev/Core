@@ -6,7 +6,7 @@ namespace GED.Core {
 
     internal static partial class fCamRectCL {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamBuff")]
-        public static partial int BuffAll(nint _this, nint dest, uint background_asRGB);
+        public static partial int BuffAll(nint _this, nint dest, uint background_asRGB, uint w, uint h);
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamResize")]
         public static partial int Resize(nint _this, nuint count);
@@ -40,6 +40,9 @@ namespace GED.Core {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamElSize")]
         public static partial nuint Size();
 
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamElPrm")]
+        public static unsafe partial int ElPrm(nint _this, CamRectPrm** prm);
+
         public readonly static nuint size;
 
         static fCamRectCLEl() {
@@ -55,6 +58,8 @@ namespace GED.Core {
             memory = new XClassMem(out _err, fCamRectCL.size);
             if(_err != FuckedNumbers.OK) return;
             _err = fCamRectCL.Make(memory.bytes);
+
+            w = 1; h = 1;
         }
 
         public override int Read(nuint index, out El buffer) {
@@ -68,17 +73,19 @@ namespace GED.Core {
         => fCamRectCL.Resize(memory.bytes, count);
 
         public override int Write(nuint index, in El buffer)
-        => fCamRectCL.Read(memory.bytes, buffer.memory.bytes, index);
+        => fCamRectCL.Write(memory.bytes, buffer.memory.bytes, index);
+
+        public uint w, h;
 
         protected override int _BuffAll(BmpSource dest, uint Colour_Background)
-        => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
+        => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background, w, h);
 
         public class El {
             internal XClassMem memory;
 
-            public El(out int state) { memory = new(out state, fCamRectCLEl.size); }
+            internal El(out int state) { memory = new(out state, fCamRectCLEl.size); }
 
-            unsafe public El(
+            unsafe internal El(
                 out int state,
                 in BmpSource source,
                 in CamRectPrm prm
@@ -88,9 +95,16 @@ namespace GED.Core {
                     (state & FuckedNumbers.DONE_HOWEV) == FuckedNumbers.DONE_HOWEV
                 ) {
                     fixed(CamRectPrm* _prm = &prm) 
-                    fCamRectCLEl.Init(this.memory.bytes, source.memory.bytes, _prm);
+                    fCamRectCLEl.Init(memory.bytes, source.memory.bytes, _prm);
                 }
             }
+
+            public unsafe ref CamRectPrm CheckPrm(out int err) {
+                CamRectPrm* param;
+                err = fCamRectCLEl.ElPrm(memory.bytes, &param);
+                return ref param[0];
+            }
+
             unsafe ~El() => fCamRectCLEl.Del(this.memory.bytes);
         }
     }

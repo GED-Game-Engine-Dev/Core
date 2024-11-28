@@ -11,8 +11,9 @@ namespace test
 {
     public partial class MainWindow : MainWin
     {
-        public CamRect camera;
+        public CamRectCL camera;
         public BmpMgr mgr = new BmpMgr();
+        public static CamRectCLMgr clmgr = new CamRectCLMgr();
 
         public MainWindow(out int err) : base(out err, 1920, 1080)
         {
@@ -21,20 +22,34 @@ namespace test
             Buffer = this.FindControl<Image>("MyImage");
             var TextBuff = this.FindControl<TextBlock>("MyText");
 
-            camera = new CamRect(out err);
+            camera = new CamRectCL(out err);
             
             camera.Resize(100);
             mgr.EmplaceBack(Resource1.Bitmap1);
 
             BmpSource source;
             err = mgr.GetSource(0, out source);
+            CamRectPrm prm;
+            prm.Alpha = 255;
+            prm.AddrXForDest = 400;
+            prm.AddrYForDest = 400;
+            prm.AxisX = prm.AxisY = -200;
+            prm.DataToIgnore = 1;
+            prm.HeightAsResized = 0;
+            prm.WidthAsResized = 0;
+            prm.ReverseIdx = CamRectPrm.YReverse;
+            prm.RotateXYClockWise.val = 0;
 
-            CamRect.El element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
-            element.CheckPrm(out err).AxisX = -200;
-            element.CheckPrm(out err).AxisY = -200;
+            clmgr.EmplaceBack(new CamRectCLMgr.Prm(source, prm));
 
-            camera.BuffAll(DisplayBuffer, 0x00FF00);
-
+            CamRectCL.El element;
+            camera.w = 20;
+            camera.h = 20;
+            clmgr.GetSource(0, out element);
+            
+            camera.BuffAll(DisplayBuffer, 0xFF00FF);
+            
+#if true
             Task.Run(() => {
                 byte i = 0;
                 int err;
@@ -45,19 +60,16 @@ namespace test
                 int mil = 0;
                 while(true) {
                     stopwatch.Restart();
-                    element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
-                    element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
-                    element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
-                    camera.Write((uint)0, in element);
+                    // element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
+                    // element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
+                    // element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
+                    // camera.Write((uint)0, in element);
                     i++;
                     int fucked = camera.BuffAll(DisplayBuffer, (uint)((0) |(mil << 16))); // buffering
                     stopwatch.Stop();
 
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
                     if(max < mil) max = mil;
-
-                    if(stopwatch.ElapsedMilliseconds > 50)
-                    Console.WriteLine($"{1000 / stopwatch.ElapsedMilliseconds} fps");
 
                     Dispatcher.UIThread.Invoke(() => {
                         Buffer.Source = null;
@@ -67,6 +79,8 @@ namespace test
                     });
                 }
             });
+
+#endif
         }
 
         void InitializeComponent() {
