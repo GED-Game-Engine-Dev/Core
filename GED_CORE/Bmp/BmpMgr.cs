@@ -1,13 +1,13 @@
 ﻿
 using GED.Core.SanityCheck;
 
-namespace GED.Core.Manager
+namespace GED.Core
 {
-    public static class Bitmap
+    public static class BmpMgr
     {
         static internal List<byte[]> list;
 
-        static Bitmap()
+        static BmpMgr()
         {
             list = new List<byte[]>();
         }
@@ -71,4 +71,6 @@ namespace GED.Core.Manager
             return err;
         }
     }
+
+    
 }

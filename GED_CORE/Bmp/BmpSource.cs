@@ -45,7 +45,7 @@ namespace GED.Core {
             out int err,
             uint Width,
             uint Height,
-            BitmapElementSize elsize,
+            BmpElSize elsize,
             nint Addr
         ) : this(out err) {
             if(err != FuckedNumbers.OK) return;

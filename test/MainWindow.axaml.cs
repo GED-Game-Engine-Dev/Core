@@ -11,7 +11,7 @@ namespace test
 {
     public partial class MainWindow : MainWin
     {
-        public Camera camera;
+        public Cam camera;
 
         public MainWindow(out int err) : base(out err, 1920, 1080)
         {
@@ -20,14 +20,15 @@ namespace test
             Buffer = this.FindControl<Image>("MyImage");
             var TextBuff = this.FindControl<TextBlock>("MyText");
 
-            camera = new Camera(out err);
+            camera = new Cam(out err);
+            
             camera.Resize(100);
-            GED.Core.Manager.Bitmap.EmplaceBack(Resource1.Bitmap1);
+            BmpMgr.EmplaceBack(Resource1.Bitmap1);
 
             BmpSource source;
-            err = GED.Core.Manager.Bitmap.GetSource(0, out source);
+            err = BmpMgr.GetSource(0, out source);
 
-            Camera.Element element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
+            Cam.El element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
             element.CheckPrm(out err).AxisX = -200;
             element.CheckPrm(out err).AxisY = -200;
 
@@ -48,7 +49,7 @@ namespace test
                     element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
                     camera.Write((uint)0, in element);
                     i++;
-                    int fucked = camera.BuffThreaded(DisplayBuffer, (uint)((0) |(mil << 16)), 4); // buffering
+                    int fucked = camera.BuffAll(DisplayBuffer, (uint)((0) |(mil << 16))); // buffering
                     stopwatch.Stop();
 
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
