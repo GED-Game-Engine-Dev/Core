@@ -11,7 +11,8 @@ namespace test
 {
     public partial class MainWindow : MainWin
     {
-        public Cam camera;
+        public CamRect camera;
+        public BmpMgr mgr = new BmpMgr();
 
         public MainWindow(out int err) : base(out err, 1920, 1080)
         {
@@ -20,15 +21,15 @@ namespace test
             Buffer = this.FindControl<Image>("MyImage");
             var TextBuff = this.FindControl<TextBlock>("MyText");
 
-            camera = new Cam(out err);
+            camera = new CamRect(out err);
             
             camera.Resize(100);
-            BmpMgr.EmplaceBack(Resource1.Bitmap1);
+            mgr.EmplaceBack(Resource1.Bitmap1);
 
             BmpSource source;
-            err = BmpMgr.GetSource(0, out source);
+            err = mgr.GetSource(0, out source);
 
-            Cam.El element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
+            CamRect.El element = new(out err, 255, 400, 400, 1000, 500,  1, in source, 2);
             element.CheckPrm(out err).AxisX = -200;
             element.CheckPrm(out err).AxisY = -200;
 

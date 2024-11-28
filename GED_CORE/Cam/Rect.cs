@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using GED.Core.SanityCheck;
 
 namespace GED.Core {
-    internal static partial class fCam {
+    internal static partial class fCamRect {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CamBuffAll")]
         public static partial int BuffAll(nint _this, nint dest, uint background_asRGB);
 
@@ -26,12 +26,12 @@ namespace GED.Core {
 
         public readonly static nuint size;
 
-        static fCam() {
+        static fCamRect() {
             size = Size();
         }
     }
 
-    internal static partial class fCamEl {
+    internal static partial class fCamRectEl {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CamEl_Size")]
         private static partial nuint Size();
 
@@ -51,56 +51,32 @@ namespace GED.Core {
         public readonly static nuint size;
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CamEl_getParam")]
-        unsafe public static partial int GetParam(nint _this, Cam.El.Prm** param);
+        unsafe public static partial int GetParam(nint _this, CamRectPrm** param);
 
-        static fCamEl() {
+        static fCamRectEl() {
             size = Size();
         }
     }
-    public class Cam : iCam<Cam.El>
+    public class CamRect : iCam<CamRect.El>
     {
         internal XClassMem memory;
-        public Cam(out int _err) {
-            memory = new XClassMem(out _err, fCam.size);
+        public CamRect(out int _err) {
+            memory = new XClassMem(out _err, fCamRect.size);
             if(_err != FuckedNumbers.OK)
             return;
-            _err = fCam.Make(memory.bytes);
+            _err = fCamRect.Make(memory.bytes);
         }
 
-        public override int Resize(nuint count) => fCam.Resize(memory.bytes, count);
+        public override int Resize(nuint count) => fCamRect.Resize(memory.bytes, count);
         protected override int _BuffAll(GED.Core.BmpSource dest, uint Colour_Background)
-        => fCam.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
-        ~Cam() => fCam.Free(memory.bytes);
+        => fCamRect.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
+        ~CamRect() => fCamRect.Free(memory.bytes);
 
         public class El
         {
-            public struct Prm {
-                public byte 
-                    Alpha, // Global Fucking Alpha
-                    ReverseIdx; // Reverse Idx?
-                public uint
-                    WidthAsResized, 	// want to resize?
-                    HeightAsResized, 	// want to resize?
-                    AddrXForDest, 		// where to copy
-                    AddrYForDest, 		// where to copy
-                    DataToIgnore;
-
-                public Float
-                    RotateXYClockWise;
-
-                public int 
-                    AxisX, AxisY;
-            };
-
             internal XClassMem memory;
             internal El(out int state) {
-                memory = new(out state, fCamEl.size);
-            }
-
-            public static class ReverseIdx {
-                public const byte XReverse = 0b1;
-                public const byte YReverse = 0b10;
-                public const byte NoneReverse = 0;
+                memory = new(out state, fCamRectEl.size);
             }
 
             public El(
@@ -112,19 +88,21 @@ namespace GED.Core {
                 uint AddrYForDest,
                 uint DataToIgnore,
                 in BmpSource source,
-                byte ReverseIdx = ReverseIdx.YReverse
-            ) : this(out state)
-            => state = fCamEl.Init(
-                memory.bytes, 
-                Alpha, ReverseIdx,
-                
-                WidthAsResized, HeightAsResized,
-                AddrXForDest, AddrYForDest,
-                
-                DataToIgnore,
-                
-                source.memory.bytes
-            );
+                byte ReverseIdx = CamRectPrm.YReverse
+            ) : this(out state) {
+                if(
+                    state == FuckedNumbers.OK || 
+                    (state & FuckedNumbers.DONE_HOWEV) == FuckedNumbers.DONE_HOWEV
+                )
+                state = fCamRectEl.Init(
+                    memory.bytes, 
+                    Alpha, ReverseIdx,
+                    WidthAsResized, HeightAsResized,
+                    AddrXForDest, AddrYForDest,
+                    DataToIgnore,
+                    source.memory.bytes
+                );
+            }
 
             public El(
                 out int state, 
@@ -138,7 +116,7 @@ namespace GED.Core {
                 bool Reverse_X,
                 bool Reverse_Y
             ) : this(out state)
-            => state = fCamEl.Init(
+            => state = fCamRectEl.Init(
                 memory.bytes, 
                 Alpha, (byte)((Reverse_X ? 1 : 0) | (Reverse_Y ? 2 : 0)),
                 
@@ -150,9 +128,9 @@ namespace GED.Core {
                 source.memory.bytes
             );
 
-            public unsafe ref Prm CheckPrm(out int err) {
-                Prm* param;
-                err = fCamEl.GetParam(memory.bytes, &param);
+            public unsafe ref CamRectPrm CheckPrm(out int err) {
+                CamRectPrm* param;
+                err = fCamRectEl.GetParam(memory.bytes, &param);
                 return ref param[0];
             }
         }
@@ -164,12 +142,12 @@ namespace GED.Core {
             int code;
             buffer = new El(out code);
             if(code != FuckedNumbers.OK) return code;
-            return fCam.Read(memory.bytes, buffer.memory.bytes, index);
+            return fCamRect.Read(memory.bytes, buffer.memory.bytes, index);
         }
 
         public override int Write(
             nuint index,
             in El buffer
-        ) => fCam.Write(memory.bytes, buffer.memory.bytes, index);
+        ) => fCamRect.Write(memory.bytes, buffer.memory.bytes, index);
     }
 }
