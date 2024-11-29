@@ -43,8 +43,6 @@ namespace test
             clmgr.EmplaceBack(new CamRectCLMgr.Prm(source, prm));
 
             CamRectCL.El element;
-            camera.w = 20;
-            camera.h = 20;
             clmgr.GetSource(0, out element);
             
             camera.BuffAll(DisplayBuffer, 0xFF00FF);
@@ -60,14 +58,14 @@ namespace test
                 int mil = 0;
                 while(true) {
                     stopwatch.Restart();
-                    // element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
-                    // element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
-                    // element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
-                    // camera.Write((uint)0, in element);
+                    element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
+                    element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
+                    element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
+                    camera.Write((uint)0, in element);
                     i++;
-                    int fucked = camera.BuffAll(DisplayBuffer, (uint)((0) |(mil << 16))); // buffering
+                    
+                    int fucked = camera.BuffAll(DisplayBuffer, (uint)((0) | (mil << 16) | (i & 255))); // buffering
                     stopwatch.Stop();
-
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
                     if(max < mil) max = mil;
 

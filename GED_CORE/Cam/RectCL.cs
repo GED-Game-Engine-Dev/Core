@@ -6,7 +6,7 @@ namespace GED.Core {
 
     internal static partial class fCamRectCL {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamBuff")]
-        public static partial int BuffAll(nint _this, nint dest, uint background_asRGB, uint w, uint h);
+        public static partial int BuffAll(nint _this, nint dest, uint background_asRGB);
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamResize")]
         public static partial int Resize(nint _this, nuint count);
@@ -58,8 +58,6 @@ namespace GED.Core {
             memory = new XClassMem(out _err, fCamRectCL.size);
             if(_err != FuckedNumbers.OK) return;
             _err = fCamRectCL.Make(memory.bytes);
-
-            w = 1; h = 1;
         }
 
         public override int Read(nuint index, out El buffer) {
@@ -75,10 +73,8 @@ namespace GED.Core {
         public override int Write(nuint index, in El buffer)
         => fCamRectCL.Write(memory.bytes, buffer.memory.bytes, index);
 
-        public uint w, h;
-
         protected override int _BuffAll(BmpSource dest, uint Colour_Background)
-        => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background, w, h);
+        => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
 
         public class El {
             internal XClassMem memory;
