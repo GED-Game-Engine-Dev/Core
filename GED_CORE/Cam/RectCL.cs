@@ -101,7 +101,7 @@ namespace GED.Core {
                 return ref param[0];
             }
 
-            unsafe ~El() => fCamRectCLEl.Del(this.memory.bytes);
+            unsafe ~El() => fCamRectCLEl.Del(memory.bytes);
         }
     }
 #endif

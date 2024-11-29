@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -24,7 +23,7 @@ namespace test
 
             camera = new CamRectCL(out err);
             
-            camera.Resize(100);
+            camera.Resize(1);
             mgr.EmplaceBack(Resource1.Bitmap1);
 
             BmpSource source;
@@ -35,8 +34,8 @@ namespace test
             prm.AddrYForDest = 400;
             prm.AxisX = prm.AxisY = -200;
             prm.DataToIgnore = 1;
-            prm.HeightAsResized = 0;
-            prm.WidthAsResized = 0;
+            prm.HeightAsResized = 500;
+            prm.WidthAsResized = 500;
             prm.ReverseIdx = CamRectPrm.YReverse;
             prm.RotateXYClockWise.val = 0;
 
@@ -57,17 +56,16 @@ namespace test
                 Stopwatch stopwatch = new Stopwatch();
                 int mil = 0;
                 while(true) {
-                    stopwatch.Restart();
                     element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
-                    element.CheckPrm(out err).WidthAsResized = (uint)i * 5 + 1;
                     element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
                     camera.Write((uint)0, in element);
-                    i++;
-                    
+
+                    stopwatch.Restart();
                     int fucked = camera.BuffAll(DisplayBuffer, (uint)((0) | (mil << 16) | (i & 255))); // buffering
                     stopwatch.Stop();
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
                     if(max < mil) max = mil;
+                    i++;
 
                     Dispatcher.UIThread.Invoke(() => {
                         Buffer.Source = null;
