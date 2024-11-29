@@ -6,7 +6,7 @@ namespace GED.Core {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_BmpSrc_size")]
         private static partial nuint Size();
 
-        [LibraryImport(DllNames.Bmp, EntryPoint = "ae2f_Bmp_cSrc_Read")]
+        [LibraryImport(DllNames.Bmp, EntryPoint = "ae2f_cBmpSrcRef")]
         public static partial int Read(nint _this, nint bytes, nuint bytes_len);
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_BmpSrc_init")]
@@ -45,7 +45,7 @@ namespace GED.Core {
             out int err,
             uint Width,
             uint Height,
-            BitmapElementSize elsize,
+            BmpElSize elsize,
             nint Addr
         ) : this(out err) {
             if(err != FuckedNumbers.OK) return;
