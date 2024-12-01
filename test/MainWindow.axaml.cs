@@ -14,7 +14,7 @@ namespace test
         public BmpMgr mgr = new BmpMgr();
         public static CamRectCLMgr clmgr = new CamRectCLMgr();
 
-        public MainWindow(out int err) : base(out err, 1920, 1080)
+        public MainWindow(out int err) : base(out err, 800, 600)
         {
             InitializeComponent();
 
