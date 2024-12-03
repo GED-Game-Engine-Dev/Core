@@ -57,7 +57,7 @@ namespace GED.Core {
             size = Size();
         }
     }
-    public class CamRect : iCam<CamRect.El>
+    public class CamRect : iCamRect<CamRect.El>
     {
         internal XClassMem memory;
         public CamRect(out int _err) {
@@ -72,7 +72,7 @@ namespace GED.Core {
         => fCamRect.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
         ~CamRect() => fCamRect.Free(memory.bytes);
 
-        public class El
+        public class El : iCamRectEl
         {
             internal XClassMem memory;
             internal El(out int state) {
@@ -128,7 +128,7 @@ namespace GED.Core {
                 source.memory.bytes
             );
 
-            public unsafe ref CamRectPrm CheckPrm(out int err) {
+            public override unsafe ref CamRectPrm CheckPrm(out int err) {
                 CamRectPrm* param;
                 err = fCamRectEl.GetParam(memory.bytes, &param);
                 return ref param[0];
@@ -137,12 +137,12 @@ namespace GED.Core {
 
         public override int Read(
             nuint index,
-            out El buffer
+            out iCamRectEl buffer
         ) {
             int code;
-            buffer = new El(out code);
-            if(code != FuckedNumbers.OK) return code;
-            return fCamRect.Read(memory.bytes, buffer.memory.bytes, index);
+            El _ = new El(out code);
+            buffer = _; if(code != FuckedNumbers.OK) return code;
+            return fCamRect.Read(memory.bytes, _.memory.bytes, index);
         }
 
         public override int Write(
