@@ -7,8 +7,9 @@ namespace GED.Core
     /// <summary>
     /// Interface for a camera type
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public abstract class iCam<T> {
+    /// <typeparam name="I">Source Data</typeparam>
+    /// <typeparam name="O">Destination Data Type</typeparam>
+    public abstract class iCam<I, O> {
 
         internal const uint WHITE = 0xFFFFFF;
         internal const uint TRANSPARENT = 0xFFFFFFFF;
@@ -63,12 +64,12 @@ namespace GED.Core
 
         public abstract int Read(
             nuint index,
-            out T buffer
+            out O dest
         );
 
         public abstract int Write(
             nuint index,
-            in T buffer
+            in I src
         );
     }
 }
