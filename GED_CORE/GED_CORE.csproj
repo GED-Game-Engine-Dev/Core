@@ -17,71 +17,27 @@
       <DefineConstants>GED_LINUX</DefineConstants>
   </PropertyGroup>
 
-      <ItemGroup Condition="'$(IsLinux)'=='true'">
-        <Content Include="libRCore.so">
+      <ItemGroup>
+        <Content Include="libRCore">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libDs.so">
+        <Content Include="libDs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libBmp.so">
+        <Content Include="libBmp">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="liberr.so">
+        <Content Include="liberr">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libCL-Bmp.so">
+        <Content Include="libCL-Bmp">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
-
-	<ItemGroup Condition="'$(IsWindows)'=='true'">
-		<Content Include="libRCore.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="libDs.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-		<Content Include="libBmp.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="liberr.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <Content Include="libBmpCL.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(IsOSX)'=='true'">
-		<Content Include="libRCore.dylib">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="libDs.dylib">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-		<Content Include="libBmp.dylib">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="liberr.dylib">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <Content Include="libBmpCL.dylib">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-	</ItemGroup>
 
       <ItemGroup>
         <AvaloniaXaml Remove="Ctrl\CustomControls\**" />
