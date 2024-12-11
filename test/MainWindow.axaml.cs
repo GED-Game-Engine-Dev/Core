@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -14,7 +15,7 @@ namespace test
         public BmpMgr mgr = new BmpMgr();
         public static CamRectCLMgr clmgr = new CamRectCLMgr();
 
-        public MainWindow(out int err) : base(out err, 800, 600)
+        public MainWindow(out int err) : base(out err, 48, 48)
         {
             InitializeComponent();
 
@@ -26,18 +27,18 @@ namespace test
             camera.Resize(1);
             mgr.EmplaceBack(Resource1.Bitmap1);
 
-            BmpSource source;
+            BmpSourceRef source;
             err = mgr.GetSource(0, out source);
             CamRectPrm prm;
             prm.Alpha = 255;
-            prm.AddrXForDest = 400;
-            prm.AddrYForDest = 400;
-            prm.AxisX = prm.AxisY = -200;
+            prm.AddrDest.x = 0;
+            prm.AddrDest.y = 0;
+            prm.Axis.x = prm.Axis.y = -0;
             prm.DataToIgnore = 1;
-            prm.HeightAsResized = 500;
-            prm.WidthAsResized = 500;
+            prm.Resz.x = 48;
+            prm.Resz.y = 48;
             prm.ReverseIdx = CamRectPrm.YReverse;
-            prm.RotateXYClockWise.val = 0;
+            prm.RotateXYClockWise = 0;
 
             clmgr.EmplaceBack(new CamRectCLMgr.Prm(source, prm));
 
@@ -56,7 +57,7 @@ namespace test
                 Stopwatch stopwatch = new Stopwatch();
                 int mil = 0;
                 while(true) {
-                    element.CheckPrm(out err).RotateXYClockWise.val = i / 10.0f;
+                    element.CheckPrm(out err).RotateXYClockWise = i / 10.0f;
                     element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
                     camera.Write((uint)0, in element);
 

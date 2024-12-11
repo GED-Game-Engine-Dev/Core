@@ -26,8 +26,15 @@ namespace GED.Core {
         }
     }
 
-    public class BmpSource {
-        internal XClassMem memory;
+    public class BmpSourceRef {
+        internal XClassMemRef memory;
+        internal BmpSourceRef(nint ptr = 0) {
+            memory = new XClassMemRef();
+            memory.bytes = ptr;
+        }
+    }
+
+    public class BmpSource : BmpSourceRef {
 
         unsafe internal BmpSource(out int err)
         => memory = new XClassMem(out err, fBmpSource.size);

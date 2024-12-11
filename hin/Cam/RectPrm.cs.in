@@ -1,22 +1,22 @@
 using GED.Core.SanityCheck;
 
 namespace GED.Core {
+
     public struct CamRectPrm {
         public byte 
             Alpha, // Global Fucking Alpha
             ReverseIdx; // Reverse Idx?
+
+        public Dim2Sclr
+            Resz, AddrDest;
         public uint
-            WidthAsResized, 	// want to resize?
-            HeightAsResized, 	// want to resize?
-            AddrXForDest, 		// where to copy
-            AddrYForDest, 		// where to copy
             DataToIgnore;
 
-        public Float
+        public @ae2f_float@
             RotateXYClockWise;
 
-        public int 
-            AxisX, AxisY;
+        public Dim2Vec 
+            Axis;
 
         public const byte XReverse = 0b1;
         public const byte YReverse = 0b10;

@@ -74,7 +74,7 @@ namespace GED.Core {
         public override int Write(nuint index, in El buffer)
         => fCamRectCL.Write(memory.bytes, buffer.memory.bytes, index);
 
-        protected override int _BuffAll(BmpSource dest, uint Colour_Background)
+        protected override int _BuffAll(BmpSourceRef dest, uint Colour_Background)
         => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
 
         public class El : iCamRectEl {
@@ -84,7 +84,7 @@ namespace GED.Core {
 
             unsafe internal El(
                 out int state,
-                in BmpSource source,
+                in BmpSourceRef source,
                 in CamRectPrm prm
             ) : this(out state) {
                 if(

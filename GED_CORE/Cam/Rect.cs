@@ -68,7 +68,7 @@ namespace GED.Core {
         }
 
         public override int Resize(nuint count) => fCamRect.Resize(memory.bytes, count);
-        protected override int _BuffAll(GED.Core.BmpSource dest, uint Colour_Background)
+        protected override int _BuffAll(BmpSourceRef dest, uint Colour_Background)
         => fCamRect.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
         ~CamRect() => fCamRect.Free(memory.bytes);
 

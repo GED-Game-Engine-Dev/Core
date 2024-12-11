@@ -15,10 +15,10 @@ namespace GED.Core {
         }
 
         public class Prm {
-            public BmpSource source;
+            public BmpSourceRef source;
             public CamRectPrm prm;
 
-            public Prm(BmpSource source, CamRectPrm prm) {
+            public Prm(BmpSourceRef source, CamRectPrm prm) {
                 this.source = source;
                 this.prm = prm;
             }

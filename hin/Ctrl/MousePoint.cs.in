@@ -4,22 +4,22 @@ namespace GED.Core.Ctrl
 {
     internal static unsafe partial class fMousePoint {
         [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_CtrlMousePointptrX")]
-        private static partial SanityCheck.Float* pX();
+        private static partial @ae2f_float@* pX();
         
         [LibraryImport(SanityCheck.DllNames.RCore, EntryPoint = "GED_CtrlMousePointptrY")]
-        private static partial SanityCheck.Float* pY();
+        private static partial @ae2f_float@* pY();
 
-        public static SanityCheck.Float* X = pX();
-        public static SanityCheck.Float* Y = pY();
+        public static @ae2f_float@* X = pX();
+        public static @ae2f_float@* Y = pY();
     }
 
     public static unsafe class MousePoint
     {
-        public static SanityCheck.Float X {
+        public static @ae2f_float@ X {
             get { return fMousePoint.X[0]; }
         }
 
-        public static SanityCheck.Float Y {
+        public static @ae2f_float@ Y {
             get { return fMousePoint.Y[0]; }
         }
     }
