@@ -87,7 +87,7 @@ namespace GED.Core {
                 uint AddrXForDest,
                 uint AddrYForDest,
                 uint DataToIgnore,
-                in BmpSource source,
+                in BmpSourceRef source,
                 byte ReverseIdx = CamRectPrm.YReverse
             ) : this(out state) {
                 if(
@@ -112,7 +112,7 @@ namespace GED.Core {
                 uint AddrXForDest,
                 uint AddrYForDest,
                 uint DataToIgnore,
-                in BmpSource source,
+                in BmpSourceRef source,
                 bool Reverse_X,
                 bool Reverse_Y
             ) : this(out state)

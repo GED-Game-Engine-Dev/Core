@@ -34,7 +34,7 @@ namespace GED.Core {
         }
     }
 
-    public class BmpSource : BmpSourceRef {
+    internal class BmpSource : BmpSourceRef {
 
         unsafe internal BmpSource(out int err)
         => memory = new XClassMem(out err, fBmpSource.size);
@@ -46,6 +46,11 @@ namespace GED.Core {
             {
                 err = fBmpSource.Read(memory.bytes, (nint)raw_ptr, (nuint)raw.Length);
             }
+        }
+
+        unsafe internal BmpSource(out int err, byte* raw, nuint len) : this(out err) {
+            if(err != FuckedNumbers.OK) return;
+            err = fBmpSource.Read(memory.bytes, (nint)raw, len);
         }
 
         unsafe internal BmpSource(

@@ -21,5 +21,15 @@ namespace GED.Core {
         public const byte XReverse = 0b1;
         public const byte YReverse = 0b10;
         public const byte NoneReverse = 0;
+
+        public void Dump() {
+                    Console.WriteLine($"addrdest: {this.AddrDest.x} {this.AddrDest.y}");
+                    Console.WriteLine($"axis: {this.Axis.x} {this.Axis.y}");
+                    Console.WriteLine($"resz: {this.Resz.x} {this.Resz.y}");
+                    Console.WriteLine($"alpha: {this.Alpha}");
+                    Console.WriteLine($"ignore: {this.DataToIgnore}");
+                    Console.WriteLine($"rvse idx: {this.ReverseIdx}");
+                    Console.WriteLine($"rotate: {this.RotateXYClockWise}");
+                }
     };
 }

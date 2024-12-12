@@ -4,7 +4,8 @@ namespace GED.Core {
     public class CamRectCLMgr : Mgr<CamRectCLMgr.Prm, CamRectCL.El, CamRectCL.El> {
         protected override int ItoS(in Prm _in, out CamRectCL.El? _el)
         {
-            int err; _el = new CamRectCL.El(out err, _in.source, _in.prm);
+            int err; 
+            _el = new CamRectCL.El(out err, _in.source, _in.prm);
             return err;
         }
 
