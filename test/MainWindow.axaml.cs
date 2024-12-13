@@ -61,13 +61,15 @@ namespace test
                 while(true) {
                     element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f;
                     // element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
-                    // element.CheckPrm(out err).Dump();
+                    element.CheckPrm(out err).Dump();
                     camera.Write((uint)0, in element);
 
                     stopwatch.Restart();
-                    int fucked = camera.BuffAll(DisplayBuffer)
-                    // , (uint)((0) | (mil << 16) | (i & 255))); // buffering
+                    int fucked = camera.BuffAll(DisplayBuffer
+                    , (uint)((0) | (mil << 16) | (i & 255))); // buffering
                     ;
+
+                    Debug.WriteLine(fucked);
                     stopwatch.Stop();
                     mil = (int)stopwatch.ElapsedMilliseconds & 255;
                     if(max < mil) max = mil;

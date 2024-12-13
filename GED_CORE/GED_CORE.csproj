@@ -1,40 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+        <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+        <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
-    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
-    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
-  </PropertyGroup>
+        <LIB_EXT Condition="'$(IsWindows)' == 'true'">.dll</LIB_EXT>
+        <LIB_EXT Condition="'$(IsLinux)' == 'true'">.so</LIB_EXT>
+        <LIB_EXT Condition="'$(IsOSX)' == 'true'">.dylib</LIB_EXT>
+      </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsWindows)'=='true'">
-      <DefineConstants>GED_WIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(IsLinux)'=='true'">
-      <DefineConstants>GED_LINUX</DefineConstants>
-  </PropertyGroup>
+      <PropertyGroup Condition="'$(IsWindows)'=='true'">
+          <DefineConstants>GED_WIN</DefineConstants>
+      </PropertyGroup>
+      <PropertyGroup Condition="'$(IsLinux)'=='true'">
+          <DefineConstants>GED_LINUX</DefineConstants>
+      </PropertyGroup>
+      <PropertyGroup Condition="'$(IsOSX)'=='true'">
+          <DefineConstants>GED_OSX</DefineConstants>
+      </PropertyGroup>
 
       <ItemGroup>
-        <Content Include="libRCore">
+        <Content Include="libRCore$(LIB_EXT)" Condition="'$(IsWindows)'=='true'">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libDs">
+        <Content Include="libDs$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libBmp">
+        <Content Include="libBmp$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="liberr">
+        <Content Include="liberr$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libCL-Bmp">
+        <Content Include="libCL-Bmp$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
@@ -50,14 +56,13 @@
         <PackageReference Include="Avalonia" Version="11.1.4" />
       </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <IsTrimmable>False</IsTrimmable>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
+      <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <IsTrimmable>False</IsTrimmable>
+        <WarningLevel>9999</WarningLevel>
+      </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <IsTrimmable>False</IsTrimmable>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-
+      <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <IsTrimmable>False</IsTrimmable>
+        <WarningLevel>9999</WarningLevel>
+      </PropertyGroup>
 </Project>
