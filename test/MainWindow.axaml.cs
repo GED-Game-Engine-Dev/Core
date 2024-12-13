@@ -28,7 +28,7 @@ namespace test
 
             camera = new CamRectCL(out err);
             
-            camera.Resize(1);
+            camera.Resize(2);
             mgr.EmplaceBack(Resource1.Bitmap1);
 
             
@@ -61,8 +61,10 @@ namespace test
                 while(true) {
                     element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f;
                     // element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
-                    element.CheckPrm(out err).Dump();
+                    // element.CheckPrm(out err).Dump();
                     camera.Write((uint)0, in element);
+                    element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f + 3;
+                    camera.Write((uint)1, in element);
 
                     stopwatch.Restart();
                     int fucked = camera.BuffAll(DisplayBuffer
@@ -89,6 +91,10 @@ namespace test
 
         void InitializeComponent() {
             AvaloniaXamlLoader.Load(this);
+        }
+        
+        public int a() {
+            return 3;
         }
     }
 }

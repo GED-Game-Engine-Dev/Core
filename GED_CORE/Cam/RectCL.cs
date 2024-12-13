@@ -80,7 +80,9 @@ namespace GED.Core {
         public class El : iCamRectEl {
             internal XClassMem memory;
 
-            internal El(out int state) { memory = new(out state, fCamRectCLEl.size); }
+            internal El(out int state) { 
+                memory = new(out state, fCamRectCLEl.size); 
+            }
 
             unsafe internal El(
                 out int state,
