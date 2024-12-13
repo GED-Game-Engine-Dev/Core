@@ -24,7 +24,7 @@
       </PropertyGroup>
 
       <ItemGroup>
-        <Content Include="libRCore$(LIB_EXT)" Condition="'$(IsWindows)'=='true'">
+        <Content Include="libRCore$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
