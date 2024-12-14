@@ -68,7 +68,7 @@ namespace GED.Core {
         }
 
         public override int Resize(nuint count) => fCamRect.Resize(memory.bytes, count);
-        protected override int _BuffAll(GED.Core.BmpSource dest, uint Colour_Background)
+        protected override int _BuffAll(BmpSourceRef dest, uint Colour_Background)
         => fCamRect.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
         ~CamRect() => fCamRect.Free(memory.bytes);
 
@@ -87,7 +87,7 @@ namespace GED.Core {
                 uint AddrXForDest,
                 uint AddrYForDest,
                 uint DataToIgnore,
-                in BmpSource source,
+                in BmpSourceRef source,
                 byte ReverseIdx = CamRectPrm.YReverse
             ) : this(out state) {
                 if(
@@ -112,7 +112,7 @@ namespace GED.Core {
                 uint AddrXForDest,
                 uint AddrYForDest,
                 uint DataToIgnore,
-                in BmpSource source,
+                in BmpSourceRef source,
                 bool Reverse_X,
                 bool Reverse_Y
             ) : this(out state)

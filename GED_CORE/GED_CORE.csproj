@@ -1,87 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+        <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+        <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
-    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
-    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
-  </PropertyGroup>
+        <LIB_EXT Condition="'$(IsWindows)' == 'true'">.dll</LIB_EXT>
+        <LIB_EXT Condition="'$(IsLinux)' == 'true'">.so</LIB_EXT>
+        <LIB_EXT Condition="'$(IsOSX)' == 'true'">.dylib</LIB_EXT>
+      </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsWindows)'=='true'">
-      <DefineConstants>GED_WIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(IsLinux)'=='true'">
-      <DefineConstants>GED_LINUX</DefineConstants>
-  </PropertyGroup>
+      <PropertyGroup Condition="'$(IsWindows)'=='true'">
+          <DefineConstants>GED_WIN</DefineConstants>
+      </PropertyGroup>
+      <PropertyGroup Condition="'$(IsLinux)'=='true'">
+          <DefineConstants>GED_LINUX</DefineConstants>
+      </PropertyGroup>
+      <PropertyGroup Condition="'$(IsOSX)'=='true'">
+          <DefineConstants>GED_OSX</DefineConstants>
+      </PropertyGroup>
 
-      <ItemGroup Condition="'$(IsLinux)'=='true'">
-        <Content Include="libRCore.so">
+      <ItemGroup>
+        <Content Include="libRCore$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libDs.so">
+        <Content Include="libDs$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libBmp.so">
+        <Content Include="libBmp$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="liberr.so">
+        <Content Include="liberr$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
 
-        <Content Include="libBmpCL.so">
+        <Content Include="libCL-Bmp$(LIB_EXT)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
       </ItemGroup>
-
-	<ItemGroup Condition="'$(IsWindows)'=='true'">
-		<Content Include="libRCore.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="libDs.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-		<Content Include="libBmp.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="liberr.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <Content Include="libBmpCL.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(IsOSX)'=='true'">
-		<Content Include="libRCore.dylib">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="libDs.dylib">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-		<Content Include="libBmp.dylib">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-
-    <Content Include="liberr.dylib">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <Content Include="libBmpCL.dylib">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-	</ItemGroup>
 
       <ItemGroup>
         <AvaloniaXaml Remove="Ctrl\CustomControls\**" />
@@ -94,14 +56,13 @@
         <PackageReference Include="Avalonia" Version="11.1.4" />
       </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <IsTrimmable>False</IsTrimmable>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
+      <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <IsTrimmable>False</IsTrimmable>
+        <WarningLevel>9999</WarningLevel>
+      </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <IsTrimmable>False</IsTrimmable>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-
+      <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <IsTrimmable>False</IsTrimmable>
+        <WarningLevel>9999</WarningLevel>
+      </PropertyGroup>
 </Project>

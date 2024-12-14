@@ -14,10 +14,10 @@ namespace GED.Core
         internal const uint WHITE = 0xFFFFFF;
         internal const uint TRANSPARENT = 0xFFFFFFFF;
 
-        protected abstract int _BuffAll(BmpSource dest, uint Colour_Background);
-        public int BuffAll(BmpSource dest) 
+        protected abstract int _BuffAll(BmpSourceRef dest, uint Colour_Background);
+        public int BuffAll(BmpSourceRef dest) 
         => _BuffAll(dest, TRANSPARENT);
-        public int BuffAll(BmpSource dest, uint Colour_Background) 
+        public int BuffAll(BmpSourceRef dest, uint Colour_Background) 
         => _BuffAll(dest, WHITE & Colour_Background);
 
         public int BuffAll(WriteableBitmap dest, uint Colour_Background) {

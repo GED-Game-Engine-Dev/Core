@@ -8,10 +8,12 @@ GED_CORE/obj/*
 test/bin/*
 test/obj/*
 
-*.so
-*.dll
-
 GED_CORE/*Test
 GED_CORE/*Test.exe
 
-GED_CORE/SanityCheck/Float.cs
+GED_CORE/Ctrl/MousePoint.cs
+GED_CORE/Cam/RectPrm.cs
+GED_CORE/DisplayWizard/MainWin.cs
+
+GED_CORE/lib*
+GED_CORE/*-Test*
