@@ -1,5 +1,5 @@
 namespace GED.Core {
-    public struct Col_t {
+    public struct MovCol_t {
         public byte raw;
     };
 }

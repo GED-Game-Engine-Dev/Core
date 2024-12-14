@@ -43,7 +43,7 @@ namespace test
             prm.Resz.x = 1000;
             prm.Resz.y = 1000;
     
-            prm.ReverseIdx = CamRectPrm.YReverse;
+            prm.ReverseIdx = CamRectPrm.NoneReverse;
             prm.RotateXYClockWise = 0;
 
             clmgr.EmplaceBack(new CamRectCLMgr.Prm(source, prm));
@@ -64,7 +64,7 @@ namespace test
                     // element.CheckPrm(out err).Dump();
                     camera.Write((uint)0, in element);
                     element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f + 3;
-                    camera.Write((uint)1, in element);
+                    // camera.Write((uint)1, in element);
 
                     stopwatch.Restart();
                     int fucked = camera.BuffAll(DisplayBuffer

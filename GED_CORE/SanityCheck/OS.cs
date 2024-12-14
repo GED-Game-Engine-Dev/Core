@@ -8,6 +8,9 @@ namespace GED.Core.SanityCheck {
 #elif GED_LINUX
         public const string Dll_Name_Prefix = "";
         public const string Dll_Name_Suffix = "";
+#elif GED_APPLE
+        public const string Dll_Name_Prefix = "";
+        public const string Dll_Name_Suffix = "";
 #else
         public const string Dll_Name_Prefix = "";
         public const string Dll_Name_Suffix = "";
