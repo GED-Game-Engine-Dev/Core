@@ -16,7 +16,7 @@ namespace test
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 int a;
-                desktop.MinCtrlWindow = new MinCtrlWindow(out a);
+                desktop.MainWindow = new MinCtrlWindow(out a);
             }
 
             base.OnFrameworkInitializationCompleted();

@@ -29,5 +29,15 @@ namespace GED.Core.SanityCheck {
         // The operation went done.
         // Note that operation may not be valid.
         DONE_HOWEV = 0b1000000;
+
+        /// <summary>
+        /// Check if it's critical. <br/><br/>
+        /// If critical, it returns the original value. <br/>
+        /// If non-critical, it returns <see cref="OK"/>.
+        /// </summary>
+        /// <param name="n">Number for states. <seealso cref="States"/></param>
+        public static errint_t IsActuallyOk(errint_t n) {
+            return (n & DONE_HOWEV) != 0 ? OK : n;
+        }
     }
 }
