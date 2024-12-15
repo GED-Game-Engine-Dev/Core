@@ -9,7 +9,7 @@ using GED.Core.DisplayWizard;
 
 namespace test
 {
-    public partial class MainWindow : MainWin
+    public partial class MinCtrlWindow : MinCtrlWin
     {
         public CamRectCL camera;
         public BmpMgr mgr = new BmpMgr();
@@ -19,7 +19,7 @@ namespace test
         BmpSourceRef source;
         CamRectPrm prm;
 
-        public MainWindow(out int err) : base(out err, 1920, 1080)
+        public MinCtrlWindow(out int err) : base(out err, 1920, 1080)
         {
             InitializeComponent();
 
@@ -60,11 +60,8 @@ namespace test
                 int mil = 0;
                 while(true) {
                     element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f;
-                    // element.CheckPrm(out err).ReverseIdx = (byte)(i % 3);
-                    // element.CheckPrm(out err).Dump();
                     camera.Write((uint)0, in element);
                     element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f + 3;
-                    // camera.Write((uint)1, in element);
 
                     stopwatch.Restart();
                     int fucked = camera.BuffAll(DisplayBuffer
@@ -85,7 +82,6 @@ namespace test
                     });
                 }
             });
-
 #endif
         }
 

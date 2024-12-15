@@ -62,7 +62,7 @@ namespace GED.Core {
         internal XClassMem memory;
         public CamRect(out int _err) {
             memory = new XClassMem(out _err, fCamRect.size);
-            if(_err != FuckedNumbers.OK)
+            if(_err != States.OK)
             return;
             _err = fCamRect.Make(memory.bytes);
         }
@@ -91,8 +91,8 @@ namespace GED.Core {
                 byte ReverseIdx = CamRectPrm.YReverse
             ) : this(out state) {
                 if(
-                    state == FuckedNumbers.OK || 
-                    (state & FuckedNumbers.DONE_HOWEV) == FuckedNumbers.DONE_HOWEV
+                    state == States.OK || 
+                    (state & States.DONE_HOWEV) == States.DONE_HOWEV
                 )
                 state = fCamRectEl.Init(
                     memory.bytes, 
@@ -141,7 +141,7 @@ namespace GED.Core {
         ) {
             int code;
             El _ = new El(out code);
-            buffer = _; if(code != FuckedNumbers.OK) return code;
+            buffer = _; if(code != States.OK) return code;
             return fCamRect.Read(memory.bytes, _.memory.bytes, index);
         }
 

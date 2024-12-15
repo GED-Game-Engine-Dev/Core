@@ -1,8 +1,7 @@
-
 namespace GED.Core.SanityCheck {
     using errint_t = byte;
 
-    internal static class FuckedNumbers {
+    public static class States {
         
         public const errint_t
         OK = 0,

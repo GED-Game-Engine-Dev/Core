@@ -7,12 +7,16 @@ using Avalonia.Platform;
 using GED.Core.Ctrl;
 using GED.Core.SanityCheck;
 
+using ae2f_float_t = @ae2f_float@;
+
 namespace GED.Core.DisplayWizard
 {
-    public partial class MainWin : Window
+    /// <summary>
+    /// Window from Avalonia, Minimum Control included.
+    /// </summary>
+    public class MinCtrlWin : Window
     {
         #region Member Fields
-        internal uint ZeroPosX, ZeroPosY;
         internal WriteableBitmap __DisplayBuffer;
         #endregion
 
@@ -22,12 +26,12 @@ namespace GED.Core.DisplayWizard
         public Image? Buffer;
         #endregion
 
-        unsafe public MainWin(out int err, int VisualWidth, int VisualHeight)
+        unsafe public MinCtrlWin(out int err, int VisualWidth, int VisualHeight)
         {
-            err = FuckedNumbers.OK;
+            err = States.OK;
             if (VisualWidth == 0 || VisualHeight == 0)
             {
-                err = FuckedNumbers.WRONG_OPERATION;
+                err = States.WRONG_OPERATION;
                 return;
             }
 
@@ -36,12 +40,11 @@ namespace GED.Core.DisplayWizard
             try
             {
                 PointerMoved += OnPointerMoved;
-                SizeChanged += OnSizeChanged;
                 AvaloniaXamlLoader.Load(this);
             }
             catch
             {
-                err = FuckedNumbers.ALLOC_FAILED;
+                err = States.ALLOC_FAILED;
                 return;
             }
         }
@@ -49,16 +52,9 @@ namespace GED.Core.DisplayWizard
         #region Private Functions
         private unsafe void OnPointerMoved(object? sender, PointerEventArgs e)
         {
-            var pos = e.GetPosition(this);
-            fMousePoint.X[0] = (@ae2f_float@)pos.X;
-            fMousePoint.Y[0] = (@ae2f_float@)pos.Y;
-        }
-        
-        private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
-        {
-            if(Buffer != null) {
-                Buffer.Source = __DisplayBuffer;
-            }
+            Point pos = e.GetPosition(this);
+            fMousePoint.X[0] = (ae2f_float_t)pos.X;
+            fMousePoint.Y[0] = (ae2f_float_t)pos.Y;
         }
         #endregion
     }

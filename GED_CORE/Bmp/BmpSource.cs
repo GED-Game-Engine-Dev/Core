@@ -41,7 +41,7 @@ namespace GED.Core {
 
         unsafe internal BmpSource(out int err, byte[] raw) : this(out err)
         {
-            if(err != FuckedNumbers.OK) return;
+            if(err != States.OK) return;
             fixed (byte* raw_ptr = raw)
             {
                 err = fBmpSource.Read(memory.bytes, (nint)raw_ptr, (nuint)raw.Length);
@@ -49,7 +49,7 @@ namespace GED.Core {
         }
 
         unsafe internal BmpSource(out int err, byte* raw, nuint len) : this(out err) {
-            if(err != FuckedNumbers.OK) return;
+            if(err != States.OK) return;
             err = fBmpSource.Read(memory.bytes, (nint)raw, len);
         }
 
@@ -60,7 +60,7 @@ namespace GED.Core {
             BmpElSize elsize,
             nint Addr
         ) : this(out err) {
-            if(err != FuckedNumbers.OK) return;
+            if(err != States.OK) return;
             err = fBmpSource.Init(memory.bytes, Width, Height, (byte)elsize, Addr);
         }
     }

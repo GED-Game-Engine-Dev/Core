@@ -1,18 +1,19 @@
 using GED.Core.SanityCheck;
+using ae2f_float_t = @ae2f_float@;
 
 namespace GED.Core {
 
     public struct CamRectPrm {
         public byte 
-            Alpha, // Global Fucking Alpha
-            ReverseIdx; // Reverse Idx?
+            Alpha, // Global Alpha Hack
+            ReverseIdx; // Would you like to Reverse Idx
 
         public Dim2Sclr
             Resz, AddrDest;
         public uint
             DataToIgnore;
 
-        public @ae2f_float@
+        public ae2f_float_t
             RotateXYClockWise;
 
         public Dim2Vec 

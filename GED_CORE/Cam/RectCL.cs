@@ -56,7 +56,7 @@ namespace GED.Core {
 
         public CamRectCL(out int _err) {
             memory = new XClassMem(out _err, fCamRectCL.size);
-            if(_err != FuckedNumbers.OK) return;
+            if(_err != States.OK) return;
             _err = fCamRectCL.Make(memory.bytes);
         }
 
@@ -64,7 +64,7 @@ namespace GED.Core {
             int code;
             El buffer = new El(out code);
             dest = buffer;
-            if(code != FuckedNumbers.OK) return code;
+            if(code != States.OK) return code;
             return fCamRectCL.Read(memory.bytes, buffer.memory.bytes, index);
         }
 
@@ -90,8 +90,8 @@ namespace GED.Core {
                 in CamRectPrm prm
             ) : this(out state) {
                 if(
-                    state == FuckedNumbers.OK || 
-                    (state & FuckedNumbers.DONE_HOWEV) == FuckedNumbers.DONE_HOWEV
+                    state == States.OK || 
+                    (state & States.DONE_HOWEV) == States.DONE_HOWEV
                 ) {
                     fixed(CamRectPrm* _prm = &prm)
                     fCamRectCLEl.Init(memory.bytes, source.memory.bytes, _prm);

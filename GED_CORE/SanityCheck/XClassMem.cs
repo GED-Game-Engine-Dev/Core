@@ -21,11 +21,11 @@ namespace GED.Core.SanityCheck {
                 }
             } catch {
                 bytes = 0;
-                state = FuckedNumbers.ALLOC_FAILED;
+                state = States.ALLOC_FAILED;
                 return;
             }
 
-            state = FuckedNumbers.OK;
+            state = States.OK;
             return;
         }
 
@@ -40,11 +40,11 @@ namespace GED.Core.SanityCheck {
                 }
             } catch {
                 bytes = 0;
-                state = FuckedNumbers.ALLOC_FAILED;
+                state = States.ALLOC_FAILED;
                 return;
             }
 
-            state = FuckedNumbers.OK;
+            state = States.OK;
             return;
         }
 
@@ -55,11 +55,11 @@ namespace GED.Core.SanityCheck {
                 ((byte*)bytes)[i] = 0;
             } catch {
                 bytes = 0;
-                state = FuckedNumbers.ALLOC_FAILED;
+                state = States.ALLOC_FAILED;
                 return;
             }
 
-            state = FuckedNumbers.OK;
+            state = States.OK;
             return;
         }
 

@@ -12,7 +12,7 @@ namespace GED.Core {
         protected override int StoO(in CamRectCL.El _el, out CamRectCL.El? _out)
         {
             _out = _el;
-            return FuckedNumbers.OK;
+            return States.OK;
         }
 
         public class Prm {

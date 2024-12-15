@@ -17,32 +17,32 @@ namespace GED.Core {
         public int Emplace(int idx, in I raw) {
             S s; int r = ItoS(in raw, out s);
             if(
-                r != FuckedNumbers.OK && 
-                (r & FuckedNumbers.DONE_HOWEV) == 0
+                r != States.OK && 
+                (r & States.DONE_HOWEV) == 0
             ) {
                 return r;
             }
 
             list[idx] = s;
-            return FuckedNumbers.OK;
+            return States.OK;
         }
         public int EmplaceBack(in I raw) {
             S s; int r = ItoS(in raw, out s);
 
             if(
-                r != FuckedNumbers.OK && 
-                (r & FuckedNumbers.DONE_HOWEV) == 0
+                r != States.OK && 
+                (r & States.DONE_HOWEV) == 0
             ) {
                 return r;
             }
 
             list.Add(s);
-            return FuckedNumbers.OK;
+            return States.OK;
         }
         public int GetSource(int index, out O? retval) {
             retval = default;
             if (index >= list.Count)
-            return FuckedNumbers.WRONG_OPERATION;
+            return States.WRONG_OPERATION;
             S s = list[index]; return StoO(in s, out retval);
         }
     }

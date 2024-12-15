@@ -26,7 +26,7 @@ namespace GED.Core
                 elsize = BmpElSize.RGB24;
             } else if (dest.Format == PixelFormats.Bgra8888) {
                 elsize = BmpElSize.RGBA32;
-            } else return FuckedNumbers.IMP_NOT_FOUND;
+            } else return States.IMP_NOT_FOUND;
 
             using(var locked = dest.Lock()) {
                 int err;
@@ -36,7 +36,7 @@ namespace GED.Core
                 elsize, locked.Address
                 );
 
-                return err == FuckedNumbers.OK ? BuffAll(bitmap, Colour_Background) : err;
+                return err == States.OK ? BuffAll(bitmap, Colour_Background) : err;
             }
         }
 
@@ -46,7 +46,7 @@ namespace GED.Core
                 elsize = BmpElSize.RGB24;
             } else if (dest.Format == PixelFormats.Bgra8888) {
                 elsize = BmpElSize.RGBA32;
-            } else return FuckedNumbers.IMP_NOT_FOUND;
+            } else return States.IMP_NOT_FOUND;
 
             using(var locked = dest.Lock()) {
                 int err;
@@ -56,7 +56,7 @@ namespace GED.Core
                 elsize, locked.Address
                 );
 
-                return err == FuckedNumbers.OK ? BuffAll(bitmap) : err;
+                return err == States.OK ? BuffAll(bitmap) : err;
             }
         }
 

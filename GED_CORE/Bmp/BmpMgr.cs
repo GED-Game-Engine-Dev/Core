@@ -1,9 +1,7 @@
-﻿using System.Data.SqlTypes;
-using GED.Core.SanityCheck;
+﻿using GED.Core.SanityCheck;
 
 namespace GED.Core
 {
-    
     public class BmpMgr : Mgr<byte[], BmpMgr.el, BmpSourceRef>
     {
         public unsafe class el {
@@ -22,7 +20,7 @@ namespace GED.Core
             _el = null;
 
             if (hey == null) {
-                return FuckedNumbers.PTR_IS_NULL;
+                return States.PTR_IS_NULL;
             }
 
             int err;

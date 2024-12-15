@@ -4,7 +4,7 @@ option(BUILD_SHARED_LIBS "" ON)
 option(ae2f_IS_SHARED "" ON)
 set(ae2f_float float CACHE STRING "Float type for the template.")
 option(ae2f_DOC " " OFF)
-option(ae2f_mov_IS_64 "" OFF)
+option(ae2f_mov_IS_64 "" ON)
 option(ae2f_TEST "" ON)
 
 if(ae2f_mov_IS_64)
@@ -14,9 +14,9 @@ else()
 endif()
 
 
-configure_file("${PROJECT_SOURCE_DIR}/hin/Cam/RectPrm.cs.in" "${PROJECT_SOURCE_DIR}/GED_CORE/Cam/RectPrm.cs")
-configure_file("${PROJECT_SOURCE_DIR}/hin/Ctrl/MousePoint.cs.in" "${PROJECT_SOURCE_DIR}/GED_CORE/Ctrl/MousePoint.cs")
-configure_file("${PROJECT_SOURCE_DIR}/hin/DisplayWizard/MainWin.cs.in" "${PROJECT_SOURCE_DIR}/GED_CORE/DisplayWizard/MainWin.cs")
+configure_file("${PROJECT_SOURCE_DIR}/hin/Cam/RectPrm.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/Cam/RectPrm.cs")
+configure_file("${PROJECT_SOURCE_DIR}/hin/Ctrl/MousePoint.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/Ctrl/MousePoint.cs")
+configure_file("${PROJECT_SOURCE_DIR}/hin/DisplayWizard/MinCtrlWin.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/DisplayWizard/MinCtrlWin.cs")
 add_subdirectory("mod/GED/RCore")
 
 add_custom_target(GED_CORE_Config ALL)
