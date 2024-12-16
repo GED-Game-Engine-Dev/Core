@@ -1,9 +1,54 @@
+using System.Runtime.InteropServices;
 using GED.Core.SanityCheck;
 using ae2f_float_t = @ae2f_float@;
 
 namespace GED.Core {
+    internal static partial class fCamRectPrm {
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmColGet")]
+        public static partial byte ColPos(nint _this, nint pos);
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmColGetRect")]
+        public static partial byte ColRect(nint _this, nint rect);
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmColGetPrm")]
+        public static partial byte ColPrm(nint _this, nint prm);
+    }
 
     public struct CamRectPrm {
+        unsafe MovCol_t Col(in Dim2Sclr a) {
+            MovCol_t r; r.raw = 0;
+
+            fixed(Dim2Sclr* ptr = &a)
+            fixed(CamRectPrm* _this = &this)
+            r.raw = fCamRectPrm.ColPos(
+                (nint)_this, (nint)ptr
+            );
+            
+            return r;
+        }
+        
+        unsafe MovCol_t Col(in Dim2SclrRect a) {
+            MovCol_t r; r.raw = 0;
+
+            fixed(Dim2SclrRect* rect = &a)
+            fixed(CamRectPrm* _this = &this)
+            r.raw = fCamRectPrm.ColRect(
+                (nint)_this, (nint)rect
+            );
+
+            return r;
+        }
+
+        unsafe MovCol_t Col(in CamRectPrm a) {
+            MovCol_t r; r.raw = 0;
+            fixed(CamRectPrm* _this = &this)
+            fixed(CamRectPrm* prm = &a)
+            r.raw = fCamRectPrm.ColPrm(
+                (nint)_this, (nint)prm
+            );
+            return r;
+        }
+
         public byte 
             Alpha, // Global Alpha Hack
             ReverseIdx; // Would you like to Reverse Idx
