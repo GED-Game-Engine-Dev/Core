@@ -1,6 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -9,31 +7,37 @@ using GED.Core.DisplayWizard;
 
 namespace test
 {
-    public partial class MinCtrlWindow : MinCtrlWin
+    public partial class MinCtrlWindow : LoopWin
     {
         public CamRectCL camera;
         public BmpMgr mgr = new BmpMgr();
         public CamRectCLMgr clmgr = new CamRectCLMgr();
+        public Stopwatch stopwatch = new Stopwatch();
         CamRectCL.El element;
 
         BmpSourceRef source;
         CamRectPrm prm;
+        TextBlock? TextBuff;
 
         public MinCtrlWindow(out int err) : base(out err, 1920, 1080)
         {
-            InitializeComponent();
-
+            AvaloniaXamlLoader.Load(this);
+            TextBuff = this.FindControl<TextBlock>("MyText");
             Buffer = this.FindControl<Image>("MyImage");
-            var TextBuff = this.FindControl<TextBlock>("MyText");
+        }
 
+        public override byte LoopBaseEnd()
+        {
+            return 0;
+        }
+
+        public override byte LoopBaseStart()
+        {
             camera = new CamRectCL(out err);
             
             camera.Resize(2);
             mgr.EmplaceBack(Resource1.Bitmap1);
-
-            
             err = mgr.GetSource(0, out source);
-            
             prm.Alpha = 255;
             prm.AddrDest.x = 500;
             prm.AddrDest.y = 500;
@@ -50,47 +54,42 @@ namespace test
             clmgr.GetSource(0, out element);
 
             camera.BuffAll(DisplayBuffer, 0xFF00FF);
-#if true
-            Task.Run(() => {
-                int i = 0;
-                int err;
+            return 0;
+        }
 
-                int max = 0;
-                Stopwatch stopwatch = new Stopwatch();
-                int mil = 0;
-                while(true) {
-                    element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f;
-                    camera.Write((uint)0, in element);
-                    element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f + 3;
+        int i = 0;
+        int err = 0;
 
-                    stopwatch.Restart();
-                    int fucked = camera.BuffAll(DisplayBuffer
-                    , (uint)((0) | (mil << 16) | (i & 255))); // buffering
-                    ;
+        int max = 0;
+        int mil = 0;
 
-                    Debug.WriteLine(fucked);
-                    stopwatch.Stop();
-                    mil = (int)stopwatch.ElapsedMilliseconds & 255;
-                    if(max < mil) max = mil;
-                    i++;
+        public override bool LoopBaseUpdate(out byte _err)
+        {
+            
+            element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f;
+            camera.Write((uint)0, in element);
+            element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f + 3;
 
-                    Dispatcher.UIThread.Invoke(() => {
-                        Buffer.Source = null;
-                        Buffer.Source = DisplayBuffer;
+            stopwatch.Restart();
+            int fucked = camera.BuffAll(DisplayBuffer
+            , (uint)((0) | (mil << 16) | (i & 255))); // buffering
+            ;
 
-                        TextBuff.Text = $"FPS: {i} {1000 / stopwatch.ElapsedMilliseconds}, [Block: {1000 / max}]";
-                    });
-                }
+
+            stopwatch.Stop();
+            mil = (int)stopwatch.ElapsedMilliseconds & 255;
+            if(max < mil) max = mil;
+            i++;
+
+            Dispatcher.UIThread.Invoke(() => {
+                Buffer.Source = null;
+                Buffer.Source = DisplayBuffer;
+
+                TextBuff.Text = $"FPS: {i} {1000 / stopwatch.ElapsedMilliseconds}, [Block: {1000 / max}]";
             });
-#endif
-        }
 
-        void InitializeComponent() {
-            AvaloniaXamlLoader.Load(this);
-        }
-        
-        public int a() {
-            return 3;
+            _err = 0;
+            return true;
         }
     }
 }
