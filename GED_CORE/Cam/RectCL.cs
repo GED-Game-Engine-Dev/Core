@@ -87,29 +87,10 @@ namespace GED.Core {
                 memory = new(out state, fCamRectCLEl.size); 
             }
 
-            unsafe internal El(
-                out int state,
-                in BmpSourceRef source,
-                in CamRectPrm prm
-            ) : this(out state) {
-                if(
-                    state == States.OK || 
-                    (state & States.DONE_HOWEV) == States.DONE_HOWEV
-                ) {
-                    fixed(CamRectPrm* _prm = &prm)
-                    fCamRectCLEl.Init(memory.bytes, source.memory.bytes, _prm);
-                }
-            }
-
             public override unsafe ref CamRectPrm CheckPrm(out int err) {
                 CamRectPrm* param;
                 err = fCamRectCLEl.ElPrm(memory.bytes, &param);
                 return ref param[0];
-            }
-
-            unsafe ~El() {
-                Console.WriteLine("Killing it");
-                fCamRectCLEl.Del(memory.bytes);
             }
         }
     }
