@@ -12,10 +12,16 @@ namespace GED.Core {
 
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmColGetPrm")]
         public static partial byte ColPrm(nint _this, nint prm);
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmGetCentre")]
+        public static partial byte GetCentre(nint _this, nint sclout);
+
+        [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmSetCentre")]
+        public static partial byte SetCentre(nint _this, nint sclout);
     }
 
     public struct CamRectPrm {
-        unsafe MovCol_t Col(in Dim2Sclr a) {
+        public unsafe MovCol_t Col(in Dim2Sclr a) {
             MovCol_t r; r.raw = 0;
 
             fixed(Dim2Sclr* ptr = &a)
@@ -27,7 +33,7 @@ namespace GED.Core {
             return r;
         }
         
-        unsafe MovCol_t Col(in Dim2SclrRect a) {
+        public unsafe MovCol_t Col(in Dim2SclrRect a) {
             MovCol_t r; r.raw = 0;
 
             fixed(Dim2SclrRect* rect = &a)
@@ -38,14 +44,33 @@ namespace GED.Core {
 
             return r;
         }
-
-        unsafe MovCol_t Col(in CamRectPrm a) {
+        public unsafe MovCol_t Col(in CamRectPrm a) {
             MovCol_t r; r.raw = 0;
             fixed(CamRectPrm* _this = &this)
             fixed(CamRectPrm* prm = &a)
             r.raw = fCamRectPrm.ColPrm(
                 (nint)_this, (nint)prm
             );
+            return r;
+        }
+
+        public unsafe MovCol_t GetCentre(out Dim2Sclr a) {
+            MovCol_t r; r.raw = 0;
+
+            fixed(CamRectPrm* _this = &this)
+            fixed(Dim2Sclr* rect = &a)
+            r.raw = fCamRectPrm.GetCentre((nint)_this, (nint)rect);
+
+            return r;
+        }
+
+        public unsafe MovCol_t SetCentre(in Dim2Sclr a) {
+            MovCol_t r; r.raw = 0;
+
+            fixed(CamRectPrm* _this = &this)
+            fixed(Dim2Sclr* rect = &a)
+            r.raw = fCamRectPrm.SetCentre((nint)_this, (nint)rect);
+
             return r;
         }
 

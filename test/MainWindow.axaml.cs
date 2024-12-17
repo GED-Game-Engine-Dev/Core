@@ -1,9 +1,12 @@
+using System;
 using System.Diagnostics;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using GED.Core;
 using GED.Core.DisplayWizard;
+using GED.Core.SanityCheck;
 
 namespace test
 {
@@ -24,6 +27,38 @@ namespace test
             AvaloniaXamlLoader.Load(this);
             TextBuff = this.FindControl<TextBlock>("MyText");
             Buffer = this.FindControl<Image>("MyImage");
+
+            KeyDown += OnKeyDown;
+        }
+
+        
+        private unsafe void OnKeyDown(object? sender, KeyEventArgs e)
+        {
+            Dim2Sclr ___dir;
+            prm.GetCentre(out ___dir);
+            const int mov_sclr = 15;
+
+            switch(e.Key) {
+                case Key.Up: {
+                    ___dir.y -= mov_sclr;
+                    prm.SetCentre(in ___dir);
+                } break;
+
+                case Key.Down: {
+                    ___dir.y += mov_sclr;
+                    prm.SetCentre(in ___dir);
+                } break;
+
+                case Key.Right: {
+                    ___dir.x += mov_sclr;
+                    prm.SetCentre(in ___dir);
+                } break;
+
+                case Key.Left: {
+                    ___dir.x -= mov_sclr;
+                    prm.SetCentre(in ___dir);
+                } break;
+            }
         }
 
         public override byte LoopBaseEnd()
@@ -51,7 +86,6 @@ namespace test
             prm.RotateXYClockWise = 0;
 
             clmgr.EmplaceBack(new CamRectCLMgr.Prm(source, prm));
-            clmgr.GetSource(0, out element);
 
             camera.BuffAll(DisplayBuffer, 0xFF00FF);
             return 0;
@@ -65,17 +99,16 @@ namespace test
 
         public override bool LoopBaseUpdate(out byte _err)
         {
-            
-            element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f;
+            // clmgr.Emplace(0, new CamRectCLMgr.Prm(source, prm));
+            clmgr.GetSource(0, out element);
+            element.CheckPrm(out err) = prm;
             camera.Write((uint)0, in element);
-            element.CheckPrm(out err).RotateXYClockWise = ((float)i) / 100.0f + 3;
+            
 
             stopwatch.Restart();
             int fucked = camera.BuffAll(DisplayBuffer
             , (uint)((0) | (mil << 16) | (i & 255))); // buffering
             ;
-
-
             stopwatch.Stop();
             mil = (int)stopwatch.ElapsedMilliseconds & 255;
             if(max < mil) max = mil;
@@ -90,6 +123,6 @@ namespace test
 
             _err = 0;
             return true;
-        }
+        } 
     }
 }

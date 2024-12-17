@@ -77,6 +77,9 @@ namespace GED.Core {
         protected override int _BuffAll(BmpSourceRef dest, uint Colour_Background)
         => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
 
+        /// <summary>
+        /// TODO: Resolve the deconstructor shit
+        /// </summary>
         public class El : iCamRectEl {
             internal XClassMem memory;
 
