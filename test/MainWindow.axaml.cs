@@ -144,9 +144,12 @@ namespace test
         public bool LoopBaseUpdate(out byte _err)
         {
             CamRectCL.El element;
+            prm_tar.DataToIgnore = 0xFFFFFFFF;
             clmgr.GetSource(0, out element);
             element.CheckPrm(out err) = prm;
             camera.Write((uint)0, in element);
+            prm_tar.ReverseIdx++;
+            prm_tar.ReverseIdx &= 3;
             element.CheckPrm(out err) = prm_tar;
             camera.Write((uint)1, in element);
             

@@ -11,7 +11,7 @@ namespace GED.Core.DisplayWizard {
     /// </summary>
     public interface iWinPtr : iWin
     {
-        byte iWin.Main(object _prm) {
+        public byte MainPtr(object _prm) {
             win.PointerMoved += OnPointerMoved;
             return States.OK;
         }
@@ -23,7 +23,10 @@ namespace GED.Core.DisplayWizard {
             fMousePoint.Y[0] = (float_t)pos.Y;
         }
 
-        public class Built<T> : iWin.Built<T, object> where T : iWinBuff, new()
+        public abstract class __Win : iWin.__Win, iWinPtr
+        {}
+
+        public class Built<T> : iWin.Built<T, object> where T : iWinPtr.__Win, new()
         {
             public Built(out byte err, object prm) : base(out err, prm) {}
         }
