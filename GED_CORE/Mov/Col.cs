@@ -5,7 +5,7 @@ namespace GED.Core {
     public struct MovCol_t {
         public byte raw;
 
-        const byte 
+        public const byte 
         C = 0b0000,
         L = 0b0001,
         R = 0b0010,
