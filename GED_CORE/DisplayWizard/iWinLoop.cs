@@ -5,7 +5,7 @@ namespace GED.Core.DisplayWizard {
     /// Create a loop function separated in nutshell. <br/>
     /// It will not actually start the loop by just instantiating it.
     /// </summary>
-    public interface LoopBase
+    public interface iWinLoop : iWin
     {
         /// <summary>
         /// Loop as initiation.
@@ -17,9 +17,9 @@ namespace GED.Core.DisplayWizard {
         /// </summary>
         public abstract byte LoopBaseEnd();
 
-
         /// <summary>
         /// Called separated from <see cref="LoopBaseUpdateTask"/>. <br/>
+        /// It will be executed after call of <see cref="LoopBaseUpdateTask"/>
         /// </summary>
         /// <param name="err">Status code output buffer</param>
         /// <returns>
@@ -59,25 +59,21 @@ namespace GED.Core.DisplayWizard {
             err |= LoopBaseEnd();
             return err;
         }
-    }
 
-    public abstract class LoopWin : MinCtrlWin, LoopBase
-    {
-        public LoopWin(
-            out int err, 
-            int VisualWidth, 
-            int VisualHeight
-        ) : base(
-            out err, 
-            VisualWidth, 
-            VisualHeight
-        ) => Task.Run(((LoopBase)this).LoopBaseSpan);
-
-        public abstract byte LoopBaseEnd();
-        public abstract byte LoopBaseStart();
-        public abstract bool LoopBaseUpdate(out byte err);
-        public async virtual Task<byte> LoopBaseUpdateTask() {
+        public byte MainLoop(object _prm) {
+            Task.Run<byte>(LoopBaseSpan);
             return States.OK;
+        }
+
+        public abstract class __Win : iWin.__Win, iWinLoop {
+            public abstract byte LoopBaseEnd();
+            public abstract byte LoopBaseStart();
+            public abstract bool LoopBaseUpdate(out byte err);
+        }
+
+        public class Built<T> : iWin.Built<T, object> where T : iWinLoop.__Win, new()
+        { 
+            public Built(out byte err, object prm) : base(out err, prm){}
         }
     }
 }

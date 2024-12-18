@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using GED.Core;
 using GED.Core.DisplayWizard;
@@ -10,28 +11,30 @@ using GED.Core.SanityCheck;
 
 namespace test
 {
-    public partial class MinCtrlWindow : LoopWin
+    public partial class MinCtrlWindow : Window, iWinBuff, iWinLoop, iWinPtr
     {
         public CamRectCL camera;
         public BmpMgr mgr = new BmpMgr();
         public CamRectCLMgr clmgr = new CamRectCLMgr();
         public Stopwatch stopwatch = new Stopwatch();
-        CamRectCL.El element;
 
         BmpSourceRef source;
         CamRectPrm prm;
         TextBlock? TextBuff;
 
-        public MinCtrlWindow(out int err) : base(out err, 1920, 1080)
+        Image Buffer;
+
+        public MinCtrlWindow(out byte err) : base()
         {
             AvaloniaXamlLoader.Load(this);
+            iWinBuff.MainPrm prm = new iWinBuff.MainPrm(1920, 1080);
+            err = Main((object)prm);
             TextBuff = this.FindControl<TextBlock>("MyText");
             Buffer = this.FindControl<Image>("MyImage");
 
             KeyDown += OnKeyDown;
         }
 
-        
         private unsafe void OnKeyDown(object? sender, KeyEventArgs e)
         {
             Dim2Sclr ___dir;
@@ -61,13 +64,14 @@ namespace test
             }
         }
 
-        public override byte LoopBaseEnd()
+        public byte LoopBaseEnd()
         {
             return 0;
         }
 
-        public override byte LoopBaseStart()
+        public byte LoopBaseStart()
         {
+            CamRectCL.El element;
             camera = new CamRectCL(out err);
             
             camera.Resize(2);
@@ -87,7 +91,7 @@ namespace test
 
             clmgr.EmplaceBack(new CamRectCLMgr.Prm(source, prm));
 
-            camera.BuffAll(DisplayBuffer, 0xFF00FF);
+            camera.BuffAll(this.DisplayBuffer, 0xFF00FF);
             return 0;
         }
 
@@ -97,14 +101,17 @@ namespace test
         int max = 0;
         int mil = 0;
 
-        public override bool LoopBaseUpdate(out byte _err)
+        public WriteableBitmap DisplayBuffer { get; set; }
+        Window iWin.win { get => this; set {  } }
+
+        public bool LoopBaseUpdate(out byte _err)
         {
+            CamRectCL.El element;
             // clmgr.Emplace(0, new CamRectCLMgr.Prm(source, prm));
             clmgr.GetSource(0, out element);
             element.CheckPrm(out err) = prm;
             camera.Write((uint)0, in element);
             
-
             stopwatch.Restart();
             int fucked = camera.BuffAll(DisplayBuffer
             , (uint)((0) | (mil << 16) | (i & 255))); // buffering
@@ -123,6 +130,16 @@ namespace test
 
             _err = 0;
             return true;
-        } 
+        }
+
+        public byte Main(object prm)
+        {
+            byte a = States.IsActuallyOk(((iWinBuff)this).MainBuff(prm));
+            if(a != States.OK) return a;
+            a |= States.IsActuallyOk(((iWinLoop)this).MainLoop(prm));
+            if(a != States.OK) return a;
+            a |= States.IsActuallyOk(((iWinPtr)this).MainPtr(prm));
+            return 0;
+        }
     }
 }

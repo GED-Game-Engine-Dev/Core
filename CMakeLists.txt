@@ -17,7 +17,7 @@ endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/Cam/RectPrm.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/Cam/RectPrm.cs")
 configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/Ctrl/MousePoint.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/Ctrl/MousePoint.cs")
-configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/DisplayWizard/MinCtrlWin.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/DisplayWizard/MinCtrlWin.cs")
+configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/DisplayWizard/iWinPtr.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/DisplayWizard/iWinPtr.cs")
 add_subdirectory("mod/GED/RCore")
 
 add_custom_target("${PROJECT_NAME}_Config" ALL)

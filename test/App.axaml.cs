@@ -15,7 +15,7 @@ namespace test
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                int a;
+                byte a;
                 desktop.MainWindow = new MinCtrlWindow(out a);
             }
 
