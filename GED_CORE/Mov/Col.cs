@@ -1,8 +1,12 @@
 namespace GED.Core {
     /// <summary>
-    /// 
+    /// Stands for direction vector. <br/>
+    /// Could represent multiple directions or so.
     /// </summary>
     public struct MovCol_t {
+        /// <summary>
+        /// It contains raw value.
+        /// </summary>
         public byte raw;
 
         public const byte 

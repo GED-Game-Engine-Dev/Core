@@ -51,7 +51,7 @@ namespace GED.Core {
     }
 
 #if true
-    public class CamRectCL : iCamRect<CamRectCL.El> {
+    public class CamRectCL : aCamRect<CamRectCL.El> {
         internal XClassMem memory;
 
         public CamRectCL(out int _err) {

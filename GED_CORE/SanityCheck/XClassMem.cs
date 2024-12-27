@@ -1,6 +1,10 @@
 using System.Runtime.InteropServices;
 
 namespace GED.Core.SanityCheck {
+    /// <summary>
+    /// Represents a pointer. <br/>
+    /// 
+    /// </summary>
     public unsafe class XClassMemRef {
         internal nint bytes;
         internal XClassMemRef(nint ptr = 0) {

@@ -2,11 +2,11 @@
 
 namespace GED.Core.SanityCheck {
     public struct Dim2Vec {
-        public int x, y;
+        public @ae2f_mov_IS_64_INTTYPE_t@ x, y;
     }
 
     public struct Dim2Sclr {
-        public uint x, y;
+        public u@ae2f_mov_IS_64_INTTYPE_t@ x, y;
     }
 
     public struct Dim2SclrRect {

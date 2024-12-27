@@ -1,5 +1,12 @@
+// This file is auto-generated.
+
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Auto-generated <br/>
+/// 
+/// Pre-defined floating point type.
+/// </summary>
 using ae2f_float_t = @ae2f_float@;
 
 namespace GED.Core.Ctrl
@@ -15,7 +22,10 @@ namespace GED.Core.Ctrl
         public static ae2f_float_t* Y = pY();
     }
 
-    public static unsafe class MousePoint
+    /// <summary>
+    /// Buffer of global mouse pointer.
+    /// </summary>
+    public static unsafe class gMousePoint
     {
         public static ae2f_float_t X {
             get { return fMousePoint.X[0]; }

@@ -11,7 +11,7 @@ using GED.Core.SanityCheck;
 
 namespace test
 {
-    public partial class MinCtrlWindow : Window, iWinBuff, iWinLoop, iWinPtr
+    public partial class MinCtrlWindow : Window, iWinLoop, iWinPtr
     {
         public CamRectCL camera;
         public BmpMgr mgr = new BmpMgr();
@@ -26,13 +26,13 @@ namespace test
 
         public MinCtrlWindow(out byte err) : base()
         {
+            err =0;
             AvaloniaXamlLoader.Load(this);
             iWinBuff.MainPrm prm = new iWinBuff.MainPrm(1920, 1080);
-            err = Main((object)prm);
             TextBuff = this.FindControl<TextBlock>("MyText");
             Buffer = this.FindControl<Image>("MyImage");
-
             KeyDown += OnKeyDown;
+            err = M((object)prm);
         }
 
         private unsafe void OnKeyDown(object? sender, KeyEventArgs e)
@@ -173,14 +173,15 @@ namespace test
             return true;
         }
 
-        public byte Main(object prm)
+        public byte M(object prm)
         {
-            byte a = States.IsActuallyOk(((iWinBuff)this).MainBuff(prm));
+            Console.WriteLine("This is test main.");
+            byte a = States.IsActuallyOk(((iWinBuff)this).Main(prm));
             if(a != States.OK) return a;
-            a |= States.IsActuallyOk(((iWinLoop)this).MainLoop(prm));
+            a |= States.IsActuallyOk(((iWinLoop)this).Main(prm));
             if(a != States.OK) return a;
-            a |= States.IsActuallyOk(((iWinPtr)this).MainPtr(prm));
-            return 0;
+            a |= States.IsActuallyOk(((iWinPtr)this).Main(prm));
+            return States.IsActuallyOk(a);
         }
     }
 }

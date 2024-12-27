@@ -1,3 +1,5 @@
+// This file is auto-generated.
+
 using Avalonia;
 using Avalonia.Input;
 using GED.Core.Ctrl;
@@ -7,11 +9,23 @@ using float_t = @ae2f_float@;
 
 namespace GED.Core.DisplayWizard {
     /// <summary>
-    /// Window from Avalonia, Minimum Control included.
+    /// Supports tracking of mouse point. <br/>
+    /// See <see cref="Main"/>
     /// </summary>
     public interface iWinPtr : iWin
     {
-        public byte MainPtr(object _prm) {
+        /// <summary>
+        /// Possible Main function defined. <br/>
+        /// Initialises the interface. <br/><br/>
+        /// 
+        /// After this function, the window on <see cref="iWin"/>
+        /// will track the mousepoint and store in global Mousepoint. <br/><br/>
+        /// 
+        /// <seealso cref="gMousePoint"/>
+        /// </summary>
+        /// <param name="_prm">Unused</param>
+        /// <returns><seealso cref="States.OK"/></returns>
+        public byte Main(object _prm) {
             win.PointerMoved += OnPointerMoved;
             return States.OK;
         }
@@ -21,14 +35,6 @@ namespace GED.Core.DisplayWizard {
             Point pos = e.GetPosition(this.win);
             fMousePoint.X[0] = (float_t)pos.X;
             fMousePoint.Y[0] = (float_t)pos.Y;
-        }
-
-        public abstract class __Win : iWin.__Win, iWinPtr
-        {}
-
-        public class Built<T> : iWin.Built<T, object> where T : iWinPtr.__Win, new()
-        {
-            public Built(out byte err, object prm) : base(out err, prm) {}
         }
     }
 }

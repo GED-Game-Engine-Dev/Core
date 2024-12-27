@@ -5,16 +5,19 @@ using GED.Core.SanityCheck;
 namespace GED.Core
 {
     /// <summary>
-    /// Interface for a camera type
+    /// 
     /// </summary>
-    /// <typeparam name="I">Source Data</typeparam>
-    /// <typeparam name="O">Destination Data Type</typeparam>
-    public abstract class iCam<I, O> {
+    /// <typeparam name="I"></typeparam>
+    /// <typeparam name="O"></typeparam>
+    public abstract class Cam<I, O> {
 
         internal const uint WHITE = 0xFFFFFF;
         internal const uint TRANSPARENT = 0xFFFFFFFF;
 
-        protected abstract int _BuffAll(BmpSourceRef dest, uint Colour_Background);
+        protected abstract int _BuffAll(
+            BmpSourceRef dest, 
+            uint Colour_Background
+        );
         public int BuffAll(BmpSourceRef dest) 
         => _BuffAll(dest, TRANSPARENT);
         public int BuffAll(BmpSourceRef dest, uint Colour_Background) 
@@ -40,6 +43,11 @@ namespace GED.Core
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dest"></param>
+        /// <returns></returns>
         public int BuffAll(WriteableBitmap dest) {
             BmpElSize elsize;
             if(dest.Format == PixelFormats.Bgr24) {

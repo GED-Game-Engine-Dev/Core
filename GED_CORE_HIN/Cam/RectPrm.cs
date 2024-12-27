@@ -1,3 +1,4 @@
+// This file is auto-generated.
 using System.Runtime.InteropServices;
 using GED.Core.SanityCheck;
 using ae2f_float_t = @ae2f_float@;
@@ -19,7 +20,7 @@ namespace GED.Core {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_Mov2PrmSetCentre")]
         public static partial byte SetCentre(nint _this, nint sclout);
     }
-
+    
     public struct CamRectPrm {
         public unsafe MovCol_t Col(in Dim2Sclr a) {
             MovCol_t r; r.raw = 0;

@@ -38,7 +38,12 @@ namespace GED.Core.DisplayWizard {
         }
 
         /// <summary>
-        /// Skeleton code for task loop.
+        /// Skeleton code for task loop. <br/><br/>
+        /// 
+        /// <seealso cref="LoopBaseStart"/><br/>
+        /// <seealso cref="LoopBaseUpdateTask"/><br/>
+        /// <seealso cref="LoopBaseUpdate"/><br/>
+        /// <seealso cref="LoopBaseEnd"/>
         /// </summary>
         public async Task<byte> LoopBaseSpan() {
             bool flag = true;
@@ -60,20 +65,14 @@ namespace GED.Core.DisplayWizard {
             return err;
         }
 
-        public byte MainLoop(object _prm) {
+        /// <summary>
+        /// Register <see cref="LoopBaseSpan"/> on new task.
+        /// </summary>
+        /// <param name="_prm">unused</param>
+        /// <returns><see cref="States.OK"/></returns>
+        public byte Main(object _prm) {
             Task.Run<byte>(LoopBaseSpan);
             return States.OK;
-        }
-
-        public abstract class __Win : iWin.__Win, iWinLoop {
-            public abstract byte LoopBaseEnd();
-            public abstract byte LoopBaseStart();
-            public abstract bool LoopBaseUpdate(out byte err);
-        }
-
-        public class Built<T> : iWin.Built<T, object> where T : iWinLoop.__Win, new()
-        { 
-            public Built(out byte err, object prm) : base(out err, prm){}
         }
     }
 }

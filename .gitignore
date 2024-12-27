@@ -14,6 +14,7 @@ GED_CORE/*Test.exe
 GED_CORE/Ctrl/MousePoint.cs
 GED_CORE/Cam/RectPrm.cs
 GED_CORE/DisplayWizard/iWinPtr.cs
+GED_CORE/SanityCheck/Dim2.cs
 
 GED_CORE/lib*
 GED_CORE/*-Test*
