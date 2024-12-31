@@ -1,9 +1,11 @@
 using System;
 using System.Diagnostics;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using GED.Core;
 using GED.Core.DisplayWizard;
@@ -28,11 +30,11 @@ namespace test
         {
             err =0;
             AvaloniaXamlLoader.Load(this);
-            iWinBuff.MainPrm prm = new iWinBuff.MainPrm(1920, 1080);
             TextBuff = this.FindControl<TextBlock>("MyText");
             Buffer = this.FindControl<Image>("MyImage");
             KeyDown += OnKeyDown;
             err = M((object)prm);
+
         }
 
         private unsafe void OnKeyDown(object? sender, KeyEventArgs e)
@@ -137,8 +139,8 @@ namespace test
 
         int max = 0;
         int mil = 0;
-
-        public WriteableBitmap DisplayBuffer { get; set; }
+        
+        public WriteableBitmap DisplayBuffer;
         Window iWin.win { get => this; set {  } }
 
         public bool LoopBaseUpdate(out byte _err)
@@ -176,8 +178,14 @@ namespace test
         public byte M(object prm)
         {
             Console.WriteLine("This is test main.");
-            byte a = States.IsActuallyOk(((iWinBuff)this).Main(prm));
-            if(a != States.OK) return a;
+            byte a = States.OK;
+
+            DisplayBuffer = new WriteableBitmap(
+                new PixelSize(1920, 1080), 
+                new Vector(96, 96), 
+                format: PixelFormats.Bgr24
+            );
+
             a |= States.IsActuallyOk(((iWinLoop)this).Main(prm));
             if(a != States.OK) return a;
             a |= States.IsActuallyOk(((iWinPtr)this).Main(prm));

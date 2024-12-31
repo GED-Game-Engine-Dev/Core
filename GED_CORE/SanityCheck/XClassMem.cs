@@ -2,8 +2,8 @@ using System.Runtime.InteropServices;
 
 namespace GED.Core.SanityCheck {
     /// <summary>
-    /// Represents a pointer. <br/>
-    /// 
+    /// Represents a memory object without a responsiblity/owning. <br/>
+    /// See <see cref="XClassMem"/>.
     /// </summary>
     public unsafe class XClassMemRef {
         internal nint bytes;
