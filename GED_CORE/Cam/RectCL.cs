@@ -51,7 +51,7 @@ namespace GED.Core {
     }
 
 #if true
-    public class CamRectCL : iCamRect<CamRectCL.El> {
+    public class CamRectCL : aCamRect<CamRectCL.El> {
         internal XClassMem memory;
 
         public CamRectCL(out int _err) {
@@ -76,7 +76,7 @@ namespace GED.Core {
 
         protected override int _BuffAll(BmpSourceRef dest, uint Colour_Background)
         => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
-
+        
         public class El : iCamRectEl {
             internal XClassMem memory;
 
@@ -84,29 +84,10 @@ namespace GED.Core {
                 memory = new(out state, fCamRectCLEl.size); 
             }
 
-            unsafe internal El(
-                out int state,
-                in BmpSourceRef source,
-                in CamRectPrm prm
-            ) : this(out state) {
-                if(
-                    state == States.OK || 
-                    (state & States.DONE_HOWEV) == States.DONE_HOWEV
-                ) {
-                    fixed(CamRectPrm* _prm = &prm)
-                    fCamRectCLEl.Init(memory.bytes, source.memory.bytes, _prm);
-                }
-            }
-
             public override unsafe ref CamRectPrm CheckPrm(out int err) {
                 CamRectPrm* param;
                 err = fCamRectCLEl.ElPrm(memory.bytes, &param);
                 return ref param[0];
-            }
-
-            unsafe ~El() {
-                Console.WriteLine("Killing it");
-                fCamRectCLEl.Del(memory.bytes);
             }
         }
     }

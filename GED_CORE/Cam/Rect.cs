@@ -57,7 +57,7 @@ namespace GED.Core {
             size = Size();
         }
     }
-    public class CamRect : iCamRect<CamRect.El>
+    public class CamRect : aCamRect<CamRect.El>
     {
         internal XClassMem memory;
         public CamRect(out int _err) {

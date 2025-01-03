@@ -5,7 +5,7 @@ namespace GED.Core.DisplayWizard {
     /// Create a loop function separated in nutshell. <br/>
     /// It will not actually start the loop by just instantiating it.
     /// </summary>
-    public interface LoopBase
+    public interface iWinLoop : iWin
     {
         /// <summary>
         /// Loop as initiation.
@@ -17,9 +17,9 @@ namespace GED.Core.DisplayWizard {
         /// </summary>
         public abstract byte LoopBaseEnd();
 
-
         /// <summary>
         /// Called separated from <see cref="LoopBaseUpdateTask"/>. <br/>
+        /// It will be executed after call of <see cref="LoopBaseUpdateTask"/>
         /// </summary>
         /// <param name="err">Status code output buffer</param>
         /// <returns>
@@ -38,7 +38,12 @@ namespace GED.Core.DisplayWizard {
         }
 
         /// <summary>
-        /// Skeleton code for task loop.
+        /// Skeleton code for task loop. <br/><br/>
+        /// 
+        /// <seealso cref="LoopBaseStart"/><br/>
+        /// <seealso cref="LoopBaseUpdateTask"/><br/>
+        /// <seealso cref="LoopBaseUpdate"/><br/>
+        /// <seealso cref="LoopBaseEnd"/>
         /// </summary>
         public async Task<byte> LoopBaseSpan() {
             bool flag = true;
@@ -59,24 +64,14 @@ namespace GED.Core.DisplayWizard {
             err |= LoopBaseEnd();
             return err;
         }
-    }
 
-    public abstract class LoopWin : MinCtrlWin, LoopBase
-    {
-        public LoopWin(
-            out int err, 
-            int VisualWidth, 
-            int VisualHeight
-        ) : base(
-            out err, 
-            VisualWidth, 
-            VisualHeight
-        ) => Task.Run(((LoopBase)this).LoopBaseSpan);
-
-        public abstract byte LoopBaseEnd();
-        public abstract byte LoopBaseStart();
-        public abstract bool LoopBaseUpdate(out byte err);
-        public async virtual Task<byte> LoopBaseUpdateTask() {
+        /// <summary>
+        /// Register <see cref="LoopBaseSpan"/> on new task.
+        /// </summary>
+        /// <param name="_prm">unused</param>
+        /// <returns><see cref="States.OK"/></returns>
+        public byte Main(object _prm) {
+            Task.Run<byte>(LoopBaseSpan);
             return States.OK;
         }
     }
