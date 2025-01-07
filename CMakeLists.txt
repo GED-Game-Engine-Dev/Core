@@ -48,17 +48,20 @@ foreach(tar RCore Bmp Ds err RCore CL-Bmp)
 endforeach()
 
 if(${ae2f_TEST})
-    add_executable(GED-Core-Test IMPORTED [GLOBAL])
-    add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND dotnet build test -o ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core-Test
-        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    add_executable(${PROJECT_NAME}-Test "____blank.c")
+    set_target_properties(
+        ${PROJECT_NAME}-Test 
+        PROPERTIES RUNTIME_OUTPUT_DIRECTORY 
+        ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core-Test/
     )
-    set_property(
-        TARGET 
-        GED-Core-Test 
-        PROPERTY IMPORTED_LOCATION 
-        ${PROJECT_SOURCE_DIR}/GED-Game-Engine-Dev/Core-Test/test
-        # ${PROJECT_SOURCE_DIR}/test/bin/test
+
+    add_custom_command(
+        TARGET ${PROJECT_NAME}-Test POST_BUILD
+        COMMAND 
+        dotnet 
+        build test -o 
+        ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core-Test
+        --no-incremental
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     )
 endif()
