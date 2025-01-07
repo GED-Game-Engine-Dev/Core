@@ -10,7 +10,7 @@ set(ae2f_float float CACHE STRING "Float type for the template.")
 option(ae2f_DOC " " OFF)
 option(ae2f_TEST "" OFF)
 
-project(GED_CORE VERSION 1.9.3)
+project(GED_CORE VERSION 1.10.3)
 ae2f_CoreLibFetch(GED-Game-Engine-Dev RCore Rel-v2.7.12)
 
 if(ae2f_mov_IS_64)
