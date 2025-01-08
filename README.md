@@ -9,17 +9,22 @@ To start, you need to run the shell
 sh init.sh
 ```
 
-# Dependency
-- gcc
-- cmake
-- make
+# See Also
+- ae2f::Core-Template
 - ae2f::Core
 - ae2f::err
-- OpenCL
-- python
-- ae2fCL::Core
+- ae2f::CL-Core-Template
+- ae2f::CL-Core
 - ae2f::mov
 - ae2f::mov2
 - ae2f::Bmp
-- ae2fCL::Bmp
+- ae2f::CL-Bmp
+
+# Dependency
+- gcc
+- make
+- cmake
+
+- OpenCL
+- python
 - dotnet sdk 8.0

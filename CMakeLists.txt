@@ -25,8 +25,11 @@ configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/Ctrl/MousePoint.cs" "${PROJEC
 configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/DisplayWizard/iWinPtr.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/DisplayWizard/iWinPtr.cs")
 configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/SanityCheck/Dim2.cs" "${PROJECT_SOURCE_DIR}/GED_CORE/SanityCheck/Dim2.cs")
 
-
-add_custom_target("${PROJECT_NAME}_Config" ALL)
+add_custom_target(
+    ${PROJECT_NAME} ALL
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    COMMAND dotnet build GED_CORE -o ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core
+)
 
 if(WIN32)
     set(lib_ext ".dll")
@@ -37,9 +40,25 @@ else()
 endif()
 
 foreach(tar RCore Bmp Ds err RCore CL-Bmp)
-    add_custom_command(TARGET ${PROJECT_NAME}_Config POST_BUILD
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         $<TARGET_FILE:${tar}>
         ${PROJECT_SOURCE_DIR}/GED_CORE/lib${tar}${lib_ext}
     )
 endforeach()
+
+if(${ae2f_TEST})
+    add_executable(GED-Core-Test IMPORTED [GLOBAL])
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND dotnet build test -o ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core-Test
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    )
+    set_property(
+        TARGET 
+        GED-Core-Test 
+        PROPERTY IMPORTED_LOCATION 
+        ${PROJECT_SOURCE_DIR}/GED-Game-Engine-Dev/Core-Test/test
+        # ${PROJECT_SOURCE_DIR}/test/bin/test
+    )
+endif()
