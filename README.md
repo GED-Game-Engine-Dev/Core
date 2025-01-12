@@ -1,13 +1,10 @@
 # GED_Core
-- Rel-v1.10.4
+- Rel-v1.10.5
 > It is a CSharp Project withon a lower project, RCore.  
 > To build, you need your programme "cmake" in your environment path on your computer.
 
 ## Begenning
-To start, you need to run the shell
-```sh
-sh init.sh
-```
+Library fetching will be automatically done with cmake configuring.
 
 # See Also
 - ae2f::Core-Template
@@ -24,7 +21,6 @@ sh init.sh
 - gcc
 - make
 - cmake
-
 - OpenCL
 - python
 - dotnet sdk 8.0
