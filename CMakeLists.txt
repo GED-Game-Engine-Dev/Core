@@ -10,7 +10,7 @@ set(ae2f_float float CACHE STRING "Float type for the template.")
 option(ae2f_DOC " " OFF)
 option(ae2f_TEST "" OFF)
 
-project(GED_CORE VERSION 1.10.3)
+project(GED_CORE VERSION 1.10.4)
 ae2f_CoreLibFetch(GED-Game-Engine-Dev RCore Rel-v2.7.12)
 
 if(ae2f_mov_IS_64)
@@ -27,8 +27,6 @@ configure_file("${PROJECT_SOURCE_DIR}/GED_CORE_HIN/SanityCheck/Dim2.cs" "${PROJE
 
 add_custom_target(
     ${PROJECT_NAME} ALL
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-    COMMAND dotnet build GED_CORE -o ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core
 )
 
 if(WIN32)
@@ -40,12 +38,16 @@ else()
 endif()
 
 foreach(tar RCore Bmp Ds err RCore CL-Bmp)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         $<TARGET_FILE:${tar}>
         ${PROJECT_SOURCE_DIR}/GED_CORE/lib${tar}${lib_ext}
     )
 endforeach()
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    COMMAND dotnet build GED_CORE -o ${PROJECT_BINARY_DIR}/submod/GED-Game-Engine-Dev/Core
+)
 
 if(${ae2f_TEST})
     add_executable(${PROJECT_NAME}-Test "____blank.c")
