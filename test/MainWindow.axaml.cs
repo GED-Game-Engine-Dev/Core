@@ -181,7 +181,7 @@ namespace test
             byte a = States.OK;
 
             DisplayBuffer = new WriteableBitmap(
-                new PixelSize(1920, 1080), 
+                new PixelSize(1280, 720), //new PixelSize(1920, 1080), 
                 new Vector(96, 96), 
                 format: PixelFormats.Bgr24
             );

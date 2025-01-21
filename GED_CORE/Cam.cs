@@ -18,7 +18,10 @@ namespace GED.Core
     /// Notice that type must not have responsiblity of memory.<br/>
     /// An output form for getting the data.
     /// </typeparam>
-    public abstract class Cam<I, O> {
+    public abstract class Cam<I, O>
+    {
+        #region Member Fields
+
         /// <summary>
         /// Represents the white colour as a 3-channel-colour.
         /// </summary>
@@ -28,6 +31,29 @@ namespace GED.Core
         /// Represents the transparent as a 4-channel-colour.
         /// </summary>
         public const uint TRANSPARENT = 0xFFFFFFFF;
+
+        #endregion
+
+        #region Abstract Functions
+
+        #region Public
+
+        /// <summary>
+        /// Resize the container.
+        /// </summary>
+        /// <param name="count">
+        /// New count for container.
+        /// </param>
+        /// <returns></returns>
+        public abstract int Resize(nuint count);
+
+        public abstract int Read(nuint index, out O dest);
+
+        public abstract int Write(nuint index, in I src);
+
+        #endregion
+
+        #region Protected
 
         /// <summary>
         /// Abstraction of buffering. <br/>
@@ -50,10 +76,13 @@ namespace GED.Core
         /// <returns>
         /// State code in 4-bytes.
         /// </returns>
-        protected abstract int _BuffAll(
-            BmpSourceRef dest, 
-            uint Colour_Background
-        );
+        protected abstract int _BuffAll(BmpSourceRef dest, uint Colour_Background);
+
+        #endregion
+
+        #endregion
+
+        #region Public Functions
 
         /// <summary>
         /// Executes <see cref="_BuffAll"/><br/><br/>
@@ -67,8 +96,10 @@ namespace GED.Core
         /// <returns>
         /// 
         /// </returns>
-        public int BuffAll(BmpSourceRef dest) 
-        => _BuffAll(dest, TRANSPARENT);
+        public int BuffAll(BmpSourceRef dest)
+        {
+            return _BuffAll(dest, TRANSPARENT);
+        }
 
         /// <summary>
         /// Esecutes <see cref="_BuffAll"/>.
@@ -86,29 +117,37 @@ namespace GED.Core
         /// <see cref="TRANSPARENT"/>
         /// </param>
         /// <returns></returns>
-        public int BuffAll(BmpSourceRef dest, uint Colour_Background) 
-        => _BuffAll(dest, WHITE & Colour_Background);
+        public int BuffAll(BmpSourceRef dest, uint Colour_Background)
+        {
+            return _BuffAll(dest, WHITE & Colour_Background);
+        }
 
         /// <summary>
         /// See <see cref="BuffAll"/>
         /// </summary>
         /// <param name="dest"></param>
         /// <returns></returns>
-        public int BuffAll(WriteableBitmap dest, uint Colour_Background) {
+        public int BuffAll(WriteableBitmap dest, uint Colour_Background)
+        {
             BmpElSize elsize;
-            if(dest.Format == PixelFormats.Bgr24) {
+
+            if(dest.Format == PixelFormats.Bgr24)
+            {
                 elsize = BmpElSize.RGB24;
-            } else if (dest.Format == PixelFormats.Bgra8888) {
+            }
+            else if (dest.Format == PixelFormats.Bgra8888)
+            {
                 elsize = BmpElSize.RGBA32;
-            } else return States.IMP_NOT_FOUND;
+            }
+            else
+            {
+                return States.IMP_NOT_FOUND;
+            }
 
-            using(var locked = dest.Lock()) {
+            using(var locked = dest.Lock())
+            {
                 int err;
-
-                BmpSource bitmap = new BmpSource(out err, 
-                (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height,
-                elsize, locked.Address
-                );
+                BmpSource bitmap = new BmpSource(out err, (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height, elsize, locked.Address);
 
                 return err == States.OK ? BuffAll(bitmap, Colour_Background) : err;
             }
@@ -119,44 +158,32 @@ namespace GED.Core
         /// </summary>
         /// <param name="dest"></param>
         /// <returns></returns>
-        public int BuffAll(WriteableBitmap dest) {
+        public int BuffAll(WriteableBitmap dest)
+        {
             BmpElSize elsize;
-            if(dest.Format == PixelFormats.Bgr24) {
+
+            if(dest.Format == PixelFormats.Bgr24)
+            {
                 elsize = BmpElSize.RGB24;
-            } else if (dest.Format == PixelFormats.Bgra8888) {
+            }
+            else if (dest.Format == PixelFormats.Bgra8888)
+            {
                 elsize = BmpElSize.RGBA32;
-            } else return States.IMP_NOT_FOUND;
+            }
+            else
+            {
+                return States.IMP_NOT_FOUND;
+            }
 
-            using(var locked = dest.Lock()) {
+            using(var locked = dest.Lock())
+            {
                 int err;
-
-                BmpSource bitmap = new BmpSource(out err, 
-                (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height,
-                elsize, locked.Address
-                );
+                BmpSource bitmap = new BmpSource(out err, (uint)dest.PixelSize.Width, (uint)dest.PixelSize.Height, elsize, locked.Address);
 
                 return err == States.OK ? BuffAll(bitmap) : err;
             }
         }
 
-        /// <summary>
-        /// Resize the container.
-        /// </summary>
-        /// <param name="count">
-        /// New count for container.
-        /// </param>
-        /// <returns></returns>
-        public abstract int Resize(nuint count);
-
-        
-        public abstract int Read(
-            nuint index,
-            out O dest
-        );
-
-        public abstract int Write(
-            nuint index,
-            in I src
-        );
+        #endregion
     }
 }

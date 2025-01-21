@@ -2,9 +2,27 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using GED.Core.SanityCheck;
 
-namespace GED.Core {
+namespace GED.Core
+{
+    internal static partial class fCamRectCL
+    {
+        #region Member Fields
 
-    internal static partial class fCamRectCL {
+        public readonly static nuint size;
+
+        #endregion
+
+        #region Constructors
+
+        static fCamRectCL()
+        {
+            size = fCamRect.size;
+        }
+
+        #endregion
+
+        #region Dll Functions
+
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamBuff")]
         public static partial int BuffAll(nint _this, nint dest, uint background_asRGB);
 
@@ -23,14 +41,28 @@ namespace GED.Core {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamWrite")]
         public static partial int Write(nint _this, nint Element, nuint index);
 
-        public readonly static nuint size;
-
-        static fCamRectCL() {
-            size = fCamRect.size;
-        }
+        #endregion
     }
 
-    internal static partial class fCamRectCLEl {
+    internal static partial class fCamRectCLEl
+    {
+        #region Member Fields
+
+        public readonly static nuint size;
+
+        #endregion
+
+        #region Constructors
+
+        static fCamRectCLEl()
+        {
+            size = Size();
+        }
+
+        #endregion
+
+        #region Dll Functions
+
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamElInit")]
         public static unsafe partial void Init(nint el, nint src, CamRectPrm* prm);
 
@@ -43,53 +75,94 @@ namespace GED.Core {
         [LibraryImport(DllNames.RCore, EntryPoint = "GED_CLCamElPrm")]
         public static unsafe partial int ElPrm(nint _this, CamRectPrm** prm);
 
-        public readonly static nuint size;
-
-        static fCamRectCLEl() {
-            size = Size();
-        }
+        #endregion
     }
 
-#if true
-    public class CamRectCL : aCamRect<CamRectCL.El> {
+    #if true
+
+    public class CamRectCL : aCamRect<CamRectCL.El>
+    {
+        #region Member Fields
+
         internal XClassMem memory;
 
-        public CamRectCL(out int _err) {
+        #endregion
+
+        #region Constructors
+
+        public CamRectCL(out int _err)
+        {
             memory = new XClassMem(out _err, fCamRectCL.size);
             if(_err != States.OK) return;
+
             _err = fCamRectCL.Make(memory.bytes);
         }
 
-        public override int Read(nuint index, out iCamRectEl dest) {
+        #endregion
+
+        #region Overrides
+
+        public override int Read(nuint index, out iCamRectEl dest)
+        {
             int code;
             El buffer = new El(out code);
             dest = buffer;
+
             if(code != States.OK) return code;
             return fCamRectCL.Read(memory.bytes, buffer.memory.bytes, index);
         }
 
         public override int Resize(nuint count)
-        => fCamRectCL.Resize(memory.bytes, count);
+        {
+            return fCamRectCL.Resize(memory.bytes, count);
+        }
 
         public override int Write(nuint index, in El buffer)
-        => fCamRectCL.Write(memory.bytes, buffer.memory.bytes, index);
+        {
+            return fCamRectCL.Write(memory.bytes, buffer.memory.bytes, index);
+        }
 
         protected override int _BuffAll(BmpSourceRef dest, uint Colour_Background)
-        => fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
-        
-        public class El : iCamRectEl {
+        {
+            return fCamRectCL.BuffAll(memory.bytes, dest.memory.bytes, Colour_Background);
+        }
+
+        #endregion
+
+        #region Sub Class
+
+        public class El : iCamRectEl
+        {
+            #region Member Fields
+
             internal XClassMem memory;
 
-            internal El(out int state) { 
+            #endregion
+
+            #region Constructors
+
+            internal El(out int state)
+            { 
                 memory = new(out state, fCamRectCLEl.size); 
             }
 
-            public override unsafe ref CamRectPrm CheckPrm(out int err) {
+            #endregion
+
+            #region Overrides
+
+            public override unsafe ref CamRectPrm CheckPrm(out int err)
+            {
                 CamRectPrm* param;
                 err = fCamRectCLEl.ElPrm(memory.bytes, &param);
+
                 return ref param[0];
             }
+
+            #endregion
         }
+
+        #endregion
     }
-#endif
+
+    #endif
 }
