@@ -1,12 +1,15 @@
 using GED.Core.SanityCheck;
 
-namespace GED.Core.DisplayWizard {
+namespace GED.Core.DisplayWizard
+{
     /// <summary>
     /// Create a loop function separated in nutshell. <br/>
     /// It will not actually start the loop by just instantiating it.
     /// </summary>
     public interface iWinLoop : iWin
     {
+        #region Abstract Functions
+
         /// <summary>
         /// Loop as initiation.
         /// </summary>
@@ -28,12 +31,17 @@ namespace GED.Core.DisplayWizard {
         /// </returns>
         public abstract bool LoopBaseUpdate(out byte err);
 
+        #endregion
+
+        #region Public Functions
+
         /// <summary>
         /// Customable waitable task during update. <br/>
         /// Must be independent from <see cref="LoopBaseUpdate"/>.
         /// </summary>
         /// <returns>Task to wait.</returns>
-        public async virtual Task<byte> LoopBaseUpdateTask() {
+        public async virtual Task<byte> LoopBaseUpdateTask()
+        {
             return States.OK;
         }
 
@@ -45,19 +53,27 @@ namespace GED.Core.DisplayWizard {
         /// <seealso cref="LoopBaseUpdate"/><br/>
         /// <seealso cref="LoopBaseEnd"/>
         /// </summary>
-        public async Task<byte> LoopBaseSpan() {
+        public async Task<byte> LoopBaseSpan()
+        {
             bool flag = true;
             byte err = States.OK;
             err |= LoopBaseStart();
-            if(States.IsActuallyOk(err) != States.OK)
-            goto FLAG_DONE;
 
-            while(flag) {
+            if (States.IsActuallyOk(err) != States.OK)
+            {
+                goto FLAG_DONE;
+            }
+
+            while(flag)
+            {
                 Task<byte> task = LoopBaseUpdateTask();
                 flag = LoopBaseUpdate(out err);
                 await task;
+
                 if(States.IsActuallyOk(err) != States.OK)
-                goto FLAG_DONE;
+                {
+                    goto FLAG_DONE;
+                }
             }
             
             FLAG_DONE:
@@ -70,9 +86,12 @@ namespace GED.Core.DisplayWizard {
         /// </summary>
         /// <param name="_prm">unused</param>
         /// <returns><see cref="States.OK"/></returns>
-        public byte Main(object _prm) {
+        public byte Main(object _prm)
+        {
             Task.Run<byte>(LoopBaseSpan);
             return States.OK;
         }
+
+        #endregion
     }
 }
