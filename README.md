@@ -22,5 +22,4 @@ Library fetching will be automatically done with cmake configuring.
 - make
 - cmake
 - OpenCL
-- python
 - dotnet sdk 8.0
